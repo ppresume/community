@@ -4,6 +4,7 @@
   "description": "PPResume community",
   "main": "index.js",
   "scripts": {
+    "blog": "pnpm --filter blog",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
