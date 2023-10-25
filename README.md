@@ -16,7 +16,17 @@ the most visually appealing resumes in the world.
 
 ## Quick Preview
 
+### A Quick Walkthrough of PPResume
+
+We've made a quick walkthrough video for PPResume, check it
+[here](https://youtu.be/mYqSTsCw3KI).
+
+### Resume Form and PDF Preview
+
 ![PPResume Resume Form and Preview](./static/images/ppresume-resume-form.png)
+
+### The Sample Resume
+
 ![PPResume Resume PDF](./static/images/ppresume-resume-pdf.png)
 
 ## Community
