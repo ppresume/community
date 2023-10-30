@@ -11,9 +11,9 @@ const themeConfig = {
       {meta.author && <meta name="author" content={meta.author} />}
     </>
   ),
-  readMore: "Read More →",
+  readMore: 'Read More →',
   postFooter: null,
   darkMode: false,
-};
+}
 
-export default themeConfig;
+export default themeConfig

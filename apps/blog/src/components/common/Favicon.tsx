@@ -46,5 +46,5 @@ export function Favicon() {
       />
       <meta name="theme-color" content="#ffffff" />
     </>
-  );
+  )
 }

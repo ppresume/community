@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "blog": "pnpm --filter blog",
+    "format": "prettier --write --ignore-unknown apps/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
