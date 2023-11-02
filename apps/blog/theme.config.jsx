@@ -1,7 +1,9 @@
+import { Footer } from '@/components/common'
+
 // visual studio code will report eslint warning of
 // import/no-anonymous-default-export if we export this directly as default
 const themeConfig = {
-  footer: <p>2023 © PPResume.</p>,
+  footer: <Footer />,
   head: ({ title, meta }) => (
     <>
       {meta.description && (
