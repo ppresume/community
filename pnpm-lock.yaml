@@ -40,6 +40,9 @@ importers:
       next:
         specifier: 13.4.19
         version: 13.4.19(@babel/core@7.12.9)(react-dom@18.2.0)(react@18.2.0)
+      nextjs-google-analytics:
+        specifier: ^2.3.3
+        version: 2.3.3(next@13.4.19)(react@18.2.0)
       nextra:
         specifier: ^2.12.3
         version: 2.12.3(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
@@ -270,7 +273,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.12.9)
       '@babel/plugin-transform-parameters': 7.22.15(@babel/core@7.12.9)
     dev: false
@@ -3233,6 +3236,17 @@ packages:
       }
     dev: false
 
+  /fsevents@2.3.3:
+    resolution:
+      {
+        integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==,
+      }
+    engines: { node: ^8.16.0 || ^10.6.0 || >=11.0.0 }
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /function-bind@1.1.1:
     resolution:
       {
@@ -5727,6 +5741,21 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: false
+
+  /nextjs-google-analytics@2.3.3(next@13.4.19)(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-Y6sI6A7wt5dji8hYBnVkOh9LTyImSLFZXx3FpyQgVW7W4b4qEFHjH2u3fhDJsrRZeLlUGM8/RuHD/mhHc2Axfg==,
+      }
+    peerDependencies:
+      next: '>=11.0.0'
+      react: '>=17.0.0'
+    dependencies:
+      next: 13.4.19(@babel/core@7.12.9)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    optionalDependencies:
+      fsevents: 2.3.3
     dev: false
 
   /nextra-theme-blog@2.12.3(next@13.4.19)(nextra@2.12.3)(react-dom@18.2.0)(react@18.2.0):

@@ -16,6 +16,7 @@
     "eslint-config-next": "13.4.19",
     "mdx-embed": "^1.1.2",
     "next": "13.4.19",
+    "nextjs-google-analytics": "^2.3.3",
     "nextra": "^2.12.3",
     "nextra-theme-blog": "^2.12.3",
     "react": "18.2.0",
