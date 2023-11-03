@@ -1,5 +1,10 @@
 import '@/styles/globals.css'
+import { MDXEmbedProvider } from 'mdx-embed'
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <MDXEmbedProvider>
+      <Component {...pageProps} />
+    </MDXEmbedProvider>
+  )
 }

@@ -1,0 +1,242 @@
+---
+title: Introducing PPResume, a LaTeX-Based Resume Builder
+date: 2023-10-31
+description: >
+  A LaTeX-based resume builder that creates beautifully typeset resumes in
+  minutes.
+tag: Resume, LaTeX, Typesetting
+author: Xiao Hanyu
+---
+
+import { YouTube } from 'mdx-embed'
+
+## Introduction
+
+Welcome to [PPResume](https://ppresume.com), a LaTeX-based resume builder that
+helps people create beautifully typeset resumes in minutes.
+
+<YouTube youTubeId="mYqSTsCw3KI" />
+
+## Motivation
+
+Years ago, my friends asked me to help them with their resumes, since I am good
+with typesetting, especially LaTeX, I was happy to help. I have helped about a
+dozen people typeset their resumes in LaTeX, and most of them are quite
+satisfied with the high-quality, beautifully typeset resumes.
+
+To my surprise, some of them still come back to me after several years and ask
+me to help them update their resumes again when they are looking for a new job.
+
+In 2016, I opened an e-commerce shop to sell service for typesetting resumes in
+LaTeX. I got a few customers, made some money, and realized that if you could
+offer people high-quality, beautifully typeset resumes, there could be a market
+for it.
+
+However, I did not have enough time to create a service for this idea until I
+was laid off in November 2022. Since I have mastered all the necessary skills to
+make this idea a reality, I decided to put it into action.
+
+The motivation behind this project is to create a resume builder that can help
+people create beautifully typeset resumes in minutes.
+
+## Market Research
+
+Here comes the first question: there are
+[tons](https://www.producthunt.com/search?q=resume) of resume builders on the
+market, why another one?
+
+List of commercial resume builders on the market:
+
+- [Resume.io](https://resume.io/)
+- [Standard Resume](https://standardresume.co/)
+- [Zety](https://zety.com/)
+- [Novoresume](https://novoresume.com/)
+- [VisualCV](https://www.visualcv.com/)
+- [Kickresume](https://www.kickresume.com/)
+- [ResumePuppy](https://resumepuppy.com/)
+
+List of some free, open source resume builders as well:
+
+- [Reactive Resume](https://github.com/AmruthPillai/Reactive-Resume)
+- [JSON Resume](https://jsonresume.org/)
+- [open-resume](https://github.com/xitanggg/open-resume)
+- [resumake.io](https://github.com/saadq/resumake.io)
+
+Most resume builders on the market put a heavy bet on UI/UX, however, their PDF
+output is not very good — if not quite bad — because they create PDFs using the
+browser's print function, essentially taking screenshots of some HTML nodes. I
+am not saying that you can not create beautifully typeset resume PDFs with
+HTML/CSS, but it's not easy. In a word, a well-designed UI/UX is important, but
+what is delivered to the recruiter is the resume PDF, not the UI/UX of the
+resume builders.
+
+## Typesetting
+
+In fact, when it comes to typesetting documents, you have several options:
+
+- Microsoft Word
+- Adobe InDesign
+- HTML/CSS
+- LaTeX
+
+All these options have their advantages and disadvantages.
+
+Microsoft Word may be the most popular word processing software that is often
+used to create documents such as letters, reports, and resumes. It is very easy
+to use, making it accessible to most people. However, it has limited design
+capabilities and is not good at creating complex layouts.
+
+Adobe InDesign, on the other hand, is a professional desktop publishing software
+designed specifically for creating print and digital publications such as
+magazines, brochures, and eBooks. It offers more advanced design features and
+layout tools than Microsoft Word. However, the learning curve is so steep that
+most people have no idea how to use it.
+
+HTML/CSS is widely used and supported by all modern browsers on all platforms,
+so you do not need to install anything to view HTML documents. However, if you
+want to create HTML documents, you need some kind of coding — wait, I just
+want to create a resume and you are asking me to learn coding? Are you kidding
+me?
+
+[LaTeX](https://www.latex-project.org/) is a professional typesetting software
+that allows you to create documents and produce extremely high-quality,
+beautifully typeset PDFs. It is widely used in academia and research, especially
+in mathematics, engineering, and computer science. However, it has a very steep
+learning curve and is very difficult for beginners to learn and use. In a word,
+it makes little sense to learn LaTeX just to create a resume.
+
+Here are two example resumes. The first was created with
+[RXResume](https://rxresu.me/), which uses HTML/CSS to create PDFs, while the
+second was created with [PPResume](https://ppresume.com/), which uses LaTeX
+instead. Feel the difference yourself and see which version is more balanced,
+elegant and beautiful in terms of typesetting.
+
+![example Resume by RXResume](/static/images/introducing-ppresume/andy-dufresne-rxresume-example.svg)
+
+![example Resume by PPResume](/static/images/introducing-ppresume/andy-dufresne-ppresume-example.svg)
+
+If you have a keen eye and prefer beautifully typeset resumes with extremely
+high quality PDF output, then I would recommend LaTeX. However, as mentioned
+earlier, LaTeX is notorious for its steep learning curve, it is quite difficult
+to get started. Looking for a LaTeX-based resume builder instead? Too bad, there
+are very few LaTeX-based resume builders on the market.
+
+### LaTeX-Based Resume Builder
+
+As far as I know, before PPResume, [ResumePuppy](https://resumepuppy.com/) is
+the only commercial resume builder on the market that uses LaTeX as its
+typesetting engine. However, it provides only 5 sections for resumes, such as
+"Personal Info", "Experience", "Projects", "Education", and "Skills", which may
+not be enough in many cases, while PPResume provides at least 14 types of
+sections that could cover most cases.
+
+[resumake.io](https://github.com/saadq/resumake.io) is an open source resume
+builder that uses LaTeX as its typesetting engine as well. However, although
+[resumake.io](https://github.com/saadq/resumake.io) was started in early 2017,
+it does not appear to have been actively developed for some time, and the
+product is far from finished in my opinion.
+
+Therefore, if you are looking for a resume builder that output top-notch PDF
+with exceptional quality, you have very limited choices as of now.
+
+## First Principles
+
+Let us go back to first principles in writing a resume. A resume is a piece of
+paper that shows information about you, your education, work experience, skills,
+etc. The goal of a resume is to help you get an offer from an organization (be
+it a company, a school, a research institute, etc.)
+
+Writing a resume is a very lengthy and tedious process. It usually takes several
+hours to write a resume and days to make it as perfect as possible. It takes so
+long because the resume plays a big role when you are looking for a new
+opportunity. A carefully crafted, beautifully typeset resume can help you stand
+out from the crowd and get an offer. Many people revise their resume letter by
+letter, word by word, line by line to make sure it does not contain any
+mistakes, just to pass the baseline. If you want your resume to stand out, a
+clean, elegant, and beautiful typesetting would be a big plus.
+
+The process of writing a resume can be divided into three steps, and each step
+requires different assistance:
+
+1. content
+
+- guidelines for writing a resume
+- spell and grammar check
+- LinkedIn profile import
+
+2. typesetting
+
+- fine-tuned typography
+- layout adjustments (font size, margins, colors, etc.)
+- high-quality PDF output
+
+3. delivery
+
+- ATS-friendly resume
+- integration of job boards
+- resume hosting with analytics (views, downloads, etc.)
+
+PPResume will focus on typesetting first, and we will gradually add support for
+content and delivery in a progressive manner.
+
+## Past, Present and Future
+
+In December 2022, I wrote the first line of code for PPResume. Here's what it
+looks like at the end of the second week, a dashboard with a form on the left
+and a resume preview container on the right:
+
+![PPResume POC](/static/images/introducing-ppresume/ppresume-poc.png)
+
+This is what it looks like after 8 months of hard work (as of November 2023),
+still a dashboard with a form on the left and a resume preview container on the
+right, but this time the dashboard is much more powerful.
+
+![PPResume Launch](/static/images/introducing-ppresume/ppresume-launch.png)
+
+### The Powerful Dashboard
+
+As mentioned above, PPResume provides an intuitive and powerful dashboard that
+can guide you through the tedious process of writing resumes.
+
+#### Real-Time Input Validation
+
+PPResume has real-time input validation that helps avoid common, simple
+low-level mistakes. All form fields are validated as you type.
+
+![Real-Time Input Validation](/static/images/introducing-ppresume/real-time-input-validation.gif)
+
+#### Rich Set of Input Controls
+
+Filling out long forms is tedious but not that hard in PPResume. PPResume offers
+a variety of input controls, such as Select to choose an option, Month Picker to
+enter start and end dates, Multi Select to enter keywords or courses, and Rich
+Text Editor to enter many text. You can enter a variety of information with
+peace.
+
+![Rich Set of Input Controls](/static/images/introducing-ppresume/rich-set-of-input-controls.gif)
+
+#### Structural Editing
+
+PPResume also provides you with powerful and intuitive structural editing to
+refine your resume, allowing you to duplicate, delete and rearrange items with
+ease.
+
+![Structural Editing](/static/images/introducing-ppresume/structural-editing.gif)
+
+#### Customizable Layout
+
+Last but not least, PPResume gives you options to customize the layout, such as
+font size and margins.
+
+![Customizable Layout](/static/images/introducing-ppresume/customizable-layout.gif)
+
+### Look Ahead
+
+Once we have a solid foundation for top tier typesetting with high quality PDF
+output, we will put more effort on content and delivery part.
+
+For example, we could integrate [grammarly](https://www.grammarly.com/) to help
+users improve syntax and grammar. We could also integrate AIGC tools to generate
+content based on user's prompt to give users more inspiration.
+
+Stay tuned!

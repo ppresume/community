@@ -14,6 +14,7 @@
     "@types/react-dom": "18.2.7",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
+    "mdx-embed": "^1.1.2",
     "next": "13.4.19",
     "nextra": "^2.12.3",
     "nextra-theme-blog": "^2.12.3",
