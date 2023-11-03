@@ -1,4 +1,4 @@
 {
   // ref: https://github.com/vercel/next.js/issues/40687#issuecomment-1385117641
-  "extends": ["next/babel", "next/core-web-vitals"]
+  "extends": ["next", "next/core-web-vitals"]
 }
