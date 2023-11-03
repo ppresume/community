@@ -13,5 +13,12 @@
     "Typesetting"
   ],
   "author": "Xiao Hanyu",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.3"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
 }
