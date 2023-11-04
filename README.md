@@ -5,7 +5,7 @@ Pretty Print Resume, Pretty Print World
 [PPResume](https://www.ppresume.com) is here to simplify your life by producing
 the most visually appealing resumes in the world.
 
-![PPResume Resume Form and Preview](./static/images/ppresume-resume-form.png)
+![PPResume Resume Form and Preview](./apps/blog/public/static/images/introducing-ppresume/ppresume-launch.png)
 
 ## Highlights
 
