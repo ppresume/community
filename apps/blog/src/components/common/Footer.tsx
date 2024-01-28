@@ -21,7 +21,8 @@ export function Footer() {
   return (
     <footer style={footerStyle}>
       <div>
-        2023 © <Link href={'https://ppresume.com'}>PPResume</Link>
+        © 2023–{new Date().getFullYear()}{' '}
+        <Link href={'https://ppresume.com'}>PPResume</Link>
       </div>
       <div style={footerRightSectionStyle}>
         <Link href={'https://discord.gg/PzbunPPkVF'}>Discord</Link>

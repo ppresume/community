@@ -1,0 +1,269 @@
+---
+title: Introducing the New Auth Flow for PPResume
+date: 2024-01-30
+description: >
+  A new auth flow powered by logto that drastically simplifies the auth
+  experience for PPResume.
+tag: Logto, OAuth, Passwordless, SSO
+author: Xiao Hanyu
+---
+
+import { Callout } from 'nextra/components'
+
+## Introduction
+
+We are very pleased to announce that PPResume has introduced a new auth flow.
+This is the result of two months of hard work with many important features for an
+optimized onboarding experience:
+
+- sign in with the password
+- sign in with the verification code
+- reset your password
+- update your username in [/settings](https://ppresume.com) page
+
+Long story short, let's take a look at the new auth flow:
+
+![PPResume Sign In](/static/images/introducing-the-new-auth-flow/ppresume-sign-in.png)
+![PPResume Sign In - Verify Your Email](/static/images/introducing-the-new-auth-flow/ppresume-sign-in-verify-your-email.png)
+![PPResume Sign In - Update Your Username in Settings Page](/static/images/introducing-the-new-auth-flow/ppresume-sign-in-user-settings.png)
+![PPResume Sign In - Welcome Email](/static/images/introducing-the-new-auth-flow/ppresume-sign-in-welcome-email.png)
+
+## Auth is Difficult and Complicated
+
+The first step to build any SaaS product is to consider how users can be
+authenticated. When I started with PPResume about a year ago, I didn't think
+too much about it, which proved to be a mistake and I wasted a lot of time.
+
+Auth is often overlooked or underestimated in the early stages of building a
+SaaS product. However, it plays a crucial role in ensuring the security and
+integrity of user data. Building an effective auth flow requires expertise in
+cryptography, security best practices, UI/UX design and more. Moreover, keeping
+up with evolving security threats and regulations can be a daunting task for
+developers focused on their core product.
+
+Auth is difficult, and complicated.
+
+When I first tried to create my own auth flow, I quickly realized the immense
+challenge of building a secure, reliable, and fully functional auth flow.
+
+You many wonder is it really that difficult to build a functional auth flow?
+Isn't it as simple as matching a username and password? The answer is both yes
+and no.
+
+Two decades ago, as the web evolved from static websites to web applications,
+users gained the ability to post content online for the first time. This era saw
+the birth of blog, social networks (facebook/twitter), media sharing platforms
+(youtube/instagram), etc., transforming the web into a ecosystem for consuming,
+creating and sharing thoughts and ideas.
+
+In the good old days, the most common approach of authenticating a user was to
+use a username and password. Usually the username is stored in plain text and
+the password is encrypted with a hash function (some also store the password in
+plain text, which is pretty bad practice and leads to many security incidents).
+When a user signs in, the password is hashed and compared with the stored hash
+value. If the two values match, the user is authenticated.
+
+Contemporary web applications encounter greater challenges than ever before and
+necessitate more secure, resilient, and adaptable auth solutions. The simple
+combination of a username and password is insufficient to meet the demands of
+modern web applications
+
+The conventional username and password approach has several inherent drawbacks:
+
+1. **Memorability:** Passwords are notoriously difficult to remember, leading to
+   frequent forgetfulness.
+2. **Simplicity and Guessability:** Simple passwords are susceptible to easy
+   guessing and compromise.
+3. **Complexity and Usability:** Complex passwords, while more secure, pose
+   challenges in memorization, hindering user onboarding.
+4. **Reuse and Security Breach:** Enforcing strong passwords during user sign up
+   doesn't prevent users from reusing them across multiple websites. A compromise
+   of one website can compromise all others using the same credentials.
+5. **Identity Verification:** The system cannot verify the actual person behind
+   the credentials, making it vulnerable to unauthorized access, even by non-human
+   entities like cats typing in the correct password.
+
+To address the shortcomings of basic username and password authentication, the
+industry has developed several advanced techniques like:
+
+1. **One-time password (OTP)**: A password that is only valid for a single login
+   session or transaction.
+2. **Multi-factor authentication (MFA)**: An authentication method that requires
+   users to provide multiple forms of identification, such as a password, a
+   physical token, or a biometric measurement, to gain access.
+3. **Passwordless authentication**: An authentication method that does not
+   require users to remember a password, but instead relies on verified
+   third-party authentication providers, such as social media accounts or
+   fingerprint scanners.
+
+Imagine the countless hours and complexities involved in building your own auth
+flow from scratch. This process would require you to develop features such as:
+
+- User sign up with email/username and password.
+- Email verification for confirming user identity.
+- A mechanism for password reset.
+- Choose appropriate hash algorithm for password encryption.
+- Email connector setup for sending emails related to user sign up and sign in
+  events.
+- Support for Single Sign-On (SSO) with providers like Google, LinkedIn, and
+  others.
+- Linking social sign-in identifiers with local accounts when email addresses
+  match.
+- Designing a robust session management mechanism to control access to protected
+  resources and pages.
+
+In summary, building a comprehensive auth solution involves meticulous planning,
+technical expertise, and adherence to security best practices. It's highly
+recommended to consult with security experts and leverage existing frameworks
+and libraries to ensure the utmost security and reliability of your
+auth solution.
+
+## Home Made Auth Flow of PPResume
+
+When I started with PPResume, I had gained some experience of building auth flow
+during my previous projects. I've read the book of [Getting Started with OAuth
+2.0](https://www.oreilly.com/library/view/getting-started-with/9781449317843/),
+understanding the basic concepts of OAuth 2.0 and I know that there're different
+[grant
+types](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2)
+in OAuth 2.0. I had successfully implemented Google Single Sign-On (SSO) in a
+previous project, allowing my colleagues to conveniently sign in using their
+work Google accounts.
+
+Despite my existing knowledge and experience, I still underestimated the
+intricacies involved in developing a fully functional and production-ready auth
+flow. As a result, I ended up wasting a significant amount of time on this task.
+
+OK long story short, let's take a look at my home made auth flow. During the
+sign up process, users are required to provide their email address, select a
+username, and create a strong password.
+
+![PPResume Sign Up](/static/images/introducing-the-new-auth-flow/ppresume-local-auth-sign-up.png)
+
+Usernames are enforced with the following rules:
+
+- at least 3 characters
+- at most 39 characters
+- may only contain alphanumeric characters or single hyphens, and cannot begin
+  or end with a hyphen.
+- must not be in the reserved list (like `admin`, `administrator`, `root`, etc.)
+
+![PPResume Sign Up - Username Input](/static/images/introducing-the-new-auth-flow/ppresume-local-auth-username-input.png)
+
+Password has even more strict requirements for security best practices:
+
+- At least 1 number
+- At least 1 lowercase letter
+- At least 1 uppercase letter
+- At least 1 special symbol
+- At least 12 characters
+- No whitespaces
+
+![PPResume Sign Up - Password Input](/static/images/introducing-the-new-auth-flow/ppresume-local-auth-password-input.png)
+
+Despite dedicating approximately a month to implementing this auth flow, I
+received feedback indicating that the password rules were excessively complex,
+hindering user sign up on PPResume.
+
+While users acknowledge the importance of strong password requirements for
+enhanced security, they find it challenging and painful to create and recall
+such complex passwords.
+
+In addition to the complexity of creating strong passwords, I have yet to
+implement a password reset feature and lack the means to verify user identities
+through verification emails. This exposes PPResume to the risk of spam attacks
+by bots.
+
+Some users encounter difficulty in remembering their passwords over time, and I
+have not yet provided a self-service password reset feature. Implementing this
+feature is likely to require an additional one to two weeks of development
+effort.
+
+After some struggle and suffering, I realized that creating a functional auth
+flow is not as straightforward as I had initially anticipated. I am not an
+expert in auth and do not wish to invest a significant amount of time (a year or
+more) in building a fully functional auth flow.
+
+Time to make a change.
+
+## Introducing Logto
+
+Yes we need a third party auth solution to help us out.
+
+[Auth0](https://auth0.com/) is definitely a top player in this area, but it's a
+bit costly, and you don't have complete control over your user data, which means
+you might get locked in with the vendor.
+
+On the other hand, [logto](https://logto.io) is an [open
+source](https://github.com/logto-io/logto) auth solution that provides a
+seamless identity infrastructure for developers. In addition to offering [logto
+cloud](https://cloud.logto.io/), you can also host it on your own server, giving
+you complete control over your user data.
+
+After dedicating two months to integrating logto into PPResume, I'm pleased to
+share that the outcome has been highly satisfactory. As a token of appreciation,
+I've contributed several PRs back to the logto community to further
+enhance the platform.
+
+- [logto-io/logto](https://github.com/logto-io/logto/pulls?q=is%3Apr+author%3Axiaohanyu+)
+- [logto-io/docs](https://github.com/logto-io/docs/pulls?q=is%3Apr+author%3Axiaohanyu+)
+- [logto-io/js](https://github.com/logto-io/js/pulls?q=is%3Apr+author%3Axiaohanyu+)
+
+Besides basic auth features like sign up, sign in, reset password, user
+profiles, etc., logto also offers a very powerful dashboard for user management,
+which is extremely beneficial for product growth.
+
+![Logto Dashboard](/static/images/introducing-the-new-auth-flow/logto-dashboard.png)
+
+## Data Migration
+
+The auth flow is extremely important for any SaaS product. It took me one or two
+days to migrate all the user data from our home made auth system to logto.
+Almost all user data remained unchanged, except for the passwords. The passwords
+are not stored in plain text and never will be; instead, they are encrypted
+using a [hash
+algorithm](https://en.wikipedia.org/wiki/Cryptographic_hash_function). The
+original auth system used the [bcrypt](https://en.wikipedia.org/wiki/Bcrypt)
+hash algorithm, while logto uses the
+[argon2](https://en.wikipedia.org/wiki/Argon2) hash algorithm, which are not
+compatible with each other. From a technical standpoint, it is
+[impossible](https://blog.logto.io/general-migration-guide/) to decrypt the
+passwords and encrypt them with a different hash algorithm, so the original
+passwords are all lost.
+
+<Callout type="info" emoji="ℹ️">
+  The only thing you need to do here is to reset your password once because of
+  the data migration. You can first sign in with a verification code and then
+  you will be prompted to set a new password. We also lowered the strong
+  password requirements—previously at least 12 characters and 3 categories of
+  characters, now at least 8 characters and 2 categories of characters.
+  Hopefully you would enjoy the new auth flow.
+</Callout>
+
+![PPResume Sign In - Set Password](/static/images/introducing-the-new-auth-flow/ppresume-sign-in-set-password.png)
+
+## Look Ahead
+
+Adopting logto has significantly improved the security and user experience of
+PPResume. As an independent developer, I can now focus on developing core
+features and delivering value to PPResume users, confident that their auth
+experience is seamless and smooth, and they are not rejected and leave away
+because I asked them to create a strong password, LOL.
+
+By leveraging the capabilities of [logto](https://logto.io), we're going to
+introduce a range of new auth features that will make it easier for users to
+get onboard. One such feature is the integration of Google SSO, allowing users
+to seamlessly sign in using their existing Google accounts. Additionally, we'll
+be introducing Linkedin SSO, enabling users to connect their Linkedin profiles
+and instantly generate visually appealing resumes. Stay tuned for these exciting
+updates that will further enhance your experience with PPResume!
+
+In conclusion, auth is essentically difficult and complicated, it is generally
+not advisable to build your own auth systems. But it doesn't have to be a
+burden for independent developers. By leveraging dedicated auth solutions like
+logto, developers can streamline their development process, enhance security,
+and deliver a superior user experience at the same time.
+
+Thanks again, logto and the
+[team](https://github.com/logto-io/logto/graphs/contributors) behind it, for
+providing such a great auth solution.
