@@ -3,6 +3,7 @@
   padding-bottom: 0;
 }
 
+.nx-prose img.shadow,
 .nx-prose video {
   /* add white background for img here, this is needed for some SVG images */
   background-color: #fff;
