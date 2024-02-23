@@ -1,0 +1,235 @@
+---
+title: Introducing Google Sign In for PPResume
+date: 2024-03-05
+description: >
+  PPResume now supports Google Sign In. This post introduces the new feature and
+  explains how to link your existing account to Google.
+tag: Google, OAuth, Passwordless, SSO, Logto
+author: Xiao Hanyu
+---
+
+## Introduction
+
+I am super excited to announce that
+[PPResume](https://ppresume.com/?utm_source=ppresume&utm_medium=blog&utm_campaign=introducing-google-sign-in)
+supports Google Sign In starting from Feb 20, 2024. You can simply sign in
+PPResume with your Google account. This is a great addon to further simplify the
+sign in process after we introduced [the new auth
+flow](/posts/introducting-the-new-auth-flow) powered by
+[logto](https://logto.io/).
+
+Let's take a quick look first:
+
+![Google Sign In](/static/images/introducing-google-sign-in/google-sign-in-logto.png)
+![Google Sign In OAuth Consent](/static/images/introducing-google-sign-in/google-sign-in-oauth-consent.png)
+
+## Why Google Sign In
+
+People hate passwords. They hate creating new accounts when they want to try out
+a new product. They hate memorizing strong, complicated passwords. They hate
+resetting passwords. They hate resetting a new password and being told that they
+can't use a previous password. They hate being warned about the danger of using
+a simple password on different websites. They hate typing out passwords. They
+hate typing out email addresses. They hate typing anything.
+
+Yes, there are password managers. But very few people use them. People are lazy,
+they are not willing to pay for a password manager and invest time to learn how
+to use a password manager.
+
+A friend of mine told me that **he will immediately leaves a website if he has
+to create an account by entering an email address and a password**
+
+A [study](https://cxl.com/blog/social-login/) shows that "92% of users will
+leave a site instead of resetting or recovering login info".
+
+Life is hard and we should not make it any harder as SaaS makers.
+
+> Mathilda: "Is life always this hard, or is it just when you're a kid?"
+>
+> Léon: "Always like this."
+>
+> — Léon: The Professional
+
+What most people really want is a one-click button that allows them to sign in
+with their existing social account. This can be a Google account, a Facebook
+account, a Twitter account, a Linkedin account, or any other social account they
+already have.
+
+So the question is, which social sign in provider should we support first? The
+data speaks for itself!
+
+```sql
+logto=> select count(*) from users where created_at < '2024-02-20 09:46:16.660978+00';
+ count
+-------
+   227
+(1 row)
+
+logto=> select count(*) from users where created_at < '2024-02-20 09:46:16.660978+00' and primary_email ilike '%gmail%';
+ count
+-------
+   102
+(1 row)
+```
+
+Out of 227 users, 102 users use Gmail as their primary email address, which is
+45% of all users. This is a very strong signal that we should support Google
+Sign In first.
+
+## Account Linking
+
+Before we integrate social sign in, there is one caveat we need to think about
+carefully. Imagine the following scenario:
+
+- Andy, with an email of `andy@gmail.com`, signed up with traditional email and
+  password at Jan
+- PPResume introduced Google Sign In at Feb
+- Andy returns to PPResume and sees the Google Sign In button, he is very happy
+  and thinks, "Oh, I can sign in with my Google account, nice, I will try it
+  right away."
+- Andy signs in with his Google account and suddenly realizes that he has been
+  given a new account, even with the same email address.
+
+This kind of scenario would be a disaster for the user experience. At first Andy
+would be very upset, he might think that all his data is lost because he got a
+new account via Google Sign In. He then signs out and tries to sign in with his
+email/password, and finds that everything is still there and nothing is lost.
+Andy finally realizes that he has two accounts with the same email address:
+
+- the first account signed in with the email of `andy@gmail.com` and a password
+- the second account was created by Google Sign In
+
+When supporting more social sign in options, users may have more than two
+accounts with the same email. How stupid and ridiculous is that!
+
+Ideally, Andy should get the same account whether he signs in via
+email/password or Google Sign In, as long as the email address is the same. We
+need "account linking" here, which allows users to associate different sign in
+methods to the same account.
+
+Fortunately, logto supports [account
+linking](https://logto.io/en/products/social-sign-in) out of the box.
+
+![Google Sign In Account Linking](/static/images/introducing-google-sign-in/google-sign-in-account-linking.png)
+
+## Increased Conversion
+
+Social sign-in can significantly increase conversion rate, with studies showing
+an average improvement of 20–40%. The case of PPResume has confirmed this.
+Again, the data speaks for itself!
+
+```sql
+logto=> select count(*) from users where created_at > '2024-02-20 09:46:16.660978+00';
+ count
+-------
+    64
+(1 row)
+
+logto=> select count(*) from users where created_at > '2024-02-20 09:46:16.660978+00' and primary_email ilike '%gmail%';
+ count
+-------
+    54
+(1 row)
+
+logto=> select count(*) from users where created_at > '2024-02-20 09:46:16.660978+00' and primary_email ilike '%gmail%' and avatar != '';
+ count
+-------
+    52
+(1 row)
+```
+
+Since the launch of Google Sign In on Feb 20, we have 54 out of 64 new users
+signing in with Gmail, and 52 out of 54 Gmail users are using Google Sign In.
+**Compared to before, 45% of users are using Gmail. Now 85% of new users use
+Gmail, and 93% of Gmail users sign in directly with their Google account**. Not
+to mention that some non-Gmail users have also signed in with their Google
+account. Very impressive, isn't it?
+
+## The Implementation
+
+As described in previous [post](/posts/introducting-the-new-auth-flow), it is
+difficult to build your own auth solution from scratch, and it is not a good
+idea to do so.
+
+Surely you can build a coursework level demo auth solution yourself with
+email/password sign in and integrate many social sign-in providers with the help
+of OAuth libraries—for example, [NextAuth.js](https://next-auth.js.org/) is a
+very good library for Next.js.
+
+How would you then implement account linking? To implement account linking, you
+need to have email address verified; to have email address verified, you must
+have a way to generate OTPs and send OTPs to the users; to send OTPs to the
+users, you need to do research to find a good email delivery service, Mailgun,
+SendGrid, just to name a few. You will not want set up the email delivery
+yourself and then warm up your home made email delivery service, will you? Come
+on, you are no superman. Last but not least, different social sign in providers
+may return different responses for user profiles and you will need to santize
+the response and map it to your own user model.
+
+To summarize, do not waste time building your own auth from scratch, adopt a
+professional dedicated auth solution instead.
+
+I chose [logto](https://logto.io/) as PPResume's auth solution, and logto
+supports account linking with multiple social sign in providers out of the box.
+
+Other auth solutions like
+[auth0](https://auth0.com/docs/manage-users/user-accounts/user-account-linking),
+[clerk](https://clerk.com/docs/authentication/social-connections/account-linking)
+also support account linking out of the box, you can make a choice according to
+your preference.
+
+To integrate Google Sign In, simply add a new social connector to Google and
+follow the official
+[guide](https://github.com/logto-io/logto/tree/master/packages/connectors/connector-google)
+to complete the setup.
+
+Please note that if you are building a SaaS product for the public, you need to
+submit your app to Google for a
+[review](https://support.google.com/cloud/answer/13461325?hl=en#zippy=%2Cdetails-about-different-components-on-the-oauth-consent-screen).
+It can take weeks to get a response but in my case I got approval from Google
+within 2 days of submitting all the required information.
+
+![Logto Google Connector Item](/static/images/introducing-google-sign-in/logto-google-connector-item.png)
+![Logto Google Connector Detail](/static/images/introducing-google-sign-in/logto-google-connector-detail.png)
+
+Of course you can also integrate other social sign in providers such as Apple,
+Facebook, Github etc. However, it is not recommended to integrate too many
+social sign-in providers.
+
+![Logto Social Connectors List](/static/images/introducing-google-sign-in/logto-social-connectors-list.png)
+
+## Final Words about OAuth
+
+Last, I want to talk a bit more about
+[OAuth](https://en.wikipedia.org/wiki/OAuth), from an engineer's perspective.
+Most of the social sign in providers use OAuth protocol under the hood.
+
+For me，OAuth is a very complicated protocol. I've read the book [Getting Started
+with OAuth
+2.0](https://www.oreilly.com/library/view/getting-started-with/9781449317843/)
+page by page, but still every time I need to do OAuth related work, I have to
+read many documents again and again, just to refresh my memory.
+
+Robin Guldener's post [Why is OAuth still hard in
+2023?](https://www.nango.dev/blog/why-is-oauth-still-hard) did a great job
+of pointing out the complications of OAuth protocol, highly recommended to read
+it if you want to go with the hard way and implement an OAuth based auth flow by
+yourself.
+
+## Conclusion
+
+OK time's up. For all SaaS makers that needs to implement the auth flow, I
+suggest:
+
+1. do not build you own auth from scratch when possible, 90% it would be waste
+   of time
+2. choose a professional dedicated auth solution carefully, because it is
+   crucial and critical for the entire lifecycle of your SaaS product
+3. integrate 1-2 social sign in providers, make sure the auth solution supports
+   account linking, which would increase the conversion rate significantly
+4. keep plain email/password sign in as a fallback, as some users may not have
+   social accounts or they may not want to use social sign in for some reasons
+
+Thanks for reading.
+
+Comments [here](https://github.com/ppresume/community/discussions/31).

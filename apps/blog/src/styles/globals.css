@@ -25,3 +25,10 @@
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
+
+.nx-prose
+  :where(blockquote p:first-of-type):not(
+    :where([class~='nx-not-prose'] *)
+  ):before {
+  content: none;
+}
