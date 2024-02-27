@@ -6,6 +6,11 @@ export default function App({ Component, pageProps }) {
   return (
     <MDXEmbedProvider>
       <GoogleAnalytics trackPageViews={{ ignoreHashChange: true }} />
+      <script
+        defer
+        data-domain="blog.ppresume.com"
+        src="https://plausible.ppresume.com/js/script.js"
+      ></script>
       <Component {...pageProps} />
     </MDXEmbedProvider>
   )
