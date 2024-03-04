@@ -2,10 +2,12 @@
 
 Pretty Print Resume, Pretty Print World
 
-[PPResume](https://www.ppresume.com) is here to simplify your life by producing
-the most visually appealing resumes in the world.
+[PPResume](https://ppresume.com/?utm_source=Github&utm_medium=ppresume%2Fcommunity)
+is here to simplify your life by creating beautifully typeset resumes in
+minutes.
 
-![PPResume Resume Form and Preview](./apps/blog/public/static/images/introducing-ppresume/ppresume-launch.png)
+![PPResume Resume Form and
+Preview](./apps/blog/public/static/images/introducing-ppresume/ppresume-launch.png)
 
 ## Highlights
 
@@ -138,7 +140,7 @@ content and delivery.
 Once we have a solid foundation of first-class typesetting with high-quality PDF
 output, we will be more concerned with content and delivery.
 
-For example, we could integrate [grammarly] (https://www.grammarly.com/) to help
+For example, we could integrate [grammarly](https://www.grammarly.com/) to help
 users improve syntax and grammar. We could integrate AIGC tools to generate
 content based on user requests to help users get more inspiration.
 
