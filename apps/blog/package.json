@@ -15,10 +15,10 @@
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "mdx-embed": "^1.1.2",
-    "next": "13.4.19",
+    "next": "14.1.3",
     "nextjs-google-analytics": "^2.3.3",
-    "nextra": "^2.12.3",
-    "nextra-theme-blog": "^2.12.3",
+    "nextra": "^2.13.4",
+    "nextra-theme-blog": "^2.13.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.2.2"
