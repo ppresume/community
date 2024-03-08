@@ -1,0 +1,28 @@
+{
+  "name": "common",
+  "version": "0.1.0",
+  "description": "common code shared by ppresume/community project",
+  "private": true,
+  "main": "dist/index",
+  "types": "dist/index",
+  "scripts": {
+    "build": "tsc --build --force",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppresume/community.git"
+  },
+  "author": "Xiao Hanyu",
+  "bugs": {
+    "url": "https://github.com/ppresume/community/issues"
+  },
+  "homepage": "https://github.com/ppresume/community",
+  "devDependencies": {
+    "@types/node": "^20.11.25",
+    "@types/react": "^18.2.64",
+    "react": "^18.2.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.2"
+  }
+}

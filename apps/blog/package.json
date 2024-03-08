@@ -12,6 +12,7 @@
     "@types/node": "20.6.1",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "common": "workspace:^",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "mdx-embed": "^1.1.2",
