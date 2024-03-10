@@ -50,6 +50,8 @@ const themeConfig = {
 
   docsRepositoryBase:
     'https://github.com/ppresume/community/tree/main/apps/doc/',
+
+  darkMode: true,
 }
 
 export default themeConfig
