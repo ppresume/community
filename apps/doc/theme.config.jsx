@@ -1,9 +1,14 @@
 import { useRouter } from 'next/router'
 import { useConfig } from 'nextra-theme-docs'
 import { IconBrandDiscord, IconBrandGithub } from '@tabler/icons-react'
+import { Logo } from '@/components/Logo'
+
+const x6 = 24
+const x8 = 32
 
 // eslint-disable-next-line import/no-anonymous-default-export
 const themeConfig = {
+  // page <head>
   head: () => {
     const ppresumeDescription = [
       'a LaTeX based resume builder that',
@@ -37,20 +42,24 @@ const themeConfig = {
     }
   },
 
-  logo: <span>PPResume</span>,
+  // left side of navbar
+  logo: <Logo height={x8} width={x8} />,
 
+  // right side of navbar
   chat: {
     link: 'https://discord.gg/PzbunPPkVF',
-    icon: <IconBrandDiscord width={24} height={24} />,
+    icon: <IconBrandDiscord width={x6} height={x6} />,
   },
   project: {
     link: 'https://github.com/ppresume/community',
-    icon: <IconBrandGithub width={24} height={24} />,
+    icon: <IconBrandGithub width={x6} height={x6} />,
   },
 
+  // doc repository base
   docsRepositoryBase:
     'https://github.com/ppresume/community/tree/main/apps/doc/',
 
+  // dark mode
   darkMode: true,
 }
 
