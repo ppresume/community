@@ -1,7 +1,7 @@
 {
   "font": "Font",
   "punctuation": "Punctuation",
-  "layout": "Layout",
+  "typesetting": "Typesetting",
   "grammar": "Grammar",
   "publishing": "Publishing"
 }
