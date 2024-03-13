@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/ppresume/community",
   "devDependencies": {
-    "@types/node": "^20.11.25",
-    "@types/react": "^18.2.64",
+    "@types/node": "^20.11.27",
+    "@types/react": "^18.2.65",
     "react": "^18.2.0",
     "tslib": "^2.6.2",
     "typescript": "^5.4.2"
