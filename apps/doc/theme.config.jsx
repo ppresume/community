@@ -55,6 +55,11 @@ const themeConfig = {
     icon: <IconBrandGithub width={x6} height={x6} />,
   },
 
+  // sidebar
+  sidebar: {
+    toggleButton: true,
+  },
+
   // doc repository base
   docsRepositoryBase:
     'https://github.com/ppresume/community/tree/main/apps/doc/',
