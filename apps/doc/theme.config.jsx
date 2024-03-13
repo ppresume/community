@@ -59,6 +59,11 @@ const themeConfig = {
     toggleButton: true,
   },
 
+  // footer
+  footer: {
+    text: `© 2023–${new Date().getFullYear()} PPResume`,
+  },
+
   // doc repository base
   docsRepositoryBase:
     'https://github.com/ppresume/community/tree/main/apps/doc/',
