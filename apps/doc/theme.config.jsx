@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router'
 import { useConfig } from 'nextra-theme-docs'
 import { IconBrandDiscord, IconBrandGithub } from '@tabler/icons-react'
-import { Logo } from '@/components/Logo'
 
 const x6 = 24
-const x8 = 32
 
 // eslint-disable-next-line import/no-anonymous-default-export
 const themeConfig = {
@@ -43,7 +41,8 @@ const themeConfig = {
   },
 
   // left side of navbar
-  logo: <Logo height={x8} width={x8} />,
+  // TODO: use PPResume svg logo here
+  logo: <span>PPResume</span>,
 
   // right side of navbar
   chat: {
