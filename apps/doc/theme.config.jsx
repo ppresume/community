@@ -54,7 +54,7 @@ const themeConfig = {
   },
   useNextSeoProps() {
     return {
-      titleTemplate: '%s – PPResume',
+      titleTemplate: '%s',
     }
   },
 
