@@ -28,7 +28,7 @@ const themeConfig = {
   head: () => {
     const ppresumeDescription = [
       'a LaTeX based resume builder that',
-      'helps people create beautifully typeset resumes in minutes.',
+      'helps people create beautifully typed resumes in minutes.',
     ].join(' ')
 
     // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -1,10 +1,9 @@
 # PPResume
 
-Pretty Print Resume, Pretty Print World
-
-[PPResume](https://ppresume.com/?utm_source=Github&utm_medium=ppresume%2Fcommunity)
-is here to simplify your life by creating beautifully typeset resumes in
-minutes.
+Welcome to
+[PPResume](https://ppresume.com/?utm_source=Github&utm_medium=ppresume%2Fcommunity),
+a LaTeX based resume builder that helps people create beautifully typed resumes
+in minutes.
 
 ![PPResume Resume Form and
 Preview](./apps/blog/public/static/images/introducing-ppresume/ppresume-launch.png)
