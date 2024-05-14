@@ -1,0 +1,245 @@
+---
+title: Introducing PPResume PWA
+date: 2024-05-18
+description: >
+  PPResume is now a PWA that can be installed as a standalone app on your
+  devices, with excellent performance and user experience in weak or even
+  offline network conditions
+tag: PWA, Service Worker, Web App, Native App, Responsive Web Design
+author: Xiao Hanyu
+---
+
+import { YouTube } from 'mdx-embed'
+
+## Introduction
+
+I am very pleased to announce that
+[PPResume](https://ppresume.com/?utm_source=ppresume&utm_medium=blog&utm_campaign=introducing-ppresume-pwa)
+is now a [PWA](https://en.wikipedia.org/wiki/Progressive_web_app).
+
+This is the result of several weeks of hard work. From now on, you can install
+PPResume as a standalone app on your devices, with improved performance, lower
+network latency and bandwidth cost, and an excellent user experience under weak
+or even offline network conditions.
+
+Let us take a quick look first:
+
+![PPResume PWA Install Prompt](/static/images/introducing-ppresume-pwa/ppresume-pwa-install-app-prompt.webp)
+![PPResume PWA macOS App Search](/static/images/introducing-ppresume-pwa/ppresume-pwa-macos-app-search.webp)
+![PPResume PWA macOS App Switch](/static/images/introducing-ppresume-pwa/ppresume-pwa-macos-app-switch.webp)
+![PPResume PWA macOS Window](/static/images/introducing-ppresume-pwa/ppresume-pwa-macos-window.webp)
+![PPResume PWA iOS](/static/images/introducing-ppresume-pwa/ppresume-pwa-ios.webp)
+
+## What is a PWA?
+
+> An iPod, a phone, an internet mobile communicator...these are NOT three
+> separate devices! And we are calling it iPhone!
+>
+> — Steve Jobs, MacWorld 2007
+
+The [birth of the iPhone](https://www.youtube.com/watch?v=VQKMoT-6XSg) ushered
+in a new era of mobile computing. When the iPhone 1 was released in 2007, it has
+a 3.5-inch display, with a mobile version of Safari for surfing the web. And the
+web was the only way to deliver apps to the iPhone at that time. As you can see,
+most websites back then were designed for desktop devices—only a small portion
+of [wap](https://en.wikipedia.org/wiki/Wireless_Application_Protocol) websites
+were designed for mobiles—so you have to pinch your fingers to zoom in and out
+in order to browse the websites on mobile devices.
+
+![Birth of iPhone, MacWorld 2007](/static/images/introducing-ppresume-pwa/iphone-1-macworld-2007.webp)
+
+Needless to say, the iPhone is a revolutionary mobile device, it was so
+successful that mobile first design became a trend afterwards as more and more
+traffic comes from mobiles.
+
+At Apple's [WWDC in 2007](https://www.youtube.com/watch?v=ubm2dYzoDW8), Steve
+Jobs announced that the iPhone would "run applications created with Web 2.0
+Internet standards". No SDK was required, and there was no App Store. All apps
+were simply websites designed for mobile devices and delivered via the Safari
+browser engine.
+
+However, the web standards back then were too weak to provide a good and
+consistent user
+experience—[HTML5](https://www.w3.org/TR/2011/WD-html5-20110405/) was first
+released to the public in January 2008, and it took 6 years to gain W3C
+Recommendation status in October 2014! People were not happy with web apps,
+developers were frustrated and Apple had to change its strategy. In October
+2007, Steve Jobs announced that an SDK would be launched the following year. In
+July 2008, Apple released [iPhone OS
+2.0](https://en.wikipedia.org/wiki/IPhone_OS_2) for the iPhone, along with the
+[App Store](<https://en.wikipedia.org/wiki/App_Store_(Apple)>). From then on,
+the vast majority of iOS applications shifted to the App Store.
+
+The App Store has proven to be a great success. It provides a central location
+where users can find, download and install apps. It also provides developers
+with a secure and reliable way to distribute their apps to users. The App Store
+ecosystem has been so successful that it has been adopted by other platforms
+such as Google Play, Windows Store and Amazon Appstore etc. It has nurtured a
+whole new mobile app ecosystem. The first thing most users do when they open
+their phone is to find a suitable app and open it, or install it from the App
+Store if it is not already installed—the App Store has become an essential part
+of the mobile experience.
+
+The App Store ecosystem continues to thrive, but the web has not stopped
+evolving either. With the advent of
+[HTML5](https://www.w3.org/TR/2011/WD-html5-20110405/), [ECMAScript
+6.0](https://262.ecma-international.org/6.0/), [Node.js](https://nodejs.org/)
+and many other powerful [web
+API](https://developer.mozilla.org/en-US/docs/Web/API)s, the web has become more
+powerful and capable than ever before.
+
+In 2010, [Ethan Marcotte](https://ethanmarcotte.com/) published an article on [A
+List Apart](https://alistapart.com/), in which he introduced the concept of
+[Responsive Web Design](https://alistapart.com/article/responsive-web-design/).
+Responsive Web Design is a design approach that aims to create websites that can
+adapt and fit to the vast majority of devices, from desktop computers to
+mobiles. The core idea of responsive web design is the use of [CSS media
+queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries) to
+apply different styles based on the characteristics of the device, such as
+screen size, orientation, and resolution, etc.
+
+![Content is like water](/static/images/introducing-ppresume-pwa/content-is-like-water.webp)
+
+In 2015, designer [Frances Berriman](https://fberriman.com/) and her husband
+[Alex Russell](https://infrequently.org/), a Google Chrome engineer, coined the
+term "Progressive Web Apps" in a blog post of Alex: [Progressive Web Apps: Escaping
+Tabs Without Losing Our
+Soul](https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/).
+
+> Over dinner last night, Frances and I enumerated the attributes of this new
+> class of applications:
+>
+> - Responsive: to fit any form factor
+> - Connectivity independent: Progressively-enhanced with Service Workers to let
+>   them work offline
+> - App-like-interactions: Adopt a Shell + Content application model to create
+>   appy navigations & interactions
+> - Fresh: Transparently always up-to-date thanks to the Service Worker update
+>   process
+> - Safe: Served via TLS (a Service Worker requirement) to prevent snooping
+> - Discoverable: Are identifiable as "applications" thanks to W3C Manifests and
+>   Service Worker registration scope allowing search engines to find them
+> - Re-engageable: Can access the re-engagement UIs of the OS; e.g. Push
+>   Notifications
+> - Installable: to the home screen through browser-provided prompts, allowing
+>   users to "keep" apps they find most useful without the hassle of an app store
+> - Linkable: meaning they're zero-friction, zero-install, and easy to share.
+>   The social power of URLs matters.
+>
+> — Alex Russell
+
+From my perspective, a PWA is still **web** at its core, however, it aims to
+provide an **app**-like user experience through **progressive** enhancement to a
+website.
+
+So here comes the question: Why PWA?
+
+## Why PWA
+
+Since the invention of the web, there have been two major ways to deliver
+services to users:
+
+- native apps, which are specifically designed for a specific platform, such as
+  Windows, macOS, Linux, iOS, Android, etc.
+- web apps, which are designed to be accessed through a web browser on any
+  device.
+
+From a user perspective, native apps usually offer a better user experience, the
+best performance and the ability to use all the features of your devices.
+However, users need to take the time to download and install the app.
+
+On the other hand, web apps are accessible via a web browser without the need to
+download and install anything, and users always get the latest web apps
+automatically. However, the user experience is usually not as good as native
+apps, especially on mobile devices, and web apps can not take advantage of all
+the capabilities of your devices because they run in browsers and rely on
+browser implementations to connect to device-specific features.
+
+From a developer's perspective, developing and maintaining native apps for
+multiple platforms is very costly, and the app store review process can be
+lengthy and risky, while for web apps, it only involves a single codebase that
+can run on multiple platforms, and it's super easy to release updates to web apps
+since there are no app stores in between the middle.
+
+Last but not least, web apps are essentially open and free, they are based on
+open standards, they can be usedon any device with a browser, and most
+importantly, there is no [benevolent
+dictator](https://en.wikipedia.org/wiki/Benevolent_dictatorship) deciding which
+web apps may be delivered to the public according to some kinds of app store
+guidelines. Freedom is priceless, isn't it?
+
+Given the list of pros and cons of native apps and web apps, why should you
+bother with PWA? **In a word, PWA gives you the best of both worlds.**
+
+At its core, PWA is still a web app that can be accessed via any web browser; it
+is discoverable and can be indexed by search engines and gain free organic
+traffic; it is built on top of URL and linkable by default, meaning it is
+zero-friction, zero-install, and easy to share. With the progressive
+enhancement, it can get many features that are only available for native apps,
+such as:
+
+- **installable**: PWA can be installed as an independent app via the browser
+  prompt or App Store.
+- **discoverable**: PWA has its own icon on your desktop, dock or home screen
+  on your devices after installation
+- **standalone window**: PWA has its own window after installation, so you won't
+  be lost in the sea of tabs in your browser
+- **better performance**: PWA can utilize service worker to cache assets and
+  data, so you don't have download the same assets and data over and over again
+  from a remote server, drastically reduces the network latency and bandwidth
+  cost, resulting in a more responsive user experience
+- **offline support**: PWA can work offline partially, as long as a page has
+  been visited, you can continue to use it in read only mode when offline.
+- **push notification**: PWA can send push notifications to users, to re-engage
+  users and bring them back to the app.
+- **native integrations**: PWA can utilize other native features of your
+  devices, such as camera, microphone, GPS, etc. with the integration of [web
+  APIs](https://web.dev/learn/pwa/capabilities#empowering_your_pwa), check [What
+  PWA Can Do Today](https://whatpwacando.today/) for example
+
+Overall PWA is an "invest small earn big" effort to provide the web with an
+app-like experience by progressive enhancement. By progressive enhancement, it
+means that you don't have to do all the enhancements at once, instead, you can
+start with the basic features and progressively enhance it with more advanced
+features. First make your website responsive, then make it installable by
+creating a manifest file, then adopt service worker to make it work offline,
+then integrate other advanced features. Agility, fast iteration, that's the
+spirit of web development, and that's all you need to create a PWA.
+
+## Show Time
+
+OK long story short, it is show time now.
+
+<YouTube youTubeId="hoqP0vUMDy4" />
+
+## Future Improvements
+
+PPResume PWA is far from perfect, there is still a lot of room for improvement.
+Here is a list of features and bug fixes that I am still working on:
+
+- feature enhancement
+  - provide rich install UI: [issue](https://github.com/ppresume/community/issues/46)
+  - custom offline page: [issue](https://github.com/ppresume/community/issues/49)
+  - respect system dark mode, [issue](https://github.com/ppresume/community/issues/52)
+  - submit app to various stores, [issue](https://github.com/ppresume/community/issues/50)
+- bug fix:
+  - fix black splash screen on iOS, [issue](https://github.com/ppresume/community/issues/54)
+- docs:
+  - documentation for PPResume PWA, [issue](https://github.com/ppresume/community/issues/56)
+- test:
+  - check PPResume PWA campatibility on different devices,
+    [issue](https://github.com/ppresume/community/issues/57)
+
+There are also lots of engineering details that are worth a deep dive, such as:
+
+- how to create a good looking web app manifest
+- how to utilize service worker to cache assets and data
+- how to deal with CORS issues when caching CDN assets
+- which library to use for Next.js PWA implementation
+
+However I will save these topics for future blog posts, otherwise it would be
+too long to have a pleasant reading experience.
+
+Stay tuned!
+
+Comments [here](https://github.com/ppresume/community/discussions/58).
