@@ -29,19 +29,19 @@ the tedious process of writing resumes.
 
 ### Real-time Input Validation
 
-![Real-time Input Validation](./static/images/real-time-input-validation.gif)
+![Real-time Input Validation](./static/images/real-time-input-validation.webp)
 
 ### Rich Set of Input Controls
 
-![Rich Set of Input Controls](./static/images/rich-set-of-input-controls.gif)
+![Rich Set of Input Controls](./static/images/rich-set-of-input-controls.webp)
 
 ### Structural Editing
 
-![Structural Editing](./static/images/structural-editing.gif)
+![Structural Editing](./static/images/structural-editing.webp)
 
 ### Customizable Layout
 
-![Customizable Layout](./static/images/customizable-layout.gif)
+![Customizable Layout](./static/images/customizable-layout.webp)
 
 ## Sample Resumes
 
