@@ -1,0 +1,96 @@
+---
+title: Multi Languages Support
+date: 2024-07-12
+description: >
+  PPResume has made a big step forward to support multi languages, starting
+  from Chinese language, with 3 variants, Simplified Chinese, Traditional
+  Chinese Hong Kong and Traditional Chinese Taiwan.
+tag: Chinese, Internationalization, Localization, CJK, CTeX, Noto Font
+author: Xiao Hanyu
+---
+
+## Introduction
+
+I am super excited that
+[PPResume](https://ppresume.com/?utm_source=ppresume&utm_medium=blog&utm_campaign=ppresume-supports-multi-languages)
+has made a big step forward to support multi languages, starting from Chinese
+languages, with 3 variants, [Simplified
+Chinese](https://en.wikipedia.org/wiki/Simplified_Chinese_characters),
+[Traditional
+Chinese Hong
+Kong](https://en.wikipedia.org/wiki/Traditional_Chinese_characters#Hong_Kong_and_Macau)
+and [Traditional Chinese
+Taiwan](https://en.wikipedia.org/wiki/Traditional_Chinese_characters#Taiwan).
+
+PPResume was designed from the bottom up to support
+[internationalization](https://en.wikipedia.org/wiki/Internationalization) and I
+finally got some time recently to implement this. As far as I know, **PPResume
+should be the only resume builder on the market that supports multi languages
+while still follows best typesetting practices.**
+
+From now on, you can specify a language when creating a new resume:
+
+![New Resume With Language](/static/images/multi-languages-support/new-resume-with-language.webp)
+
+You can also switch language for existing resumes:
+
+![Switch Resume Language](/static/images/multi-languages-support/switch-resume-language.webp)
+
+When switch langugages, all idioms, conventions of the target language will be
+strictly obeyed.
+
+When switching languages, all idioms and conventions of the target language will
+be strictly observed.
+
+Let's check some ample resumes:
+
+## Engineering
+
+OK, a bit more tech details here. Supporting multi languages is not as easy as
+translating some English phrases, you have to follow target languages' idioms,
+conventions, and typesetting best practices when mixing different languages.
+Here are some nitty gritty details:
+
+### Datetime
+
+datetime has different display convention between English and Chinese, for
+example, `Jun 2018 – Present` in English will be translated to `2018 年 6 月至今` in
+Chinese，the position of the year and the month should be reversed, and the
+en-dash `–` should be removed.
+
+### Number Styles
+
+Number styles in English and Chinese resumes can be different, we can apply
+OldStyle numbers in English, while adopting Lining style numbers for Chinese
+resumes, just make the glyph style align with host language.
+
+### Traditional Chinese Variants
+
+Traditional Chinese has at least Hong Kong and Taiwan variants, and one
+country can have slightly different names in HK and TW Traditional Chinese,
+better to take care of this.
+
+### Location
+
+Locations. The address format are different between English and Chinese
+conventions. In English, the smaller segment, like the address line, town comes
+first, then follows by city, state and country, while in Chinese, the order is
+totally reversed.
+
+### Punctuations
+
+Punctuations. English use comma as the separator, while Chinese has dedicated
+separator (顿号 `、`) to separates items in a list (like Keywords list), better to
+handle this as well.
+
+### CJK Font
+
+Last but not least, CJK character set is huge and many typefaces are missing
+glyphs for many CJK characters and we have tested carefully to make the right
+choice for CJK fonts. Here we choose Noto Sans/Serif as the default font for
+CJK.
+
+## Look ahead
+
+The foundational work has been settled down, it won't be too hard to support
+more languages, Japanese, French, Spanish, etc. Stay tuned with us!
