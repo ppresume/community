@@ -2,19 +2,18 @@
 title: Multi Languages Support
 date: 2024-07-12
 description: >
-  PPResume has made a big step forward to support multi languages, starting
-  from Chinese language, with 3 variants, Simplified Chinese, Traditional
-  Chinese Hong Kong and Traditional Chinese Taiwan.
-tag: Chinese, Internationalization, Localization, CJK, CTeX, Noto Font
+  PPResume has taken a big step forward to support multi languages, starting
+  with Chinese , with 3 variants, Simplified Chinese, Traditional Chinese Hong
+  Kong and Traditional Chinese Taiwan.
+tag: Chinese, CJK, CTeX, Internationalization, LaTeX, Localization, Noto Font
 author: Xiao Hanyu
 ---
 
 ## Introduction
 
-I am super excited that
+I am thrilled that
 [PPResume](https://ppresume.com/?utm_source=ppresume&utm_medium=blog&utm_campaign=ppresume-supports-multi-languages)
-has made a big step forward to support multi languages, starting from Chinese
-languages, with 3 variants, [Simplified
+has taken a big step forward to support multi languages, starting with Chinese, with 3 variants, [Simplified
 Chinese](https://en.wikipedia.org/wiki/Simplified_Chinese_characters),
 [Traditional
 Chinese Hong
@@ -22,13 +21,13 @@ Kong](https://en.wikipedia.org/wiki/Traditional_Chinese_characters#Hong_Kong_and
 and [Traditional Chinese
 Taiwan](https://en.wikipedia.org/wiki/Traditional_Chinese_characters#Taiwan).
 
-PPResume was designed from the bottom up to support
-[internationalization](https://en.wikipedia.org/wiki/Internationalization) and I
-finally got some time recently to implement this. As far as I know, **PPResume
-should be the only resume builder on the market that supports multi languages
-while still follows best typesetting practices.**
+PPResume was designed from the ground up to support [internationalization and
+localization](https://en.wikipedia.org/wiki/Internationalization_and_localization),
+and I finally got some time to implement this recently. As far as I know,
+**PPResume should be the only resume builder on the market that supports multi
+languages while following best typesetting practices.**
 
-From now on, you can specify a language when creating a new resume:
+From now on, you can specify a language when creating new resumes:
 
 ![New Resume With Language](/static/images/multi-languages-support/new-resume-with-language.webp)
 
@@ -36,61 +35,261 @@ You can also switch language for existing resumes:
 
 ![Switch Resume Language](/static/images/multi-languages-support/switch-resume-language.webp)
 
-When switch langugages, all idioms, conventions of the target language will be
-strictly obeyed.
+When switching languages, all idioms and conventions of the target language are
+strictly observed.
 
-When switching languages, all idioms and conventions of the target language will
-be strictly observed.
+Here are some sample resumes.
 
-Let's check some ample resumes:
+- English resume:
+
+![English Resume](/static/images/multi-languages-support/andy-dufresne-en-0.png)
+
+- Simplified Chinse resume:
+
+![Simplified Chinse Resume](/static/images/multi-languages-support/zhang-xiaomeng-zh-cn-0.png)
+
+- Traditional Chinese HK resume:
+
+![Traditional Chinse HK Resume](/static/images/multi-languages-support/zhang-xiaomeng-zh-hk-0.png)
+
+- Traditional Chinese TW resume:
+
+![Traditional Chinse TW Resume](/static/images/multi-languages-support/zhang-xiaomeng-zh-tw-0.png)
+
+If you look closely, you will notice that although there are many similarities
+between English resumes and Chinese resumes, there are still two major
+differences in terms of typesetting:
+
+1. there is no italics in Chinese resumes so all dates are not italicized as in
+   English resume, as it is considered [bad
+   practice](https://drwhispers.com/2021/11/16/italics-in-chinese/) to use italics
+   in Chinese typesetting
+2. [number](https://www.lifewire.com/how-to-typeset-numbers-1077695) in English
+   resumes are old style, while Chinese resumes use lining style
+
+All I can tell you here is that supporting multi languages is not as simple as
+translating a list of words from one language to another language, as
+aforementioned, you have to follow target languages' conventions and idioms.
+Typesetting practices with mixed languages is another big topic as well. If you
+are not a tech guy, you can close this tab and take a break. However, if you do
+want know the nuts and guts, you can stay and continue reading this post.
 
 ## Engineering
 
-OK, a bit more tech details here. Supporting multi languages is not as easy as
-translating some English phrases, you have to follow target languages' idioms,
-conventions, and typesetting best practices when mixing different languages.
-Here are some nitty gritty details:
+OK, you are not closing this tab, let us dive a little more into the tech
+details here.
 
-### Datetime
+Technically, there are two categories of things to do when supporting multi
+languages:
 
-datetime has different display convention between English and Chinese, for
-example, `Jun 2018 – Present` in English will be translated to `2018 年 6 月至今` in
-Chinese，the position of the year and the month should be reversed, and the
-en-dash `–` should be removed.
+- [Internationalization](https://phrase.com/blog/posts/internationalization-vs-localization/#what-is-internationalization-i18n),
+  often abbreviated as "i18n" (where the number 18 represents the 18 characters
+  between "i" and "n"), is basically a set of practices that allow a product
+  support multi languages, i18n main consists of translating the product into
+  mutli languages and dynamically switching the langauge according to the user's
+  choice
+- [Localization](https://phrase.com/blog/posts/internationalization-vs-localization/#what-is-localization-l10n),
+  often abbreviated as "l10n" (the number 10 represents the characters between
+  "l" and "n"), it goes beyond mere translation and instead adapts the product
+  to the cultural specifics of the target language.
 
-### Number Styles
+In practice, i18n always comes first, l10n comes after. For multi languages
+support in PPResume, we have made the following efforts to get the best l10n for
+CVs in addition to the pure i18n translation.
 
-Number styles in English and Chinese resumes can be different, we can apply
-OldStyle numbers in English, while adopting Lining style numbers for Chinese
-resumes, just make the glyph style align with host language.
+### Date
+
+Resumes often use a lot of dates for work experience and education background.
+Dates are presented differently in English and Chinese, e.g. "Jun 2018 –
+Present" in English should be translated as "2018 年 6 月至今" in Chinese，the
+position of the year and month should be reversed, and the en-dash "–" should be
+replaced by "至".
+
+With JavaScript, you can use
+[Date.prototype.toLocaleDateString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString)
+to get localized string output for a `Date` object.
+
+### Old Style Numbers
+
+Old style numbers, also known as [text
+figures](https://en.wikipedia.org/wiki/Text_figures), designed with varying
+heights in a fashion that resembles a typical line of running text, hence the
+name.
+
+![Text Figures](/static/images/multi-languages-support/440px-Text_figures.jpg)
+
+In contrast, lining style numbers (also called lining, titling or modern
+figures), have the same height as upper-case characters.
+
+PPResume defaults to old style numbers for English resumes and lining style numbers
+for Chinese resumes. Why? Because Chinese characters all have the same height and
+width (that is why Chinese characters are also called "方块字", which means square
+characters), basically all Chinese characters are titled by nature. By adopting
+numbers in the lining style, the number style is adapted more closely to the
+Chinese characters.
+
+> High-quality typesetting generally prefers text figures in body text: they
+> integrate better with lowercase letters and small capitals, unlike runs of
+> lining figures. Lining figures are called for in all-capitals settings (hence
+> the alternative name titling figures), and may work better in tables and
+> spreadsheets.
+>
+> — [Text figures](https://en.wikipedia.org/wiki/Text_figures#Design)
 
 ### Traditional Chinese Variants
 
-Traditional Chinese has at least Hong Kong and Taiwan variants, and one
-country can have slightly different names in HK and TW Traditional Chinese,
-better to take care of this.
+Traditional Chinese has at least two variants, namely, the Hong Kong variant
+[zh-HK](https://simplelocalize.io/data/locale-code/zh-HK/) and the Taiwan
+variant [zh-TW](https://simplelocalize.io/data/locale-code/zh-TW/). Most of the
+scripts in zh-HK and zh-TW are identical, with only a few minor differences.
+
+For example, the word "software", when translated to zh-HK, it is "軟件", while
+in zh-TW, it is "軟體". There are about tens of words in English that are
+translated differently in zh-HK and zh-TW, check
+[here](https://zh.wikipedia.org/wiki/%E7%B9%81%E4%BD%93%E5%AD%97#%E7%94%A8%E8%AA%9E%E5%B7%AE%E7%95%B0).
+
+[OpenCC](https://github.com/byvoid/opencc) is an open source project that can
+perform convensions between Simplified and Traditional Chinese, with support for
+both zh-HK and zh-TW.
+
+In general, PPResume can't do too much for the difference between zh-HK and
+zh-TW , as users have to decide which variant to use when writing resumes and
+make sure that the content conforms to the idioms and convensions of zh-HK or
+zh-TW. However, there is one thing that PPResume needs to handle properly for
+zh-HK and zh-TW, because some countries have different names in zh-HK and zh-TW.
+[Saudi Arabia](https://en.wikipedia.org/wiki/Saudi_Arabia), for example, is
+translated as "沙特阿拉伯" in zh-HK and "沙烏地阿拉伯" in zh-TW. There are also a few other
+countries. PPResumes takes care of all countries that has different translations
+in zh-HK and zh-TW.
 
 ### Location
 
-Locations. The address format are different between English and Chinese
-conventions. In English, the smaller segment, like the address line, town comes
-first, then follows by city, state and country, while in Chinese, the order is
+The address formats differ between English and Chinese conventions. In
+English, the smaller segment, such as the address line, town and county comes
+first, follows by city, state and country, while in Chinese the order is
 totally reversed.
+
+Don't worry, PPResumes has already handled this for you.
 
 ### Punctuations
 
-Punctuations. English use comma as the separator, while Chinese has dedicated
-separator (顿号 `、`) to separates items in a list (like Keywords list), better to
-handle this as well.
+#### Comma
+
+English uses the comma `,` as a separator to separate parts of a sentence and
+items in a list, while Chinese uses a Chinese comma `，` to separate sensences,
+and a dedicated enumeration comma
+([顿号](https://en.wikipedia.org/wiki/Comma#East_Asia), `、`) to separate items in
+a list (e.g. keyword list).
+
+With PPResumes's [TagsInput](https://mantine.dev/core/tags-input/) component for
+the input of `keywords` and `courses`, the correct seperator punctuations are
+used according to the main language of the resume.
+
+#### Colon
+
+English and Chinese also have
+[different](https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms) colons.
+The [English colon](https://www.compart.com/en/unicode/U+003A) is `:`, with
+Unicode `U+003A`, while the [Chinese
+colon](https://www.compart.com/en/unicode/U+FF1A) is `：`, with Unicode `U+FF1A`.
+
+As you can always trust, PPResume also takes care of this. You may wonder, how
+does PPResume deal with this?
+
+Under the hood, PPResume uses [moderncv](https://github.com/xdanaux/moderncv) as the
+current default template. Since moderncv defines a macro
+[`\cvitemwithcomment`](https://github.com/xdanaux/moderncv/blob/453d694/moderncvbodyiii.sty#L187-L194),
+we need to override this colon in [line
+188](https://github.com/xdanaux/moderncv/blob/453d694/moderncvbodyiii.sty#L188)
+based on the main language of the resume. Hence the code:
+
+```tex
+<= #layout.computed.environment.isCJK =>
+% renew moderncv command to adapt for CJK colon
+\renewcommand*{\cvitem}[3][.25em]{%
+  \ifstrempty{#2}{}{\hintstyle{#2}<= &templateTranslations.punctuations.Colon =>}{#3}%
+  \par\addvspace{#1}}
+
+\renewcommand*{\cvitemwithcomment}[4][.25em]{%
+  \savebox{\cvitemwithcommentmainbox}{\ifstrempty{#2}{}{\hintstyle{#2}<= &templateTranslations.punctuations.Colon =>}#3}%
+  \setlength{\cvitemwithcommentmainlength}{\widthof{\usebox{\cvitemwithcommentmainbox}}}%
+  \setlength{\cvitemwithcommentcommentlength}{\maincolumnwidth-\separatorcolumnwidth-\cvitemwithcommentmainlength}%
+  \begin{minipage}[t]{\cvitemwithcommentmainlength}\usebox{\cvitemwithcommentmainbox}\end{minipage}%
+  \hfill% fill of \separatorcolumnwidth
+  \begin{minipage}[t]{\cvitemwithcommentcommentlength}\raggedleft\small\itshape#4\end{minipage}%
+  \par\addvspace{#1}}
+<= /layout.computed.environment.isCJK =>
+```
+
+Here `templateTranslations.punctuations.Colon` is a dynamic variable that would
+be assigned to the correct colon based on the main language of the resume.
 
 ### CJK Font
 
-Last but not least, CJK character set is huge and many typefaces are missing
-glyphs for many CJK characters and we have tested carefully to make the right
-choice for CJK fonts. Here we choose Noto Sans/Serif as the default font for
-CJK.
+Last but not least, the size of the CJK character set is huge and many fonts are
+missing glyphs for some CJK characters, resulting in an empty sqaure placeholder
+in the final PDF output, which is ugly and strange.
+
+Under the hood, we use [CTeX](https://github.com/CTeX-org/ctex-kit) for CJK
+typesetting. By default, CTeX offers the six `fontset` choices to choose from:
+
+- adobe: use fonts provided by Adobe
+- fandol: use [fandol](https://ctan.org/tex-archive/fonts/fandol?lang=en) fonts
+- founder: use fonts provided by [Founder](https://fonts.adobe.com/foundries/foundertype)
+- mac: use default system fonts available on mac
+- ubuntu: use default system fonts available on ubuntu
+- windows: use default system fonts available on windows
+
+`adobe`, `mac` and `windows` fonts are not available for commercial use; a few
+`founder` fonts are free for commercial use, but must be downloaded and
+installed manually; `fandol` fonts is available in the standard texlive
+distribution, however, some commonly used Chinese characters such as `瑢`, `樭`
+are [missing](https://github.com/ppresume/community/issues/33). `ubuntu` font
+seems to be our last choice, however, by default, `ubuntu` font use
+`gkai00mp.ttf: AR PL KaitiM GB,文鼎ＰＬ简中楷:style=Regular` for [Kai
+form](https://en.wikipedia.org/wiki/List_of_CJK_fonts#Regular_script), some
+commonly used Traditional Chinese characters such as `學`, `績` are [not
+available](https://github.com/ppresume/community/issues/63#issuecomment-2206043675).
+
+So what can we do then? Fortunately, there are some good, high quality CJK fonts
+available free for commercial use which also has a good coverage of the
+character set for both Simplified and Traditional Chinese. Thanks to Google and
+Adobe, [Noto Fonts](https://fonts.google.com/noto/fonts) are licensed under the
+Open Font License. You can use them in all your products and projects — print or
+digital, commercial or otherwise.
+
+To use the Noto fonts in LaTeX, you must first install them:
+
+```sh
+# if you are on macOS
+brew install font-noto-sans-cjk font-noto-serif-cjk
+
+# if you are on Ubuntu
+apt install -y fonts-noto-cjk fonts-noto-cjk-extra
+```
+
+Then set Noto Fonts as the main CJK font for xeCJK in the LaTeX preamble:
+
+```tex
+% ctex settings
+% ref: http://ctan.mirrorcatalogs.com/language/chinese/ctex/ctex.pdf
+\usepackage[UTF8, fontset=none]{ctex}
+
+\setCJKmainfont{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}
+```
+
+You are all set then. Feel free to enter any CJK characters in your LaTeX
+documents and compile them with [XeTeX](https://tug.org/xetex/), you should be
+good to go.
 
 ## Look ahead
 
-The foundational work has been settled down, it won't be too hard to support
-more languages, Japanese, French, Spanish, etc. Stay tuned with us!
+OK, long enough boring tech details, time to close this tab :-). But before you
+close this tab, I want to tell you that, the groundwork has been done and it
+won't be too hard for PPResume to support more languages, Japanese, French,
+Spanish, etc. Stay tuned!
+
+You can close this tab now.
