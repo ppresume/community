@@ -77,7 +77,7 @@ const themeConfig = {
 
   // footer
   footer: {
-    text: `© 2023–${new Date().getFullYear()} PPResume`,
+    text: `© 2023 – ${new Date().getFullYear()} PPResume`,
   },
 
   // doc repository base
