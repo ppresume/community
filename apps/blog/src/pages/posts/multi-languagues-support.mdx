@@ -64,7 +64,7 @@ differences in terms of typesetting:
    English resume, as it is considered [bad
    practice](https://drwhispers.com/2021/11/16/italics-in-chinese/) to use italics
    in Chinese typesetting
-2. [number](https://www.lifewire.com/how-to-typeset-numbers-1077695) in English
+2. [numbers](https://www.lifewire.com/how-to-typeset-numbers-1077695) in English
    resumes are old style, while Chinese resumes use lining style
 
 All I can tell you here is that supporting multi languages is not as simple as
@@ -86,7 +86,7 @@ languages:
   often abbreviated as "i18n" (where the number 18 represents the 18 characters
   between "i" and "n"), is basically a set of practices that allow a product
   support multi languages, i18n main consists of translating the product into
-  mutli languages and dynamically switching the langauge according to the user's
+  mutli languages and dynamically switching the language according to the user's
   choice
 - [Localization](https://phrase.com/blog/posts/internationalization-vs-localization/#what-is-localization-l10n),
   often abbreviated as "l10n" (the number 10 represents the characters between
@@ -95,12 +95,12 @@ languages:
 
 In practice, i18n always comes first, l10n comes after. For multi languages
 support in PPResume, we have made the following efforts to get the best l10n for
-CVs in addition to the pure i18n translation.
+resumes in addition to the pure i18n translation.
 
 ### Date
 
-Resumes often use a lot of dates for work experience and education background.
-Dates are presented differently in English and Chinese, e.g. "Jun 2018 –
+Resumes often use a lot of dates for work experience and education background
+items. Dates are presented differently in English and Chinese, e.g. "Jun 2018 –
 Present" in English should be translated as "2018 年 6 月至今" in Chinese，the
 position of the year and month should be reversed, and the en-dash "–" should be
 replaced by "至".
@@ -144,7 +144,7 @@ variant [zh-TW](https://simplelocalize.io/data/locale-code/zh-TW/). Most of the
 scripts in zh-HK and zh-TW are identical, with only a few minor differences.
 
 For example, the word "software", when translated to zh-HK, it is "軟件", while
-in zh-TW, it is "軟體". There are about tens of words in English that are
+in zh-TW, it is "軟體". There are at least tens of words in English that are
 translated differently in zh-HK and zh-TW, check
 [here](https://zh.wikipedia.org/wiki/%E7%B9%81%E4%BD%93%E5%AD%97#%E7%94%A8%E8%AA%9E%E5%B7%AE%E7%95%B0).
 
@@ -156,10 +156,10 @@ In general, PPResume can't do too much for the difference between zh-HK and
 zh-TW , as users have to decide which variant to use when writing resumes and
 make sure that the content conforms to the idioms and convensions of zh-HK or
 zh-TW. However, there is one thing that PPResume needs to handle properly for
-zh-HK and zh-TW, because some countries have different names in zh-HK and zh-TW.
+zh-HK and zh-TW, as some countries have different names in zh-HK and zh-TW.
 [Saudi Arabia](https://en.wikipedia.org/wiki/Saudi_Arabia), for example, is
 translated as "沙特阿拉伯" in zh-HK and "沙烏地阿拉伯" in zh-TW. There are also a few other
-countries. PPResumes takes care of all countries that has different translations
+countries. PPResume takes care of all countries that has different translations
 in zh-HK and zh-TW.
 
 ### Location
@@ -169,7 +169,7 @@ English, the smaller segment, such as the address line, town and county comes
 first, follows by city, state and country, while in Chinese the order is
 totally reversed.
 
-Don't worry, PPResumes has already handled this for you.
+Don't worry, PPResume has already handled this for you.
 
 ### Punctuations
 
@@ -181,7 +181,7 @@ and a dedicated enumeration comma
 ([顿号](https://en.wikipedia.org/wiki/Comma#East_Asia), `、`) to separate items in
 a list (e.g. keyword list).
 
-With PPResumes's [TagsInput](https://mantine.dev/core/tags-input/) component for
+With PPResume's [TagsInput](https://mantine.dev/core/tags-input/) component for
 the input of `keywords` and `courses`, the correct seperator punctuations are
 used according to the main language of the resume.
 
