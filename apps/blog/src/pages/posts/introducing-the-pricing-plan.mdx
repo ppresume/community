@@ -1,0 +1,247 @@
+---
+title: Introducing the Pricing Plan
+date: 2024-09-29
+description: >
+  PPResume has launched a pricing plan. Unlike most resume builders on the
+  market, PPResume takes a pay-as-you-go pricing model, you don't have to pay us
+  if you don't update your resumes.
+tag: Pricing, Stripe
+author: Xiao Hanyu
+---
+
+## Introduction
+
+It's been more than a year since PPResume was launched. 1450+ users have
+registered, 1480+ resumes have been created. Here's a timeline:
+
+- September 6, 2023, PPResume was launched officially, got 15 registered users
+  and 2 bug reports
+- September 14, 2023, 50 registered users
+- October 21, 2023, launched first demo
+  [video](https://www.youtube.com/watch?v=mYqSTsCw3KI)—damn, making video is so
+  hard for me
+- October 26, 2023, 100 registered users
+- October 31, 2023, launched this blog with first
+  [post](https://blog.ppresume.com/posts/introducing-ppresume)
+- January 21, 2024, launched the [new auth
+  flow](https://blog.ppresume.com/posts/introducting-the-new-auth-flow) for
+  PPResume, which is powered by [logto](https://logto.io)
+- February 20, 2024, launched [Google Sign
+  In](https://blog.ppresume.com/posts/introducing-google-sign-in) to further
+  simplify the onboarding process
+- March 7, 2024, 300 registered users
+- March 14, 2024, launched the [docs site](https://docs.ppresume.com), starting
+  with a resume typesetting [guide](https://docs.ppresume.com/guide)
+- April 9, 2024, upgraded the UI library and revamped the landing page
+- April 19, 2024, 500 registered users, got a traffic spike with 1200 UV/day
+- April 24, 2024, 700 registered users
+- May 18, 2024, transformed PPResume to a
+  [PWA](http://blog.ppresume.com/posts/introducing-ppresume-pwa), with boosted
+  performance and optimal offline experience
+- June 1, 2024, 1000 registered users
+- July 12, 2024, launched [multi languages
+  support](http://blog.ppresume.com/posts/multi-languagues-support)
+
+We are making steady progress, step by step, however, there have been no updates
+since July 12, what's going on?
+
+You have probably already guessed the answer, as the title of this post
+suggests, we are introducing a pricing plan today!
+
+I wrote the first line of code for PPResume on December 20, 2022. It took me 8
+months to launch PPResume to the public, and then almost a year to further
+improve and optimize it. Although PPResume is still not as good as I expect it
+to be, it is time to introduce a pricing plan to make the product more
+sustainable in the long term.
+
+![PPResume First Line of Code](/static/images/introducing-the-pricing-plan/ppresume-first-line-of-code.webp)
+
+## Slow Down
+
+There are countless posts over the internet suggesting doing products in a move-
+fast way. So, what it means by moving fast?
+
+- do a MVP in weeks or even days or even hours with the help of AI
+- reach out to some users and inivite them give a try to the MVP
+- if the feedbacks is not good as expected, throw the MVP to trash
+- do a new MVP and loop forward
+
+I personally do not favor this way of doing things. People has heard so many
+stories like:
+
+- "got 10k MRR with 3 months, and here's how to do that"
+- "tech is not important, what matters is marketing"
+- "no need to waste time for pixel perfect design, ship fast instead"
+
+No no no, marketing is important, tech is important, performance is important,
+design is important, UI/UX is important, and so on. **In essence, you should
+respect your users, respect your code, respect your design. Do not throw a
+poorly designed and implemented products in fronte of users' and yell at them to
+try it**.
+
+For me, as the timeline shows, PPResume took 8 months from the first line of
+code to launch, and then almost a year to **polish, polish and polish**, and
+even now it's still far from perfect in my eyes. **What I want to deliver is a
+product that is a carefully crafted, designed and implemented with bottom up
+respect for its users**. That is why I spend 2 months optimizing the auth
+flow, and another 2 months optimizing the performance, with zero revenue
+at all—all these optimizations happens before the launch of a pricing plan.
+
+I believe that my effort and hard work is paying off, even though PPResume only
+has 1450+ registered users at the moment. The fact is, PPResume's sign up rate
+is above 10%, while in
+[contrast](https://www.metrichq.org/marketing/sign-up-rate/):
+
+> According to WordStream's benchmark report, the average Sign Up Rate for SaaS
+> websites ranges between 2% to 5%, with top performing sites converting at more
+> than 11%
+
+From March to September, PPResume got 9.6k unique visitors and around 1.2k
+registered users, the sign up rate is around 12.5%, which is clearly a top
+performing figure for a SaaS product.
+
+![PPResume UV](/static/images/introducing-the-pricing-plan/ppresume-uv.webp)
+
+And that's not all, PPResume users come from all over the world, despite the
+fact that we have invested almost no marketing budget.
+
+![PPResume User Location](/static/images/introducing-the-pricing-plan/ppresume-user-location.webp)
+
+## Pricing Model
+
+To be honest, I am not doing PPResume just for kindness, instead, I want to make
+some profit, no need to be shy and hide that fact. After one year's constantly
+polishing, PPResume already got some tractions, with a small user base as well,
+it is time for me to introduce a pricing plan.
+
+The first thing to consider when introducing a pricing plan is, which pricing
+model to adopt?
+
+The pricing model is really a complicated topic with SaaS products. It is one of
+core decisions you need to make when doing a SaaS product simply because pricing
+model is tightly coupled with the design and implementation of the product.
+[Stripe pricing model
+101](https://stripe.com/resources/more/saas-pricing-models-101) listed some
+types of pricing models:
+
+- Subscription model
+- Usage-based model
+- Tiered pricing
+- Freemium model
+- Per-user pricing
+- Flat-rate model
+
+### Competitors' Decision
+
+Most resume builders on the market adopt subscription model, i.e, customers pay
+a set rate regularly, often monthly or annually. For example:
+
+| Vendor                      | Pricing Plan                                                                      |
+| --------------------------- | --------------------------------------------------------------------------------- |
+| https://resume.io           | $2.95/week, $44.95/6 months, $74.95/year, 7-day money back guarantee              |
+| https://novoresume.com/     | $19.99/month, $39.99/quarter, $99.99/year, 14 days money back, no recurring       |
+| https://www.cvwizard.com/   | $0.99 for 14 days free trials, $14.99/month, recurring                            |
+| https://flowcv.com/         | $11/month (basic plan, yearly $3/month), $19/month (Pro+ plan, yearly $5/month),  |
+| https://www.kickresume.com/ | $7/month (yearly), $13/month (quarterly), $19/month (monthly), 14 days money back |
+| https://www.rezi.ai/        | $29/month, $249 one-time for lifetime access                                      |
+| https://www.visualcv.com/   | $24/month (monthly), $15/month (quarterly), 30 days money back, recurring ,       |
+| https://standardresume.co/  | $19/month                                                                         |
+
+As you can see, [novoresume](https://novoresume.com/) is the only exception that
+offers non-recurring billing.
+
+Initially I also considered adopting subscription model, but then I spoke to
+some PPResume customers who told me that they would very reluctant to pay if I
+took the subscription model.
+
+That is understandable. Why? Because most people don't update their resumes in a
+daily basis, most likely, people would only spend quite amount of time updating
+their resumes carefully when looking for a job or applying for a scholarship,
+and this period won't last for too long, normally less than 6 months. When
+people got a offer, their resumes would become static and untouched for quite a
+while, until next time when they are looking for a new job or applying for
+another scholarship. It doesn't make sense for resume builder to charge people
+in a monthly basis because most people won't update their resumes every month,
+and hosting a resume in a server database would cost less than a penny.
+
+### PPResume's Decision
+
+As concluded above, it is unethical for resume builder to adopt a subscription
+model, that is why PPResume takes the Freemium model, more specifically,
+**PPResumes takes a Pay As You Go model**.
+
+Put it simply, PPResume offers two plans:
+
+- a Pro plan which has full access to PPResume
+- a Free plan which has limited access—users can not update resumes, however,
+  the hosting is free forever
+
+| Features            | Free Plan | Pro Plan |
+| ------------------- | --------- | -------- |
+| Unlimited Resumes   | yes       | yes      |
+| Download Resume PDF | yes       | yes      |
+| Delete Resume       | yes       | yes      |
+| Create Resume       | no        | yes      |
+| Update Resume       | no        | yes      |
+
+Besides, PPResume offers a 14 days free Trial plan to all new customers which
+has the same full access as the Pro plan. At the end of the free trial period,
+customers can choose to upgrade to a Pro plan, or stay on the Free plan.
+
+The Pro plan is also very flexible in terms of the period of the plan. PPResume
+offers four Pro plan period, i.e, a week, a month, a quarter or a year. The
+longer period you purchase, the more discount you get. For example, a Pro month
+plan is 25% off compared to 4 Pro week plans, and a Pro quarter plan is 25% off
+compard to 3 Pro month plans, same discount applies to the Pro year plan.
+
+![PPResume Pricing Plan](/static/images/introducing-the-pricing-plan/ppresume-pricing-plan.webp)
+
+With all these setup, customers can enjoy the free resume hosting forever, and
+only pay when they need to update their resumes. For example:
+
+- if customers only need to modify a small part of an existing resume, then they
+  could purchase a Pro week plan for instant update
+- if customers are looking for a new job, they may need to constantly update
+  their resumes for a month or a quarter, then they could purchase a Pro month or
+  a Pro quarter plan
+- finally, for true lovers of PPResume, they could support PPResume by
+  purchasing a Pro year plan
+
+Compared to other resume builders on the market, PPResume charges the lowest
+fees. And most importantly, it doesn't charge in a recurring way, you don't have
+to worry about being charged additional fees if you forgot to pause or cancel
+your subscriptions.
+
+## Payment Processing
+
+The last thing I want and also need to talk about is payment processing. People
+may worry about the security of their payment information and I just want to
+guarantee that all transactions are 100% secure.
+
+Behind the scenes, PPResume adopt [Stripe](https://stripe.com) as the payment
+processor which complies with with the PCI standards and also has the [highest
+levels of security measures](https://docs.stripe.com/security) that are
+available.
+
+Once again, I want to emphasize that all PPResume plan are non-recurring,
+one-time charge, we said no to the subscription model so you don't have to worry
+to be charged every month!
+
+## Early Bird Discount
+
+Last but not least, all customers that register before November 1, 2024 will get
+a 50% Early Bird discount. This discount will be applied automatically when
+checking out a Pro plan. The Early Bird program will valid for a year till
+November 1, 2025.
+
+## Look ahead
+
+With the introduction of a pricing plan, I hope both PPResume and I, as a father
+of two, can be self-sustainable in a year or two.
+
+In the meantime, I will continue to improve PPResume with long-awaited features
+and bug fixes. I've created a [public
+roadmap](https://github.com/ppresume/community/issues/67) and published it in
+our community, check it out if you want to comment or contribute.
+
+Any feedbacks would be highly appreciated!

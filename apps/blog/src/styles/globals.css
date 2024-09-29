@@ -15,6 +15,11 @@
     rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem;
 }
 
+.nx-prose img {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .nx-prose ul,
 .nx-prose ol {
   margin-top: 0;
