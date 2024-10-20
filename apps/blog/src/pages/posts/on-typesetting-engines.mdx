@@ -1,0 +1,922 @@
+---
+title: "On Typesetting Engines: A Programmer's Perspective"
+date: 2024-10-31
+description: >
+  Pros and cons for different typesetting engines from engineering perspective
+  and why PPReseume chose LaTeX.
+tag: Typesetting, Engineering, LaTeX, Typst, HTML, CSS, LaTeX.js, React
+author: Xiao Hanyu
+---
+
+## Table of Contents
+
+## Prologue
+
+Typesetting is "architecture in two dimensions."
+
+If text and its fonts are the materials of the building, then typesetting is the
+drawings of the building.
+
+Typesetting is a big topic, it is both an art and an engineering technique that
+has evolved significantly with the advent of digital technology. Obviously I
+cannot cover this topic in one post, even a book cannot do.
+
+Among many typesetting concepts, the typesetting engine is one of the core
+concepts. Basically, **a typesetting engine is a piece of software that decides
+how the glyphs, graphics, tables, etc. are laid out for printing or digital
+display**.
+
+When [PPResume](https://ppresume.com) was
+[launched](https://blog.ppresume.com/posts/introducing-ppresume), some people
+[asked](https://discord.com/channels/1139929039314894878/1139929039751090230/1160701786630389892)
+me why chose LaTeX as the default typesetting engine for PPReseume. Hmmm, this
+is a big topic.
+
+In this post, I would like to explore the pros and cons of some popular
+typesetting engines: HTML/CSS, [LaTeX.js](https://latex.js.org/),
+[LaTeX](https://www.latex-project.org/), [Typst](https://typst.app/),
+[react-pdf](https://react-pdf.org/) and conclude why PPResume chose LaTeX as the
+default typesetting engine.
+
+But before we start, let us agree on some glossaries that will be used thoughout
+whole post. Yes this is a long post and it takes time and energy to read.
+_Don't complain to me later. I warned you here!_
+
+Glossaries:
+
+- **[Indo-European
+  languages](https://en.wikipedia.org/wiki/Indo-European_languages)**:
+  a language family native to the overwhelming
+  majority of Europe, the Iranian plateau, and the northern Indian subcontinent.
+  Widely spoken indo-european languages includes English, French, Portuguese,
+  Russian, Dutch, and Spanish, etc.
+- **[CJK](https://en.wikipedia.org/wiki/CJK_characters)**: Chinese, Japanese and
+  Korean languages
+- **[Character Set](https://www.creatopy.com/blog/what-is-a-character-set/)**:
+  the complete collection of characters, symbols, glyphs, and punctuation marks
+  available within a specific typeface or font
+- **[Glyph](https://en.wikipedia.org/wiki/Glyph)**: the specific shape, design,
+  or representation of a character in typography
+
+## The Accessment Criteria
+
+Each typesetting engine has its strengths and weaknesses, catering to different
+needs and preferences. Web-based typesetting with HTML/CSS is extremely flexible
+and [responsive](https://alistapart.com/article/responsive-web-design/), ideal
+for interactive and SEO-optimized content. LaTeX.js provides a bridge between
+the web and LaTeX, while LaTeX itself is the gold standard for academic and
+high-precision typesetting. Typst is considered as a modern, improved LaTeX
+alternative. React-pdf allows dynamic PDF generation with
+[react](https://react.dev/). The choice of typesetting engine depends very much
+on the specific requirements of the project.
+
+I am not a designer so I cannot talk too much about typesetting from the
+perspective of art. Instead, I want to discuss some technical things about
+typesetting engines from a programmer's perspective. Meanwhile, this post is not
+an academic benchmarking report, so I won't evaluate every aspect of typesetting
+engines. Instead, **I will give some assessment criteria based on PPResume's
+requirements.**
+
+When I wrote the first line code for PPResume, I've set 2 goals:
+
+- it must produce top notch, high quality PDF
+- it must provide native support for multi languages
+
+To produce top notch, high quality PDF, the typesetting engine must have a top
+tier [line breaking
+algorithm](https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap), and to
+provide native support for multi languages, the typesetting engine must support
+languages with a huge character set (such as Chinese, Japanese and Korean, aka
+CJK). Let us evaluate these two criteria before we dive into specific
+typesetting engines.
+
+Wait a minute, I almost forgot, to produce a PDF **the typesetting engine must
+support pagination**. You may ask: is there any typesetting engine that does
+not support pagination? The answer is neither a yes nor a no, depending on
+whether you consider HTML & CSS to be a typesetting engine. We will talk more
+about this later when we talk about HTML & CSS.
+
+Finally, it would be better if PPResume could have an excellent user experience,
+of all possible features I believe **instant preview is the most wanted one**.
+
+In a nutshell, I will judge a typesetting engine by checking whether it meets
+the following accessment criteria:
+
+1. Knuth Plass line breaking algorithm
+2. CJK typesetting
+3. Pagination
+4. Instant Preview
+
+### The Sacred Line Breaking Algorithm
+
+Line breaking algorithms are one of the core techniques used in typesetting
+engines. They play a crucial role in determining how text is arranged on a page
+or screen.
+
+The primary purpose of a line breaking algorithm is to determine the optimal
+points at which to break lines of text in a paragraph. Line breaking algorithms
+are essential to digital typesetting and form a core component of any system
+that needs to present text in a visually appealing and readable format.
+
+There are 3 key aspects that are used to assess the quality of a line breaking
+algorithm:
+
+1. **Justification**: Line breaking algorithms work in conjunction with
+   [justification](https://en.wikipedia.org/wiki/Typographic_alignment#Justified)
+   techniques to create evenly spaced lines of text.
+2. **Hyphenation**: Many advanced algorithms incorporate
+   [hyphenation](https://en.wikipedia.org/wiki/Syllabification) to improve line
+   breaks, especially for languages with long words.
+3. **Optimization**: The algorithm typically tries to minimize unsightly gaps or
+   overly tight spacing between words across an entire paragraph.
+
+There are [two
+categories](https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap#Algorithm) of
+line breaking algorithms:
+
+1. **Minimum number of lines**: a gready algorithm that puts as many words on a
+   line as possible, then moving on to the next line to do the same until there
+   are no more words left to place. This method is used by many modern word
+   processors, such as [LibreOffice
+   Writer](https://www.libreoffice.org/discover/writer/) and Microsoft Word.
+2. **Minimum raggedness**: a dynamic programming algorithm, firstly used in TeX,
+   minimizes the sum of the squares of the lengths of the spaces at the end of
+   lines to **produce a more aesthetically pleasing result than the greedy
+   algorithm**, which does not always minimize squared space.
+
+Technically speaking, the minimum number of lines algorithm has faster speed, while
+the minimum raggedness algorithm produces more visually pleasing result. Let me
+show you an example here. In the following image, the top half is a
+[LibreOffice](https://www.libreoffice.org/)
+[document](/static/resources/on-typesetting-engines/knuth-plass-line-breaking-algorithm-demo.odt),
+using the "minimum number of lines" approach , while the bottom half is a PDF
+[document](/static/resources/on-typesetting-engines/knuth-plass-line-breaking-algorithm-demo.pdf)
+generated by TeX using the "minimum raggedness" approach. You can very easily
+see that the bottom half PDF looks less ragged on the right margin and more
+visually appealing simply because the line breaking is more balanced and
+justified.
+
+![Knuth Plass Line Breaking Algorithm](/static/images/on-typesetting-engines/knuth-plass-line-breaking-algorithm-demo-with-libreoffice-and-tex.webp)
+
+Among all line breaking algorithms, the [Knuth Plass line breaking
+algorithm](https://en.wikipedia.org/wiki/Knuth%E2%80%93Plass_line-breaking_algorithm)
+is the gold standard for minimum raggedness approach. It is widely adopted by
+various typesetting engines like [TeX](https://en.wikipedia.org/wiki/TeX),
+[SILE](https://sile-typesetter.org/) and
+[Typst](https://github.com/typst/typst/discussions/626), etc.
+
+Back to PPResume's case, one of the design goals for PPResume is to produce top
+notch, high quality PDF, so the chosen typesetting engine must have a more
+visually appealing line breaking algorithm, that being said, the typesetting
+engine must adopt Knuth Plass line breaking algorithm.
+
+### CJK Typesetting is Complicated
+
+Typesetting for [CJK](https://en.wikipedia.org/wiki/CJK_characters) (Chinese,
+Japanese, and Korean) languages is generally considered to be more complicated
+than Indo-European languages. Here is a classic
+[discussion](https://github.com/koreader/koreader/issues/6162) from the
+[koreader](https://github.com/koreader/koreader) project. There are several
+reasons for this.
+
+TL;DR: if you don't want to delve into the details, you can check out the
+following [W3C](https://www.w3.org/) notes to get an intuitive sense of the
+complexity of typesetting requirements for CJK:
+
+- [Requirements for Chinese Text Layout 中文排版需求](https://www.w3.org/TR/clreq/)
+- [Requirements for Japanese Text Layout 日本語組版処理の要件（日本語版）
+  ](https://www.w3.org/TR/jlreq/)
+- [Requirements for Hangul Text Layout and Typography : 한국어 텍스트 레이아웃 및 타이포그래피를
+  위한 요구사항](https://www.w3.org/TR/klreq/) to
+
+#### CJK Character Set is Huge
+
+The root cause for this complexity is that the size of the character set for CJK
+languages is much more larger than Indo-European languages. According to the
+[CJK Unified Ideographs](https://en.wikipedia.org/wiki/CJK_Unified_Ideographs),
+as of Unicode 16.0, Unicode defines a total of 97,680 characters. **This is
+insanely huge**. In contrast, Indo-European languages typically use the Latin
+alphabet, which has a few hundred characters, much smaller than CJK. Hmmmm, 100k
+characters, even creating a font that covers all of them is a huge amount of
+work, labor-intensive and very expensive.
+
+![CJK Characters](/static/images/on-typesetting-engines/The_old_man_is_72_years_old_final.webp)
+
+Taking PPResume as an example, we have two issues
+([1](https://github.com/ppresume/community/issues/33),
+[2](https://github.com/ppresume/community/issues/63)) where the fonts
+recommended by [ctex](https://ctan.org/pkg/ctex?lang=en) are missing characters.
+Unlike Indo-European languages, there are very few fonts that have full coverage
+of the entire CJK character set, and most of them are commercial—
+[Noto](https://fonts.google.com/noto) is one of the few exceptions that both has
+good coverage of [CJK](https://github.com/notofonts/noto-cjk) characters and is
+free to use.
+
+#### Cultural Nuances
+
+Each CJK language has its own set of typographic conventions that must be
+followed, and these can vary greatly from culture to culture and context to
+context. For example, punctuation placement and spacing rules differ between
+Chinese, Japanese, and Korean texts. It is hard to imagine that the [quotation
+mark](https://en.wikipedia.org/wiki/Quotation_mark) is used with completely
+[different
+conventions](https://en.wikipedia.org/wiki/Quotation_mark#Chinese,_Japanese_and_Korean)
+in CJK.
+
+> In Japan, corner brackets are used.
+>
+> In South Korea, corner brackets and English-style quotes are used.
+>
+> In North Korea, angle quotes are used.
+>
+> In mainland China, English-style quotes (full width “ ”) are official and
+> prevalent; corner brackets are rare today. The Unicode code points used are the
+> English quotes (rendered as fullwidth by the font), not the fullwidth forms.
+>
+> In Taiwan, Hong Kong and Macau, where traditional characters are used, corner
+> brackets are prevalent, although English-style quotes are also used.
+>
+> In the Chinese language, double angle brackets are placed around titles of
+> books, documents, movies, pieces of art or music, magazines, newspapers, laws,
+> etc. When nested, single angle brackets are used inside double angle brackets.
+> With some exceptions, this usage parallels the usage of italics in English:
+>
+> 「你看過《三國演義》嗎？」他問我。
+>
+> "Have you read Romance of the Three Kingdoms?", he asked me.
+
+#### Font Pairing
+
+When mixing CJK with other Indo-European languages, things become more
+complicated.
+
+Firstly, punctuations are different. For example, the
+[comma](https://en.wikipedia.org/wiki/Comma) has different forms in Chinese and
+English:
+
+> English uses the comma `,` as a separator to separate parts of a sentence and
+> items in a list, while Chinese uses a Chinese comma `，` to separate
+> sensences, and a dedicated enumeration comma (顿号, `、`) to separate items in
+> a list (e.g. keyword > list).
+>
+> — [Multi Languages Support](https://ppresume.com/posts/multi-languagues-support#punctuations)
+
+Meanwhile, a Latin font for Indo-European languages may cover one thousand
+glyphs, whereas a CJK font must cover at least thousands of glyphs, as mentioned
+above.
+
+Effective typesetting often requires CJK fonts to be paired with Latin fonts to
+maintain visual consistency. This can be challenging as it requires combined
+fonts that intelligently switch between character sets.
+
+> So Chinese, Japanese and Korean fonts tend to be developed by Asian designers,
+> with an understandable emphasis on the elegance of the Asian characters.
+> Unfortunately this can be at the expense of the design of the Latin letters,
+> which may in some cases be really quite ugly.
+>
+> The solution? Use an attractive Latin-script font for any Latin letters and
+> numbers, and an Asian font for the Chinese, Japanese or Korean characters.
+> Rather than making the poor typesetter manually change the font each time a
+> Latin letter or number appears, applications such as InDesign allow Combined
+> Fonts to be set within a document which intelligently switch the font according
+> to the nature of each letter or character.
+>
+> — [Typesetting conventions and best practices for CJK (Chinese, Japanese, Korean)](https://asianabsolute.co.uk/blog/typesetting-conventions-best-practices-chinese-japanese-korean/)
+
+Not all typesetting engines have built-in support for font pairing but this is
+essential for PPResume to provide native support for multi languages.
+
+In summary, the nuances of character sets, cultural conventions and technical
+challenges contribute to the greater complexity of typesetting CJK languages
+compared to Indo-European languages.
+
+## HTML & CSS
+
+Technically speaking, [HTML](https://en.wikipedia.org/wiki/HTML) (Hypertext
+Markup Language) is not a typesetting engine, but a markup language used to
+create the structure and content of web pages. It's designed to define the
+structure of a document, such as headings, paragraphs, lists, and links, and so
+on.
+
+While HTML can indirectly influence how text appears on a page (e.g. by using
+the obsolete
+[font](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font) tags), it
+cannot handle the complex tasks of typesetting, such as:
+
+- **Font selection**: plain HTML doesn't have built-in mechanisms for selecting
+  specific fonts.
+- **Text formatting**: HTML can control some aspects of text formatting (e.g.,
+  bold, italic, etc.), however, it cannot provide the granular control offered
+  by typesetting engines.
+- **Hyphenation**: HTML doesn't handle hyphenation.
+- **Pagination**: HTML is not designed for pagination.
+
+HTML itself is cannot function as a typesetting engine, however, HTML &
+[CSS](https://en.wikipedia.org/wiki/CSS) (Cascading Style Sheets) together can
+be considered as a rudimentary typesetting engine.
+
+Although not as sophisticated as dedicated typesetting engines such as LaTeX or
+[InDesign](https://en.wikipedia.org/wiki/Adobe_InDesign), HTML & CSS provide a
+flexible way to control the layout and appearance of text on web pages.
+
+- HTML is used to define the structure of the content, such as headings,
+  paragraphs, and lists.
+- CSS is used to style the HTML elements, controlling
+  aspects like:
+  - Font selection: CSS allows you to specify fonts, font sizes, and font
+    styles.
+  - Text formatting: You can control line spacing, letter spacing, text
+    alignment, and more.
+  - Layout: CSS enables you to create complex layouts using techniques like
+    floats, [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/),
+    and grid.
+
+By combining HTML & CSS, you can achieve a wide range of text formatting and
+layout effects. However, for more advanced typesetting tasks, such as complex
+mathematical equations or precise control over typography, dedicated typesetting
+engines may be more appropriate.
+
+There are many resume builders on the market which use the HTML & CSS as their
+typesetting engine. Most are commercial, with only a few being free or open
+source:
+
+| Website                    | Technique   | Type               |
+| -------------------------- | ----------- | ------------------ |
+| https://resume.io          | HTML Canvas | Commercial         |
+| https://flowcv.com/        | HTML & CSS  | Commercial         |
+| https://www.visualcv.com/  | HTML & CSS  | Commercial         |
+| https://standardresume.co/ | HTML & CSS  | Commercial         |
+| https://zety.com/          | HTML & CSS  | Commercial         |
+| https://rxresu.me          | HTML & CSS  | Free & open source |
+
+On the one hand, from a business perspective, given the market is so crowded,
+it is not wise for me to create another resume builder that uses HTML & CSS as
+the typesetting engine.
+
+On the other hand, from a engineering perspective, HTML & CSS does not implement
+Knuth Plass line breaking algorithm, so it cannot meet PPResume's needs.
+
+### Line Breaking
+
+In fact, standard CSS do provide some options for adjusting text justification:
+
+- [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align):
+  sets the horizontal alignment of the inline-level content inside a block
+  element or table-cell box.
+- [`text-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap):
+  controls how text inside an element is wrapped
+- [`hypens`](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens):
+  specifies how words should be hyphenated when text wraps across multiple
+  lines.
+- [`hanging-punctuation`](https://developer.mozilla.org/en-US/docs/Web/CSS/hanging-punctuation):
+  specifies whether a punctuation mark should hang at the start or end of a line
+  of text
+
+Firefox even provides a
+[`test-justify`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-justify)
+option to set what type of justification should be applied to text when
+text-align: justify; is set on an element, however, this option is only
+available on Firefox.
+
+However none of them apply proper hyphenation, so they
+[cannot](https://chriscummins.cc/2013/typesetting/) produce the same visually
+appealing result as a real Knuth Plass line breaking algorithm—Hacker News has a
+valuable [discussion](https://news.ycombinator.com/item?id=1134342) about why
+modern browsers are too lazy to implement the Knuth Plass line breaking
+algorithm.
+
+There are also a few JavaScript implementations for the Knuth-Plass linebreaking
+algorithm, but none of them seems to be production ready:
+
+- https://github.com/bramstein/typeset
+- https://github.com/robertknight/tex-linebreak
+
+### CJK
+
+HTML & CSS—or the browser, provides support for CJK, that's for sure, otherwise
+the browser couldn't be the world's most widely adopted information platform on
+the world. However, this doesn't mean that every page containing CJK follows
+typesetting best practices.
+
+For example, it is highly recommended to put some space between CJK and Western
+characters, plain HTML & CSS cannot do this automatically—this needs the help of
+JavaScript.
+
+In general, it takes extra effort in order to follow best practices for CJK
+typesetting in the browser. As mentioned above, [Requirements for Chinese Text
+Layout 中文排版需求](https://www.w3.org/TR/clreq/) is a pretty good and authoritative
+reference, and one of the authors, [Chen Yijun](https://yijun.me/), has
+published an open source project called [Han](https://hanzi.pro/) which provides
+a pretty nice implementation if you want to typeset CJK with best practices.
+
+![Han.css](/static/images/on-typesetting-engines/typeset.webp)
+
+### Pagination
+
+HTML & CSS is not designed for paginated documents, though with the help of
+JavaScript, it can simulate paginated documents (here is a good
+[implementation](https://github.com/Renovamen/oh-my-cv/blob/main/packages/vue-smart-pages/src/useSmartPages.ts)
+from a [oh-my-cv](https://github.com/Renovamen/oh-my-cv)). HTML's documents are
+essentially [responsive](https://alistapart.com/article/responsive-web-design/),
+flow like water, can adapt viewports of any size.
+
+### Instant Preview
+
+HTML & CSS can have instant preview if the resume generation process only
+happens only on the client side, otherwise, if it happens on the server side,
+there would be a round trip time from request to response and hence no instant
+preview.
+
+### Conclusion
+
+Before we conclude, I couldn't resist showing you an excellent
+[example](https://latex.vercel.app/) of how HTML & CSS typesetting can be pushed
+to its limit. It uses `text-align: justify` and `hypens: auto` to get an
+optimal, aligned layout for paragraphs. This is almost the best that HTML & CSS
+can do. If you ever want to do some typesetting with HTML & CSS, this would be
+a very good reference.
+
+In summary, while it is theoretically possible to get a top typesetting for HTML
+& CSS, just as dedicated typesetting engines, the effort would be enormous and
+they may also be browser compatibility issues. So, for the time being at least,
+if top notch typesetting is required, it is still recommended to use a dedicated
+typesetting engine instead of tuning HTML & CSS hand by hand.
+
+- Pros
+  - **Universal accessibility**: HTML & CSS is the backbone of the web, making it
+    accessible on any device with a browser.
+  - **Responsive**: HTMl & CSS can be responsive and adapt to viewport of any
+    size
+  - **Flexible**: HTML & CSS is extremely flexible, it is programmable with rich
+    set of standard APIs
+  - **Instant preview**: HTML & CSS can provide instant preview for resume
+    composing
+- Cons
+  - **Limited control over typesetting**: compared to dedicated typesetting
+    software, HTML/CSS offers less control over fine typographic details.
+  - **Browser compatibility**: different browsers may render same HTML & CSS
+    different, making it challenging to keep consistency across devices.
+  - **No native pagination**: HTML & CSS is not designed for paginated
+    documents, hence it does not provide first class utility to export to PDF
+  - **Poor line breaking**: as mentioned, plain HTML & CSS do not implement
+    Knuth Plass line breaking algorithm
+  - **Extra effort needed for CJK typesetting**: HTML & CSS needs extra
+    libraries and effort in order to follow CJK best typesetting practices
+
+## LaTeX
+
+[TeX](https://en.wikipedia.org/wiki/TeX) is a typesetting system created by
+[Donald Knuth](https://www-cs-faculty.stanford.edu/~knuth/) in the late 1970s.
+It is designed for the creation of high quality typeset documents, particularly
+those containing complex mathematical and scientific notation. TeX is a
+low-level system that requires the user to write commands in a specific language
+to format documents. It has its own set of rules and macros for formatting text,
+and it is highly customizable and extensible.
+
+[LaTeX](https://www.latex-project.org/), on the other hand, is a document
+preparation system that is built on top of TeX. It was created by [Leslie
+Lamport](https://www.lamport.org/) in the early 1980s to simplify the document
+preparation process. LaTeX provides a set of higher-level macros on top of TeX's
+lower-level programming language, making it more easier and intuitive to use.
+
+One of the most frequently asked questions is, why use LaTeX instead of a word
+processors like Microsoft Word? The TL;DR answer is: "for beauty".
+[Dario](https://nitens.org/w/) wrote an excellent post [The Beauty of
+LaTeX](https://nitens.org/w/latex/) with dozens of examples showing the
+nitty-gritty typesetting details between Microsoft Word and LaTeX. No need for
+me to repeat here.
+
+In summary, for professional typesetting, LaTeX excels in the following
+features:
+
+- line breaking with justification and hyphenation
+- advanced font features like kerning, ligature, small caps, etc.
+- mathematical formulas
+- programmable and extensable
+- consistency and stability
+- cross platform compatibility
+
+### Line Breaking
+
+TeX has the golden line breaking algorithm—the Knuth Plass line breaking
+algorithm. After all Knuth is the author of TeX, right?
+
+As mentioned above, the Knuth Plass line breaking algorithm does its best to
+produce a more aesthetically pleasing result by reducing the raggedness to
+minimum.
+
+Under the hood, the Knuth Plass line breaking algorithm uses a "total-fit"
+line breaking algorithm, in contrast to the "first-fit" approach used by many
+other systems. This means:
+
+- it considers all possible breakpoints in a paragraph simultaneously
+- it optimizes the layout globally across the entire paragraph
+- it can adjust earlier line breaks based on their effects on later lines
+
+This allows TeX to produce more visually appealing and balanced paragraphs
+overall.
+
+Meanwhile, unlike many systems that treat hyphenation separately, TeX's line
+breaking algorithm integrates hyphenation decisions directly. This allows for
+more optimal placement of hyphens in the context of the entire paragraph.
+
+Overall, TeX's line breaking algorithm is considered one of the most
+sophisticated and effective approaches to typesetting, and its core principles
+continue to influence modern typesetting systems and remain at the forefront of
+high-quality digital typography.
+
+### CJK
+
+Regarding to CJK typesetting, LaTeX has pretty good support for CJK with the
+help of some new engines and some packages:
+
+- new engines like [LuaTeX](https://www.luatex.org/) and
+  [XeTeX](https://tug.org/xetex/)
+- packages like [xeCJK](https://ctan.org/pkg/xecjk?lang=en) and
+  [ctex](https://ctan.org/pkg/ctex?lang=en)
+
+For example, xeCJK package provide following commands to set fonts for CJK:
+
+- `\setCJKmainfont`: setting CJK fonts for the serif family of body text
+- `\setCJKsansfont`: setting CJK fonts for the sans family of body text
+- `\setCJKmonofont`: setting CJK fonts for the monospace family
+
+xeCJK also provides options for specifying punctuation styles for CJK, spacing
+between CJK and non-CJK characters, etc.
+
+Overall LaTeX's CJK support is now quite mature, although it may take some time
+to set up in different environments. Here's a manual page from [The XeTeX
+Companion TEX meets OpenType and
+Unicode](https://xml.web.cern.ch/XML/lgc2/xetexmain.pdf), you can get a glance
+of XeTeX's ability for CJK typesetting.
+
+![XeTeX for CJK](/static/images/on-typesetting-engines/xetexmain.webp)
+
+### Pagination
+
+LaTeX is designed from ground up for typesetting paginated documents, so yes it
+has excellent support for pagination, you can easily adjust paper size,
+orientation, margins, etc.
+
+Check the [geometry](https://ctan.org/pkg/geometry?lang=en) package for details.
+
+### Instant Preview
+
+LaTeX by default runs on the server side so there would be a round trip time
+from the request to generate the PDF to the response for the generated PDF.
+
+Using LaTeX as the typesetting engine means that we're losing the ability for
+instant preview. However there do have ways to mitigate this. The magic is
+[WebAssembly](https://webassembly.org/).
+
+There's some effort that goes into compiling LaTeX to WebAssembly (aka wasm) so
+that it can run purely in a browser:
+
+- [texlive.js](https://manuels.github.io/texlive.js/): the initial effort to
+  compile LaTeX to wasm, only support
+  [pdfTeX](https://www.tug.org/applications/pdftex/) engine
+- [SwiftLaTeX](https://www.swiftlatex.com/), a recent, modern trial to make
+  LaTeX Engines run in Browsers, support XeTeX with CJK.
+- [TeXpresso](https://github.com/let-def/texpresso): live rendering and error
+  reporting for LaTeX, check its
+  [screencasts](https://github.com/let-def/texpresso?tab=readme-ov-file#Screencasts)
+  for demo
+
+Although none of the above are actively maintained though, it is theoretically
+possible to run LaTeX purely in a browser. This would drastically reduce the
+round-trip time from browser to server, and we could get instant previews then.
+
+### Conclusion
+
+Before concluding, I would like to share a bit of off-topic information here.
+There are a very few choices for LaTeX based resume builders on the market:
+
+- https://resumepuppy.com/: the only commercial resume builders that use LaTeX
+  as far as I knowT they declare that they have been trusted by 100,000+
+  professionals & students.
+- https://resumake.io/: the open source one, with more than 3k stars on github.
+
+From a business perspective, this is a niche market and not too crowded, so it
+might be worthwhile for me to create another LaTeX based resume builder.
+
+OK time to conclude LaTeX.
+
+- Pros
+  - **Precision and control**: LaTeX offers unparalleled control over document
+    layout and typography.
+  - **Golden line breaking**: Knuth Plass line breaking algorithm is the golden
+    standard for optimized line breaking, and it is invented by TeX authors
+  - **Extensive support for CJK**: there're A vast collection of packages
+    that extends LaTeX's capabilities for CJK support.
+- Cons
+  - **Steeper Learning Curve**: LaTeX has a higher barrier to entry for new
+    users compared to WYSIWYG editors.
+  - **No instant preview**: by default LaTeX need a compilation process on
+    server and hence no instant preview.
+  - **Old and arcane developer experience**: LaTeX's compilation log is
+    sometimes unreadable that can only be debugged with binary search approach
+
+## LaTeX.js
+
+[LaTeX.js](https://latex.js.org/) is a LaTeX to HTML5 translator that aims to
+render LaTeX documents directly in the browser without the need for server-side
+processing.
+
+It provides a very impressive
+[playground](https://latex.js.org/playground.html), where on the left you can
+enter some LaTeX code, on the right it will render the LaTeX code into a pretty
+nice HTML document.
+
+![LaTeX.js Playground](/static/images/on-typesetting-engines/latex-js-playground.webp)
+
+### Line Breaking
+
+LaTeX.js does not use Knuth Plass line breaking but instead uses `text-align:
+justify` to minimize the raggedness for paragraphs.
+
+Meanwhile, it also uses [soft
+hyphen](https://en.wikipedia.org/wiki/Soft_hyphen) `$shy;` to facilitate with
+`hypens: manual` for better line breaking.
+
+Although these techniques produce much better visual result than normal HTML, it
+is still not true Knuth Plass line breaking.
+
+### CJK
+
+LaTeX.js supports CJK because it is just a wrapper on top of HTML & CSS.
+However, just like HTML & CSS, it doesn't follow CJK best practices and it's
+even harder and requires more work to tune itself according to CJK typesetting
+best practices.
+
+### Pagination
+
+Looks like we can have a LaTeX in a browser? No, no, no, if things were really
+that easy, the world would be a better place. LaTeX.js comes with lots of
+[limitations](https://latex.js.org/limitations.html), some of which are fatal
+for a production-ready LaTeX replacement in a browser:
+
+- horizontal glue, like [`\hfill`](https://latexref.xyz/_005chfill.html) in a
+  paragraph of text, is not possible
+- vertical glue makes no sense in HTML, and is impossible to emulate, except in
+  boxes with fixed height
+- the concept of pages does not really apply to HTML, so any macro related to
+  pagebreaks will be ignored, that being said, you cannot get a paged document
+  with LaTeX.js, which is a fatal deal breaker for a resume builder app
+
+### Instant Preview
+
+LaTeX.js provides instant preview because it is a client side library and runs
+in a browser.
+
+### Conclusion
+
+LaTeX.js provides only
+[limited](https://latex.js.org/limitations.html#when-parsing-tex-as-a-context-free-grammar)
+parsing capabilities for TeX/LaTeX, in other words, many LaTeX packages cannot
+be used in LaTeX.js.
+
+> This is a PEG parser, which means it interprets LaTeX as a context-free
+> language. However, TeX (and therefore LaTeX) is Turing complete, so TeX can only
+> really be parsed by a complete Turing machine. It is not possible to parse the
+> full TeX language with a static parser. See here (opens new window)for some
+> interesting examples.
+
+When I started PPResume at Dec, 2022, I also tried LaTeX.js for a while, but
+after discovering its fatal limitations, I quickly dropped it in favour of
+server-side LaTeX. As far as what I can tell, **LaTeX.js is a good demo idea but
+far from being a production-ready LaTeX replacement**.
+
+- Pros
+  - **Instant preview**: LaTeX.js processes LaTeX documents entirely on the
+    client side, which means it can render documents in real-time in the browser.
+    This eliminates the need for server-side LaTeX installations and compilations.
+  - **Extensible**: The project is implemented in JavaScript, making it easy to
+    integrate into web applications. New macros can also be added easily in
+    JavaScript.
+- Cons
+  - **Missing capabilites**: LaTeX.js only covers a limited set of LaTeX
+    capabilities, it is far from being a production ready LaTeX replacement.
+    Lots of LaTeX packages cannot be used with LaTeX.js.
+  - **No pagination**: Some LaTeX features, like glue, paging, cannot be
+    translated to HTML, which is a deal breaker for producing paged documents
+    like PDF.
+  - **Poor line breaking**: LaTeX.js is based on HTML & CSS and do not implement
+    Knuth Plass line breaking algorithm
+  - **Extra effort needed for CJK typesetting**: same as above, LaTeX.js is
+    based on HTML & CSS hence it needs extra effort in order to follow CJK best
+    typesetting practices, and is harder to do this than plain HTML & CSS
+
+## Typst
+
+[Typst](https://typst.app/) is a modern typesetting system designed to be
+an intuitive and efficient alternative to LaTeX. It uses a syntax that is
+heavily inspired by Markdown, making it more accessible to users who may find
+LaTeX's syntax complex. Typst allows users to compose documents in a text file,
+similar to LaTeX, but with a focus on speed, simplicity, and error handling.
+
+![Typst App](/static/images/on-typesetting-engines/typst-app.webp)
+
+### Line Breaking
+
+Typst provide two options for line breaks:
+
+- `#set par(linebreaks: "simple")`: determine the line breaks in a simple
+  first-fit style.
+- `#set par(linebreaks: "optimized")`: optimize the line breaks for the whole
+  paragraph. This option
+  [implemented](https://github.com/typst/typst/discussions/626) the Knuth Plass
+  line breaking algorithm internally.
+
+The line breakingn in typst would be better if `linebreaks` option and
+[`hyphenate`](https://typst.app/docs/reference/text/text/#parameters-hyphenate)
+option are used together.
+
+### CJK
+
+Because typst is very young, its CJK support is not as mature as LaTeX. As a
+result, there're lots of [open
+issues](https://github.com/typst/typst/issues?q=is%3Aissue+is%3Aopen+CJK) in
+the typst community. Here are some typical ones:
+
+- [Better CJK support](https://github.com/typst/typst/issues/276)
+- [Ignore linebreaks between CJK characters in source
+  code](https://github.com/typst/typst/issues/792)
+- [Language-dependant font
+  configuration](https://github.com/typst/typst/issues/794)
+- [Add support for ruby (CJK, e.g., furigana for
+  Japanese)](https://github.com/typst/typst/issues/1489)
+- [CJK punctuation at the start of paragraphs are not adjusted
+  sometimes](https://github.com/typst/typst/issues/2348)
+- [Writing Chinese text results in some characters falling back to a different
+  font in web app](https://github.com/typst/typst/issues/5040)
+- [0.12 handles CJK fonts
+  incorrectly](https://github.com/typst/typst/issues/5277)
+
+Basically these issues can be categorised as follows:
+
+- CJK font settings
+- punctuation rules
+- spacing styles between CJK and non-CJK characters
+- language aware line breaking
+
+I am 100% sure that typst will be able to improve and solve these issues, but it
+will take time. It is very likely that there will be some breaking changes in
+the future.
+
+### Pagination
+
+Typst supports [pagination](https://typst.app/docs/guides/page-setup-guide/) out
+of the box, fair enough as a dedicated typesetting engine.
+
+### Instant Preview
+
+This part is a bit complicated.
+
+Basically, typst is an [open source](https://github.com/typst/typst/) project, it
+can run as a CLI tool where you can just type in a command `typst compile
+path/to/source.typ path/to/output.pdf` and get a PDF in your local folder.
+
+It can also run purely in a browser, as the project is written in rust and
+designed to be able to be compiled to WebAssembly. In fact, the official typst
+[web app](https://typst.app) run typst in a browsers via WebAssembly. However,
+this part is [not](https://github.com/typst/typst/issues/909) open sourced:
+
+> Typst can be compiled to WASM, but no JS glue is available, you'd have to
+> write that yourself. It's not as simple as compile(string) because you also
+> need to provide fonts, and if you want a multi-file setup of course also files.
+
+That being said, if you want instant preview for typst in a browser, you are
+mostly on your own to write a WebAssembly binding to typst.
+
+### Conclusion
+
+In my opinion, typst is a very promising alternative to LaTeX, but still very
+young and lacks some key capabilites to handle complicated typesetting
+scenarios.
+
+- Pros
+  - **User-friendly Syntax**: typst's syntax is more straightforward and
+    consistent compared to LaTeX, making it easier for beginners to learn and
+    use.
+  - **Fast compilation**: typst has incremental compilation which lead to a
+    faster compilation in milliseconds rather than seconds.
+  - **Customizable line breaking**: typst provide options for users to opt in
+    Knuth Plass line breaking algorithm
+- Cons
+  - **Limited ecosystem**: as a newer tool, Typst lacks the extensive package
+    ecosystem that LaTeX offers, which can limit functionality for advanced
+    typesetting needs.
+  - **Unstable CJK typesetting**: typst still has lots of issues for CJK
+    typesetting and is constantly evolving
+  - **Instant preview is private**: typst do not open source their WebAssembly
+    bindings so there is no official instant preview feature on browser
+
+## React-pdf
+
+[React-pdf](https://react-pdf.org/) is react renderer for creating PDF files on
+the browser and server.
+
+### Line Breaking
+
+React-pdf internally [implements](https://react-pdf.org/advanced#hyphenation)
+the Knuth and Plass line breaking algorithm. By default it's set to hyphenate
+english words.
+
+This is one page from the example document in [react-pdf
+playground](https://react-pdf.org/repl), note the layout of the paragraph, the
+text overall looks balanced and justified, much better than normal paragraphs in
+normal HTML & CSS.
+
+![React-pdf document](/static/images/on-typesetting-engines/react-pdf-document.webp)
+
+### CJK
+
+React-pdf with default settings does not render CJK characters, you need to
+[register a
+font](https://github.com/diegomura/react-pdf/issues/867#issuecomment-713483012)
+and quote it in styles.
+
+### Pagination
+
+Needless to say, react-pdf supports pagination because it is a library to
+generate PDF. It also provides [options](https://react-pdf.org/components#page)
+to specify page sizes, dpi, styles, etc.
+
+### Instant Preview
+
+React-pdf can be used on both client side and server side.
+
+If used on client side, then yes we have instant preview, again, you can check
+the [playground](https://react-pdf.org/repl) for a live demo.
+Otherwise, if used on server side with
+[node.js](https://react-pdf.org/node), then no instant preview due to the round
+trip time from request to response.
+
+### Conclusion
+
+It seems that react-pdf would be a perfect choice as the typesetting engine for
+a resume builder.
+
+However, react-pdf is not a dedicated typesetting engine. It lacks many features
+that are only available or work well with a dedicated typesetting engine. For
+example, it has no built-in list items. Most importantly, even though it already
+implements the Knuth-Plass line-breaking algorithm, typesetting is not just
+about breaking paragraphs into lines, is it? You still need to tune the spacing
+between paragraphs, adjust font size/styles, respect CJK best typesetting
+practices, etc. All this tuning requires a huge amount of work that LaTeX
+already provides out of the box.
+
+In fact, there is an open source resume builder called
+[open-resume](https://www.open-resume.com/resume-builder) which uses this
+library to generate and update resume PDF in real time, you can check the output
+PDF by yourself and compare it to the [PDF generated by
+LaTeX](https://ppresume.com/gallery).
+
+OK conclusion:
+
+- Pros
+  - **React integration**: react-pdf allows developers to create PDF documents
+    using react
+  - **Instant preview**: react-pdf provides instant preview when running on
+    client side
+  - **Good line breaking**: react-pdf implemented Knuth Plass line breaking
+    algorithm internally, better than plain HTML & CSS
+  - **Pagination**: react-pdf support pagination out of the box, with
+    customizable page size, margins, etc.
+- Cons
+  - **Limited typesetting capabilites**: after all react-pdf is a react library,
+    neither a professional nor a dedicated typesetting engine.
+  - **Limited support for CJK**: react-pdf can render CJK with manually
+    registered font, however, it doesn't respect CJK best typesetting practices
+
+## Summary
+
+The goal of PPResume is to be a professional resume builder that offers top
+notch typesetting quality, with native support for multi languages.
+
+As mentioned above, in order to meet PPResume's requirements, the typesetting
+engine must:
+
+- adopt Knuth Plass line breaking algorithm
+- support CJK with respect to best typesetting practices
+- support pagination
+- (optional) support instant preview
+
+| Typesetting Engine | Knuth Plass line breaking | CJK     | Pagination | Instant Preview |
+| ------------------ | ------------------------- | ------- | ---------- | --------------- |
+| HTML & CSS         | No                        | Yes     | Partial    | Yes             |
+| LaTeX              | Yes                       | Yes     | Yes        | No              |
+| LaTeX.js           | No                        | Yes     | No         | Yes             |
+| Typst              | Yes                       | Partial | Yes        | Partial         |
+| React-pdf          | Yes                       | No      | Yes        | Yes             |
+
+Both HTML & CSS and LaTeX.js do not support Knuth Plass line breaking, react-pdf
+and typst's CJK support is not production ready, hence LaTeX is our only option.
+
+In the long run if there're better choice, it is possible for PPResume to add
+support for other typesetting engines.
+
+Last but not least, having fun with [polytype](https://polytype.dev/), a Rosetta
+stone for typesetting engines.
+
+Thanks for reading!

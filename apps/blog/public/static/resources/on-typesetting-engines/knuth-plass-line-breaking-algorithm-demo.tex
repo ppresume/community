@@ -1,0 +1,27 @@
+\documentclass[a4paper, serif, 12pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[left=0.79in, right=0.79in, top=0.79in, right=0.79in]{geometry}
+\usepackage[UTF8, fontset=none, heading=false, punct=kaiming, scheme=plain, space=auto]{ctex}
+
+\setCJKmainfont{Noto Serif CJK SC}
+
+\begin{document}
+\setlength{\parskip}{1em}
+
+\noindent
+The Knuth–Plass algorithm is a line-breaking algorithm designed for use in
+Donald Knuth's typesetting program TeX. It integrates the problems of text
+justification and hyphenation into a single algorithm by using a discrete
+dynamic programming method to minimize a loss function that attempts to
+quantify the aesthetic qualities desired in the finished output.
+
+\noindent
+Making hyphenation decisions follows naturally from the algorithm, but the
+choice of possible hyphenation points within words, and optionally their
+preference weighting, must be performed first, and that information inserted
+into the text stream in advance. Knuth and Plass' original algorithm does not
+include page breaking, but may be modified to interface with a pagination
+algorithm, such as the algorithm designed by Plass in his PhD thesis.
+\end{document}
