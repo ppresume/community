@@ -365,6 +365,9 @@ In fact, standard CSS do provide some options for adjusting text justification:
   element or table-cell box.
 - [`text-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap):
   controls how text inside an element is wrapped
+- [`word-break`](https://developer.mozilla.org/en-US/docs/Web/CSS/word-break):
+  sets whether line breaks appear wherever the text would otherwise overflow its
+  content box.
 - [`hypens`](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens):
   specifies how words should be hyphenated when text wraps across multiple
   lines.
@@ -777,6 +780,11 @@ Basically, typst is an [open source](https://github.com/typst/typst/) project, i
 can run as a CLI tool where you can just type in a command `typst compile
 path/to/source.typ path/to/output.pdf` and get a PDF in your local folder.
 
+Typst provides a `typst watch` command, combined with incremental compilation,
+the PDF can be updated in milliseconds. There are also some extensions such as
+[tinymist](https://github.com/Myriad-Dreamin/tinymist) which allows instant
+preview on editors.
+
 It can also run purely in a browser, as the project is written in rust and
 designed to be able to be compiled to WebAssembly. In fact, the official typst
 [web app](https://typst.app) run typst in a browsers via WebAssembly. However,
@@ -921,3 +929,17 @@ Last but not least, having fun with [polytype](https://polytype.dev/), a Rosetta
 stone for typesetting engines.
 
 Thanks for reading!
+
+## Revision
+
+### Nov 2, 2024
+
+- refer `word-break` in HTML & CSS section, suggested by
+  [u/Jona-Anders](https://www.reddit.com/r/programming/comments/1ggg67q/comment/luxjfsy/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+- refer [tinymist](https://github.com/Myriad-Dreamin/tinymist) in Typst section,
+  suggested by
+  [u/Afkadrian](https://www.reddit.com/r/programming/comments/1ggg67q/comment/luxiasn/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+
+### Nov 1, 2024
+
+- typo fix: ctex -> CTeX, suggested by [Liam Huang](https://liam.page/en/about/)
