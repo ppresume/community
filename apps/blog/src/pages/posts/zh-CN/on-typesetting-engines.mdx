@@ -1,0 +1,558 @@
+---
+title: 排版引擎纵谈：程序员的视角
+date: 2024-10-31
+description: >
+  Pros and cons for different typesetting engines from engineering perspective
+  and why PPReseume chose LaTeX.
+tag: Typesetting, Engineering, LaTeX, Typst, HTML, CSS, LaTeX.js, React
+author: Xiao Hanyu
+---
+
+## Table of Contents
+
+## 序言
+
+排版是“二维的建筑”。
+
+如果文本及其字体是建筑的材料，那么排版就是建筑的图纸。
+
+排版是一个大话题，它既是一门艺术，也是一种随着数字技术的出现而显著发展的工程技术。显然，我无法在一篇文章中涵盖这个话题，甚至一本书也做不到。
+
+在众多排版概念中，排版引擎是核心之一。简单来说，**排版引擎是一种软件，它决定了字形、图形、表格等如何布局，以便进行打印或屏幕显示**。
+
+当 [PPResume](https://ppresume.com) [发布](https://blog.ppresume.com/posts/introducing-ppresume)时，有人[问](https://discord.com/channels/1139929039314894878/1139929039751090230/1160701786630389892)我为什么选择 LaTeX 作为 PPResume 的默认排版引擎。嗯，这确实是一个大话题。
+
+在这篇文章中，我想探讨一些流行排版引擎的优缺点，包括 HTML/CSS、[LaTeX.js](https://latex.js.org/)、[LaTeX](https://www.latex-project.org/)、[Typst](https://typst.app/)、[react-pdf](https://react-pdf.org/)，并说明为什么 PPResume 会选择 LaTeX 作为默认排版引擎。
+
+但在开始之前，让我们先明确一些将在整篇文章中使用的术语。是的，这是一篇长文，阅读需要时间和精力。**读累的时候不要跟我抱怨哈，我在这里提醒过你啦！**
+
+术语：
+
+- **[印欧语系](https://en.wikipedia.org/wiki/Indo-European_languages)**：一种语言家族，主要分布在欧洲大部分地区、伊朗高原和印度次大陆北部。广泛使用的印欧语系语言包括英语、法语、葡萄牙语、俄语、荷兰语和西班牙语等。
+- **[CJK](https://en.wikipedia.org/wiki/CJK_characters)**：中文、日文和韩文。
+- **[字符集](https://www.creatopy.com/blog/what-is-a-character-set/)**：特定字体或字型中可用的完整字符、符号、字形和标点符号的集合。
+- **[字形](https://en.wikipedia.org/wiki/Glyph)**：在排版中字符的具体形状、设计或表现形式。
+- **[断词](https://en.wikipedia.org/wiki/Syllabification)**：在行尾将一个词分成几个音节，以改善文字的整体外观和可读性。
+- **[对齐](https://en.wikipedia.org/wiki/Typographic_alignment#Justified)**：调整版块内的文字，使其与左右页边齐平，一般通过调整字与字之间的间距来实现，使每行文字的外观保持一致。
+- **[锯齿](https://www.myfonts.com/pages/fontscom-learning-fontology-level-2-text-typography-rags-widows-orphans)**：文本在一个文本块的边缘对齐不均匀或不规则。这种情况通常发生在文字向一侧（左侧或右侧）对齐时，导致对侧出现“锯齿状”或不均匀。
+
+## 评估标准
+
+每种排版引擎都有其优缺点，可以满足不同的需求和偏好。基于 Web 的 HTML/CSS 排版极其灵活并支持[响应式](https://alistapart.com/article/responsive-web-design/)设计，非常适合 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization) 和交互式的内容。LaTeX.js 在 Web 和 LaTeX 之间架起了一座桥梁，而 LaTeX 本身则是学术和高精度排版的黄金标准。Typst 被视为是一个现代化、改进的 LaTeX 替代品。React-pdf 则允许使用 [react](https://react.dev/) 动态生成 PDF。排版引擎的选择在很大程度上取决于项目的具体需求。
+
+我并不是设计师，因此我无法从艺术的视角深入探讨排版。不过，我想从程序员的视角讨论一些关于排版引擎的技术问题。另，这篇文章并不是一份学术基准报告，所以我不会评估排版引擎的每一个方面。相反，**我会根据 PPResume 的需求设定一些评估标准。**
+
+当我在给 PPResume 写下第一行代码时，我设定了两个目标：
+
+- 必须生成顶级、高质量的 PDF
+- 必须提供对多语言的原生支持
+
+为了生成顶级、高质量的 PDF，排版引擎必须具备优秀的[换行算法](https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap)，而为了实现多语言的原生支持，排版引擎必须能够处理具有庞大字符集的语言（如中文、日文和韩文，即 CJK）。在深入探讨具体的排版引擎之前，让我们先评估这两个标准。
+
+哦对了，还有一点，**排版引擎必须支持分页**，才能生成 PDF。你可能会问：是否存在不支持分页的排版引擎？答案既不是 yes 也不是 no，这取决于你是否将 HTML & CSS 视为一种排版引擎。我们将在稍后讨论 HTML & CSS 时详细探讨这个问题。
+
+最后，如果 PPResume 能够提供出色的用户体验，那就更好了。在所有可能的功能中，我相信**实时预览是最受欢迎的**。
+
+简而言之，我会通过检查排版引擎是否符合以下评估标准来对其进行评判：
+
+1. Knuth Plass 换行算法
+2. CJK 排版
+3. 分页
+4. 实时预览
+
+### 神圣的换行算法
+
+换行算法是排版引擎的核心技术之一。它们在决定文本在页面或屏幕上的排列方式中起着至关重要的作用。
+
+换行算法的主要目的是决定段落中文本换行的最佳点。换行算法对于数字排版至关重要，是一切需要以视觉上吸引人和可读格式呈现文本的系统中的核心组成部分。
+
+评估换行算法质量有三个关键指标：
+
+1. **对齐**：换行算法与[对齐](https://en.wikipedia.org/wiki/Typographic_alignment#Justified)技术结合使用，以创建间距均匀的文本行。
+2. **断词**：许多高级算法都采用[断词](https://en.wikipedia.org/wiki/Syllabification)来改善换行，特别是对于长单词的语言。
+3. **优化**：算法通常会尽量减少整段文字之间难看的间隙或过于紧凑的间距。
+
+换行算法有[两类](https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap#Algorithm)：
+
+1. **最少行数**：一种贪婪算法，将尽可能多的单词放在一行上，然后移动到下一行并重复此过程，直到没有更多单词可放置。这种方法被许多现代文字处理器使用，如 [LibreOffice Writer](https://www.libreoffice.org/discover/writer/) 和 Microsoft Word。
+2. **最小锯齿**：一种动态规划算法，最早在 TeX 中使用，旨在最小化行末空格长度的平方和，以**产生比贪婪算法更美观的结果**，后者并不总是最大限度地减小行末空格长度的平方和。
+
+从技术上讲，最少行数算法速度更快，而最小锯齿算法则产生更具视觉吸引力的结果。举个例子，在下图中，上半部分是一个采用“最少行数”算法的 [LibreOffice 文档](/static/resources/on-typesetting-engines/knuth-plass-line-breaking-algorithm-demo.odt)，而下半部分是一个采用“最小锯齿”算法的 TeX 引擎生成的 [PDF 文档](/static/resources/on-typesetting-engines/knuth-plass-line-breaking-algorithm-demo.pdf)。你可以很容易地看到下半部分的 PDF 在右边距上看起来不那么参差不齐，更具视觉吸引力，因为换行更平衡和齐整。
+
+![Knuth Plass 换行算法](/static/images/on-typesetting-engines/knuth-plass-line-breaking-algorithm-demo-with-libreoffice-and-tex.webp)
+
+在所有换行算法中，[Knuth Plass 换行算法](https://en.wikipedia.org/wiki/Knuth%E2%80%93Plass_line-breaking_algorithm)是最小锯齿方法的黄金标准。它被各种排版引擎广泛采用，如 [TeX](https://en.wikipedia.org/wiki/TeX)、[SILE](https://sile-typesetter.org/) 和 [Typst](https://github.com/typst/typst/discussions/626) 等。
+
+回到 PPResume 的案例，PPResume 的设计目标之一是生成顶级、高质量的 PDF，因此所选的排版引擎必须具备更具视觉吸引力的换行算法，也就是说，排版引擎必须采用 Knuth Plass 换行算法。
+
+### CJK 排版的复杂性
+
+[CJK](https://en.wikipedia.org/wiki/CJK_characters)（中文、日文和韩文）语言的排版通常被认为比印欧语言更为复杂。这一点在 [koreader](https://github.com/koreader/koreader) 项目的经典[讨论](https://github.com/koreader/koreader/issues/6162)中得到了体现。造成这种复杂性的原因有几个。
+
+简而言之，如果你不想深入细节，可以参考以下几份 [W3C](https://www.w3.org/) 的草案说明，以直观了解 CJK 排版的复杂性：
+
+- [Requirements for Chinese Text Layout 中文排版需求](https://www.w3.org/TR/clreq/)
+- [Requirements for Japanese Text Layout 日本語組版処理の要件（日本語版）
+  ](https://www.w3.org/TR/jlreq/)
+- [Requirements for Hangul Text Layout and Typography : 한국어 텍스트 레이아웃 및 타이포그래피를
+  위한 요구사항](https://www.w3.org/TR/klreq/)
+
+#### CJK 字符集庞大
+
+这种复杂性的根本原因在于 CJK 语言的字符集远远大于印欧语言。根据 [CJK 统一表意文字](https://en.wikipedia.org/wiki/CJK_Unified_Ideographs)，截至 Unicode 16.0，Unicode 定义了总共 97680 个字符。**这实在是庞大无比**。相比之下，印欧语言通常使用拉丁字母表，字符数量仅有几百个，远小于 CJK 字符集。嗯哼，10 万个字符，即使是创建一种涵盖所有字符的字体，也是一项巨大的工作，需要大量人力，而且非常昂贵。
+
+![CJK Characters](/static/images/on-typesetting-engines/The_old_man_is_72_years_old_final.webp)
+
+以 PPResume 为例，我们曾遇到两个问题
+([1](https://github.com/ppresume/community/issues/33),
+[2](https://github.com/ppresume/community/issues/63))，皆因
+[CTeX](https://ctan.org/pkg/ctex?lang=en) 的推荐字体缺少某些字符。与印欧语言不同，能够完整覆盖整个 CJK 字符集的字体非常少，且大多数都是商业字体——
+[Noto](https://fonts.google.com/noto) 是少数几个既能很好覆盖
+[CJK](https://github.com/notofonts/noto-cjk) 字符集又可以免费使用的例外之一。
+
+#### 文化的细微差别
+
+每种 CJK 语言都有自己的一套排版惯例，这些惯例在不同文化和上下文中可能差异很大。例如，标点符号的放置和间距规则在中文、日文和韩文文本中各不相同。很难想象[引号](https://en.wikipedia.org/wiki/Quotation_mark)在 CJK 中的使用有完全不同的[惯例](https://en.wikipedia.org/wiki/Quotation_mark#Chinese,_Japanese_and_Korean)。
+
+> In Japan, corner brackets are used.
+>
+> In South Korea, corner brackets and English-style quotes are used.
+>
+> In North Korea, angle quotes are used.
+>
+> In mainland China, English-style quotes (full width “ ”) are official and
+> prevalent; corner brackets are rare today. The Unicode code points used are the
+> English quotes (rendered as fullwidth by the font), not the fullwidth forms.
+>
+> In Taiwan, Hong Kong and Macau, where traditional characters are used, corner
+> brackets are prevalent, although English-style quotes are also used.
+>
+> In the Chinese language, double angle brackets are placed around titles of
+> books, documents, movies, pieces of art or music, magazines, newspapers, laws,
+> etc. When nested, single angle brackets are used inside double angle brackets.
+> With some exceptions, this usage parallels the usage of italics in English:
+>
+> 「你看過《三國演義》嗎？」他問我。
+>
+> "Have you read Romance of the Three Kingdoms?", he asked me.
+
+#### 字体搭配
+
+当 CJK 与其他印欧语言混合时，事情变得更加复杂。
+
+首先，标点符号的形式不同。例如，[逗号](https://en.wikipedia.org/wiki/Comma)在中文和英文中有不同的形式：
+
+> English uses the comma `,` as a separator to separate parts of a sentence and
+> items in a list, while Chinese uses a Chinese comma `，` to separate
+> sensences, and a dedicated enumeration comma (顿号, `、`) to separate items in
+> a list (e.g. keyword > list).
+>
+> — [Multi Languages Support](https://ppresume.com/posts/multi-languagues-support#punctuations)
+
+另，如前所述，印欧语言的拉丁字体可能覆盖一千个字形，而 CJK 字体必须至少覆盖数千个字形。
+
+合格的排版通常需要 CJK 字体与拉丁字体搭配，来保证视觉上的一致性。这也是有挑战性的，因为它需要智能地在字符集之间切换字体。
+
+> So Chinese, Japanese and Korean fonts tend to be developed by Asian designers,
+> with an understandable emphasis on the elegance of the Asian characters.
+> Unfortunately this can be at the expense of the design of the Latin letters,
+> which may in some cases be really quite ugly.
+>
+> The solution? Use an attractive Latin-script font for any Latin letters and
+> numbers, and an Asian font for the Chinese, Japanese or Korean characters.
+> Rather than making the poor typesetter manually change the font each time a
+> Latin letter or number appears, applications such as InDesign allow Combined
+> Fonts to be set within a document which intelligently switch the font according
+> to the nature of each letter or character.
+>
+> — [Typesetting conventions and best practices for CJK (Chinese, Japanese, Korean)](https://asianabsolute.co.uk/blog/typesetting-conventions-best-practices-chinese-japanese-korean/)
+
+并非所有排版引擎都内置支持字体搭配，但这对于 PPResume 提供对多语言的原生支持却是至关重要的。
+
+总之，与印欧语言相比，CJK 字符集的巨大规模、文化上的细微差别和技术上的挑战，导致 CJK 的排版工作更加复杂。
+
+## HTML & CSS
+
+从技术上讲，[HTML](https://en.wikipedia.org/wiki/HTML)（超文本标记语言）并不是一个排版引擎，而是一种用于创建网页结构和内容的标记语言。它的主要目的是定义文档的结构，例如标题、段落、列表和链接等。
+
+虽然 HTML 可以间接影响页面上文本的显示方式（比如使用过时的 [font](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font) 标签），但它无法处理复杂的排版任务，例如：
+
+- **字体选择**：HTML 没有内置机制来选择特定字体。
+- **文本格式化**： HTML 可以控制文本格式的某些方面（如粗体、斜体等），但无法提供排版引擎所提供的细粒度控制。
+- **断词**：HTML 不处理断词。
+- **分页**：HTML 不是为分页设计的。
+
+虽然 HTML 本身不能作为排版引擎使用，但结合 [CSS](https://en.wikipedia.org/wiki/CSS)（层叠样式表）后，可以视为一个初级的排版引擎。
+
+HTML 和 CSS 虽然不像 LaTeX 或 [InDesign](https://en.wikipedia.org/wiki/Adobe_InDesign) 等专用排版引擎那样复杂，但它们提供了一种灵活的方式来控制网页上文本的布局和外观。
+
+- HTML 用于定义内容的结构，例如标题、段落和列表。
+- CSS 用于设置 HTML 元素的样式，控制的方面包括：
+  - 字体选择：指定字体、字体大小和字体样式。
+  - 文本格式化：控制行间距、字间距、文本对齐等。
+  - 布局：使用 [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float)、[flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 和 [grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid) 等技术创建复杂的布局。
+
+通过将 HTML 与 CSS 相结合，可以实现多种文本格式和布局效果。不过，对于更高级的排版任务，如复杂的数学公式或对排版的精确控制，专用排版引擎可能更为合适。
+
+市场上有许多使用 HTML 和 CSS 作为排版引擎的简历生成器。大多数是商业产品，只有少数是免费或开源的：
+
+| 网站                       | 技术        | 类型       |
+| -------------------------- | ----------- | ---------- |
+| https://resume.io          | HTML Canvas | 商业       |
+| https://flowcv.com/        | HTML & CSS  | 商业       |
+| https://www.visualcv.com/  | HTML & CSS  | 商业       |
+| https://standardresume.co/ | HTML & CSS  | 商业       |
+| https://zety.com/          | HTML & CSS  | 商业       |
+| https://rxresu.me          | HTML & CSS  | 免费和开源 |
+
+一方面，从商业角度来看，考虑到市场竞争已经如此激烈，创建另一个使用 HTML 和 CSS 作为排版引擎的简历生成器并不明智。
+
+另一方面，从工程角度来看，HTML 和 CSS 并未实现 Knuth Plass 换行算法，因此无法满足 PPResume 的需求。
+
+### 换行
+
+实际上，标准 CSS 确实提供了一些选项来调整文本对齐：
+
+- [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align)：设置块级元素或表格单元格内的内联内容的水平对齐。
+- [`text-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap)：控制元素内文本的换行方式。
+- [`word-break`](https://developer.mozilla.org/en-US/docs/Web/CSS/word-break)：设置文本在其内容框溢出时是否换行。
+- [`hyphens`](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens)：指定文本在多行换行时如何断词。
+- [`hanging-punctuation`](https://developer.mozilla.org/en-US/docs/Web/CSS/hanging-punctuation)：指定标点符号是否应悬挂在文本行的开头或结尾。
+
+Firefox 甚至提供了一个 [`text-justify`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-justify) 选项，用于设置在元素上应用 `text-align: justify;` 时应使用哪种对齐方式，但此选项仅在 Firefox 上可用。
+
+然而，这些选项都没有实现适当的断词，因此它们[无法](https://chriscummins.cc/2013/typesetting/)产生与真正的 Knuth Plass 换行算法一样的视觉效果——Hacker News 上有一个有价值的[讨论](https://news.ycombinator.com/item?id=1134342)，探讨了现代浏览器为何懒于实现 Knuth Plass 换行算法。
+
+虽然也有一些 Knuth-Plass 换行算法的 JavaScript 实现，但似乎没有一个准备好用于生产环境：
+
+- https://github.com/bramstein/typeset
+- https://github.com/robertknight/tex-linebreak
+
+### CJK
+
+HTML 和 CSS——或者说浏览器，确实支持 CJK，这是毋庸置疑的，否则浏览器不可能成为全球最广泛采用的信息平台。然而，这并不意味着每个包含 CJK 的页面都遵循排版最佳实践。
+
+例如，强烈建议在 CJK 和西文字符之间留出一些空格，而纯 HTML 和 CSS 无法自动做到这一点——这需要 JavaScript 的帮助。
+
+总的来说，为了在浏览器中遵循 CJK 排版的最佳实践，需要额外的努力。如上所述，[Requirements for Chinese Text Layout 中文排版需求](https://www.w3.org/TR/clreq/)是一个非常好的权威参考，其中一位作者[陳奕鈞](https://yijun.me/)发布了一个开源项目 [Han](https://hanzi.pro/)，如果你想按照最佳实践排版 CJK，它提供了一个非常好的实现。
+
+![Han.css](/static/images/on-typesetting-engines/typeset.webp)
+
+### 分页
+
+HTML 和 CSS 不是为分页文档设计的，尽管借助 JavaScript，可以模拟分页文档（[oh-my-cv](https://github.com/Renovamen/oh-my-cv) 提供了一个很好的参考[实现](https://github.com/Renovamen/oh-my-cv/blob/main/packages/vue-smart-pages/src/useSmartPages.ts)）。HTML 的文档本质上是[响应式](https://alistapart.com/article/responsive-web-design/)的，像水一样流动，可以适应任何大小的[视口](https://developer.mozilla.org/zh-CN/docs/Glossary/Viewport)。
+
+### 实时预览
+
+如果简历生成过程仅在客户端进行，HTML 和 CSS 可以实现实时预览；否则，如果在服务器端进行，则会有从请求到响应的往返时间，那么则无法实现实时预览。
+
+### 结论
+
+在结束之前，我忍不住想给你展示一个优秀的[例子](https://latex.vercel.app/)，展示了 HTML 和 CSS 排版能力的极致。它使用 `text-align: justify` 和 `hyphens: auto` 来获得段落的最佳对齐布局。这几乎是 HTML 和 CSS 能做到的最好效果。如果你想用 HTML 和 CSS 进行一些排版，这将是一个很好的参考。
+
+总之，虽然理论上可以通过 HTML 和 CSS 实现顶级排版效果，就像专用排版引擎一样，但这需要耗费大量的精力，并且可能还会面临浏览器兼容性问题。因此，至少在目前，如果需要顶级的排版，仍然建议使用专用的排版引擎，而不是手动调整 HTML 和 CSS。
+
+- 优点
+  - **普适性**：HTML 和 CSS 是 web 的基础，使其在任何带有浏览器的设备上都可访问。
+  - **响应式**：HTML 和 CSS 是响应式的，可以适应任何大小的视口。
+  - **灵活性**：HTML 和 CSS 非常灵活，可以通过丰富的标准 API 进行编程。
+  - **实时预览**：HTML 和 CSS 支持实时预览。
+- 缺点
+  - **排版控制有限**：与专用排版引擎相比，HTML/CSS 在细微排版细节上提供的控制较少。
+  - **浏览器兼容性**：不同的浏览器可能会以不同的方式渲染相同的 HTML 和 CSS，使得跨设备保持一致性具有挑战性。
+  - **无原生分页**：HTML 和 CSS 不是为分页文档设计的，因此不提供导出为 PDF 的一流工具。
+  - **换行效果差**：如前所述，HTML 和 CSS 未实现 Knuth Plass 换行算法。
+  - **CJK 排版需要额外努力**：HTML 和 CSS 需要额外的库和努力才能遵循 CJK 的最佳排版实践。
+
+## LaTeX
+
+[TeX](https://en.wikipedia.org/wiki/TeX) 是由 [Donald Knuth](https://www-cs-faculty.stanford.edu/~knuth/) 在 20 世纪 70 年代末创建的排版系统。它专为创建高质量排版的文档而设计，特别是那些包含复杂数学和科学符号的文档。TeX 是一个低级系统，要求用户使用特定语言编写命令来格式化文档。它有自己的一套规则和宏来格式化文本，并且高度可定制和可扩展。
+
+[LaTeX](https://www.latex-project.org/) 是一个建立在 TeX 之上的文档编制系统。它由 [Leslie Lamport](https://www.lamport.org/) 在 20 世纪 80 年代初创建，以简化文档准备过程。LaTeX 在 TeX 的低级编程语言之上提供了一组更高级的宏，使其更易于使用和更直观。
+
+一个常被问到的问题是，为什么要使用 LaTeX 而不是像 Microsoft Word 这样的文字处理器？简短的回答是：“为了美观”。[Dario](https://nitens.org/w/) 写了一篇优秀的文章 [The Beauty of
+LaTeX](https://nitens.org/w/latex/)，其中有数十个例子展示了 Microsoft Word 和 LaTeX 之间的排版细节。我就不在这里再重复了。
+
+总之，对于专业排版，LaTeX 在以下功能上表现出色：
+
+- 带有对齐和连字符的换行
+- 高级字体功能，如字距调整、断词、小型大写字母等
+- 数学公式
+- 可编程和可扩展
+- 一致性和稳定性
+- 跨平台兼容性
+
+### 换行
+
+TeX 拥有黄金换行算法——Knuth Plass 换行算法。毕竟 Knuth 是 TeX 的作者，对吧？
+
+如上所述，Knuth Plass 换行算法通过将锯齿降至最低，尽力产生更美观的结果。
+
+与许多其他系统使用的“首次拟合”方法不同，Knuth Plass 断线算法采用的是“总体拟合”换行算法。这意味着：
+
+- 它同时考虑段落中的所有可以进行换行的断点
+- 它针对整个段落优化布局
+- 它可以根据对后续行的影响调整较早的换行
+
+这使得 TeX 能够整体上产生更具视觉吸引力和平衡的段落。
+
+同时，与许多将断词处理分开的系统不同，TeX 的换行算法直接整合了断词决策。这允许在整个段落的上下文中更优化地放置连字符。
+
+总体而言，TeX 的换行算法被认为是排版中最复杂和有效的方法之一，其核心原则持续影响现代排版系统，并在高质量数字排版的前沿保持领先地位。
+
+### CJK
+
+关于 CJK 排版，LaTeX 在一些新引擎和一些包的帮助下对 CJK 提供了相当好的支持：
+
+- 新引擎如 [LuaTeX](https://www.luatex.org/) 和 [XeTeX](https://tug.org/xetex/)
+- 宏包如 [xeCJK](https://ctan.org/pkg/xecjk?lang=en)、[CTeX](https://ctan.org/pkg/ctex?lang=en) 和 [LuaTeX-ja](https://ctan.org/pkg/luatexja?lang=en)
+
+例如，xeCJK 包提供以下命令来设置 CJK 字体：
+
+- `\setCJKmainfont`：设置正文衬线族的 CJK 字体
+- `\setCJKsansfont`：设置正文无衬线族的 CJK 字体
+- `\setCJKmonofont`：设置正文等宽族的 CJK 字体
+
+xeCJK 还提供了指定 CJK 标点样式、CJK 与非 CJK 字符之间的间距等选项。
+
+总体而言，LaTeX 的 CJK 支持现在相当成熟，尽管在不同环境中设置可能需要一些时间。这里有一页来自 [The XeTeX Companion TEX meets OpenType and Unicode](https://xml.web.cern.ch/XML/lgc2/xetexmain.pdf) 的手册文档，你可以一瞥 XeTeX 在 CJK 排版方面的能力。
+
+![XeTeX for CJK](/static/images/on-typesetting-engines/xetexmain.webp)
+
+### 分页
+
+LaTeX 从一开始就是为排版分页文档而设计的，所以它对分页有出色的支持，你可以轻松调整纸张大小、方向、边距等。
+
+查看[geometry](https://ctan.org/pkg/geometry?lang=en)包以获取详细信息。
+
+### 实时预览
+
+LaTeX 默认在服务器端运行，因此从请求生成 PDF 到响应生成的 PDF 会有往返时间。
+
+使用 LaTeX 作为排版引擎意味着我们失去了实时预览的能力。然而，确实有方法可以缓解这一问题。魔法在于[WebAssembly](https://webassembly.org/)。
+
+有一些努力将 LaTeX 编译为 WebAssembly（即 wasm），这样 LaTeX 就可以在纯浏览器环境中运行了：
+
+- [texlive.js](https://manuels.github.io/texlive.js/)：最初的将 LaTeX 编译为 wasm 的尝试，仅支持 [pdfTeX](https://www.tug.org/applications/pdftex/) 引擎
+- [SwiftLaTeX](https://www.swiftlatex.com/)，一个最近的尝试，让 LaTeX 引擎在浏览器中运行，支持带有 CJK 的 XeTeX。
+- [TeXpresso](https://github.com/let-def/texpresso)：支持实时渲染和错误报告的 LaTeX，这里有一些 [录屏演示](https://github.com/let-def/texpresso?tab=readme-ov-file#Screencasts)
+
+尽管上述项目都没有积极维护，但理论上可以在浏览器中纯粹运行 LaTeX。这将大大减少从浏览器到服务器的往返时间，我们可以获得实时预览。
+
+### 结论
+
+在总结之前，我想在这里分享一些题外话。市场上基于 LaTeX 的简历生成器选择非常少：
+
+- [https://resumepuppy.com/](https://resumepuppy.com/)：我知道的市面上唯一使用 LaTeX 的商业简历生成器，他们声称已被 100,000 多名专业人士和学生所使用。
+- [https://resumake.io/](https://resumake.io/)：开源的一个，在 GitHub 上有超过 3k star。
+
+从商业角度来看，这是一个利基市场，并不太拥挤，所以可能值得我创建另一个基于 LaTeX 的简历生成器。
+
+好了，是时候给 LaTeX 下个结论了。
+
+- 优点
+  - **精确和控制**：LaTeX 提供无与伦比的文档布局和排版控制。
+  - **黄金换行**：Knuth Plass 换行算法是最优换行算法的黄金标准，且其是由 TeX 作者发明的。
+  - **广泛的 CJK 支持**：有大量的宏包扩展了 LaTeX 对 CJK 的支持。
+- 缺点
+  - **学习曲线陡峭**：与所见即所得编辑器相比，LaTeX 对新用户的入门门槛更高。
+  - **没有实时预览**：默认情况下，LaTeX 需要在服务器上进行编译，因此没有实时预览。
+  - **旧且神秘的开发体验**：LaTeX 的编译日志有时难以阅读，只能通过二分搜索方法进行调试。
+
+## LaTeX.js
+
+[LaTeX.js](https://latex.js.org/) 是一个将 LaTeX 转换为 HTML5 的工具，旨在直接在浏览器中渲染 LaTeX 文档，而无需服务器端处理。
+
+它提供了一个非常令人印象深刻的 [playground](https://latex.js.org/playground.html)，在左侧你可以输入 LaTeX 代码，右侧则会将其渲染成一个美观的 HTML 文档。
+
+![LaTeX.js Playground](/static/images/on-typesetting-engines/latex-js-playground.webp)
+
+### 换行
+
+LaTeX.js 不使用 Knuth Plass 换行算法，而是采用 `text-align: justify` 来最小化段落的锯齿。
+
+同时，它还使用[软连字符](https://en.wikipedia.org/wiki/Soft_hyphen) `$shy;` 配合 `hyphens: manual` 来实现更好的换行效果。
+
+尽管这些技术比普通 HTML 产生了更好的视觉效果，但仍然无法达与真正的 Knuth Plass 换行算法相比。
+
+### CJK
+
+LaTeX.js 支持 CJK，因为它本质上是 HTML 和 CSS 的一个转译器。然而，和 HTML、CSS 一样，它并不遵循 CJK 的最佳排版实践，且想要调整它以便遵循这些最佳实践时，会更为困难。
+
+### 分页
+
+看起来我们可以在浏览器中使用 LaTeX？不，不，不，如果事情真的那么简单，世界会更美好。LaTeX.js 有许多[限制](https://latex.js.org/limitations.html)，其中一些对于生产环境中的 LaTeX 替代品来说是致命的：
+
+- 水平[粘连](https://www.overleaf.com/learn/latex/Articles/Boxes_and_Glue%3A_A_Brief%2C_but_Visual%2C_Introduction_Using_LuaTeX)，例如段落中的[`\hfill`](https://latexref.xyz/_005chfill.html)，无法实现。
+- 垂直粘连在 HTML 中没有意义，除了在固定高度的盒子中外，无法模拟。
+- 页面的概念不适用于 HTML，因此与分页相关的任何宏都会被忽略，也就是说，你无法使用 LaTeX.js 生成分页文档，这对于简历生成器应用来说是致命的。
+
+### 实时预览
+
+LaTeX.js 提供实时预览，因为它是一个客户端库，能够在浏览器中运行。
+
+### 结论
+
+LaTeX.js 仅提供[有限的](https://latex.js.org/limitations.html#when-parsing-tex-as-a-context-free-grammar) TeX/LaTeX 解析能力，换句话说，许多 LaTeX 包无法在 LaTeX.js 中使用。
+
+> This is a PEG parser, which means it interprets LaTeX as a context-free
+> language. However, TeX (and therefore LaTeX) is Turing complete, so TeX can only
+> really be parsed by a complete Turing machine. It is not possible to parse the
+> full TeX language with a static parser. See here (opens new window)for some
+> interesting examples.
+
+当我在 2022 年 12 月我开始创建 PPResume 时，我也尝试了一段时间 LaTeX.js，但在发现其致命限制后，我迅速放弃了它，转而使用服务器端 LaTeX。我个人认为，**LaTeX.js 是一个很好的想法，但远未成为生产环境下的 LaTeX 替代品**。
+
+- 优点
+  - **实时预览**：LaTeX.js 完全在客户端处理 LaTeX 文档，这意味着它可以在浏览器中实时渲染文档，消除了对服务器端 LaTeX 安装和编译的需求。
+  - **可扩展性**：该项目用 JavaScript 实现，易于集成到 Web 应用程序中。新的宏也可以很容易地通过 JavaScript 来添加。
+- 缺点
+  - **功能有限**：LaTeX.js 仅涵盖有限的 LaTeX 功能，远未成为生产环境下的 LaTeX 替代品。许多 LaTeX 包无法与 LaTeX.js 一起使用。
+  - **缺乏分页**：一些 LaTeX 功能，如粘连和分页，无法转换为 HTML，这对于生成像 PDF 这样的分页文档来说是一个致命缺点。
+  - **换行效果差**：LaTeX.js 基于 HTML 和 CSS，并没有实现 Knuth Plass 换行算法。
+  - **CJK 排版需要额外的工作**：同样，由于 LaTeX.js 基于 HTML 和 CSS，因此需要额外的工作才能遵循 CJK 的最佳排版实践，而且比纯 HTML 和 CSS 更麻烦一些。
+
+## Typst
+
+[Typst](https://typst.app/) 是一个现代排版系统，旨在成为 LaTeX 的直观高效替代品。它的语法深受 Markdown 的启发，使得那些觉得 LaTeX 语法复杂的用户更容易上手。Typst 允许用户在文本文件中撰写文档，类似于 LaTeX，但更注重速度、简洁性和错误处理。
+
+![Typst 应用](/static/images/on-typesetting-engines/typst-app.webp)
+
+### 换行
+
+Typst 提供两种换行选项：
+
+- `#set par(linebreaks: "simple")`：以简单的首次拟合风格进行换行。
+- `#set par(linebreaks: "optimized")`：优化整个段落的换行，此选项[实现了](https://github.com/typst/typst/discussions/626) Knuth Plass 换行算法。
+
+在 Typst 中，如果同时使用 `linebreaks` 选项和 [`hyphenate`](https://typst.app/docs/reference/text/text/#parameters-hyphenate) 选项，换行效果会更佳。
+
+### CJK
+
+由于 Typst 仍在发展中，其 CJK 支持尚不如 LaTeX 成熟。因此，Typst 社区中存在许多[暂未解决的问题](https://github.com/typst/typst/issues?q=is%3Aissue+is%3Aopen+CJK)。以下是一些典型问题：
+
+- [Better CJK support](https://github.com/typst/typst/issues/276)
+- [Ignore linebreaks between CJK characters in source
+  code](https://github.com/typst/typst/issues/792)
+- [Language-dependant font
+  configuration](https://github.com/typst/typst/issues/794)
+- [Add support for ruby (CJK, e.g., furigana for
+  Japanese)](https://github.com/typst/typst/issues/1489)
+- [CJK punctuation at the start of paragraphs are not adjusted
+  sometimes](https://github.com/typst/typst/issues/2348)
+- [Writing Chinese text results in some characters falling back to a different
+  font in web app](https://github.com/typst/typst/issues/5040)
+- [0.12 handles CJK fonts
+  incorrectly](https://github.com/typst/typst/issues/5277)
+
+这些问题大致可以归类为以下几类：
+
+- CJK 字体设置
+- 标点规则
+- CJK 和非 CJK 字符之间的间距样式
+- 语言相关的换行
+
+我坚信 Typst 能够改善并解决这些问题，但这需要时间。未来可能会有一些不兼容的变化。
+
+### 分页
+
+Typst 的[分页](https://typst.app/docs/guides/page-setup-guide/)功能开箱即用，作为一个专用排版引擎，这一点相当不错。
+
+### 实时预览
+
+这一部分稍显复杂。
+
+原则上讲，Typst 是一个[开源](https://github.com/typst/typst/)项目，可以作为 CLI 工具运行。你只需输入命令 `typst compile path/to/source.typ path/to/output.pdf`，即可在本地文件夹中生成 PDF。
+
+Typst 提供了 `typst watch` 命令，结合增量编译，PDF 可以在毫秒内更新。此外，还有一些扩展如 [tinymist](https://github.com/Myriad-Dreamin/tinymist)，可以在编辑器中实现实时预览。
+
+它也可以在浏览器中运行，因为该项目是用 Rust 编写的，并设计为能够编译为 WebAssembly。实际上，官方的 Typst [web app](https://typst.app) 就是通过 WebAssembly 在浏览器中运行的。然而，这一部分[并未](https://github.com/typst/typst/issues/909)开源：
+
+> Typst 可以编译为 WASM，但没有可用的 JS 绑定，你需要自己编写。它并不像 compile(string) 那样简单，因为你还需要提供字体，如果你想要多文件设置，当然还需要文件。
+
+换言之，如果你想在浏览器中实现 Typst 的实时预览，你大多需要自己编写 WebAssembly 绑定。
+
+### 结论
+
+在我看来，Typst 是 LaTeX 的一个非常有前途的替代品，但仍然很年轻，缺乏处理复杂排版场景的一些关键能力。
+
+- 优点
+  - **用户友好的语法**：Typst 的语法比 LaTeX 更直接和一致，使初学者更容易学习和使用。
+  - **快速编译**：Typst 具有增量编译，编译速度在毫秒级而非秒级。
+  - **可定制的换行**：Typst 提供选项让用户选择 Knuth Plass 换行算法。
+- 缺点
+  - **有限的生态系统**：作为一个较新的工具，Typst 缺乏 LaTeX 提供的广泛包生态系统，这可能限制高级排版需求的功能。
+  - **不稳定的 CJK 排版**：Typst 在 CJK 排版方面仍存在许多问题，并在不断演进中。
+  - **实时预览是私有的**：Typst 并未开源其 WebAssembly 绑定，因此在浏览器中没有官方的实时预览功能。
+
+## React-pdf
+
+[React-pdf](https://react-pdf.org/) 是一个用于在浏览器和服务器上创建 PDF 文件的 React 渲染器。
+
+### 换行
+
+React-pdf 内部[实现了](https://react-pdf.org/advanced#hyphenation) Knuth Plass 换行算法。默认情况下，它会对英语单词进行断词符处理。
+
+以下是来自 [react-pdf playground](https://react-pdf.org/repl) 示例文档的一页，你可以注意到段落的布局，文本整体看起来平衡且齐整，远比普通 HTML 和 CSS 中的段落要好。
+
+![React-pdf 文档](/static/images/on-typesetting-engines/react-pdf-document.webp)
+
+### CJK
+
+在默认设置下，react-pdf 不支持 CJK 字符，你需要[注册字体](https://github.com/diegomura/react-pdf/issues/867#issuecomment-713483012)并在样式中引用它。
+
+### 分页
+
+显而易见，react-pdf 支持分页，因为它是一个生成 PDF 的库。它还提供[选项](https://react-pdf.org/components#page)来指定页面大小、dpi、样式等。
+
+### 实时预览
+
+React-pdf 可以在客户端和服务器端使用。
+
+如果在客户端使用，你就可以享受实时预览，你可以再次查看 [playground](https://react-pdf.org/repl) 以获取实时演示。否则，如果在服务器端与 [Node.js](https://react-pdf.org/node) 一起使用，由于请求到响应的往返时间，就无法实现实时预览。
+
+### 结论
+
+看起来 React-pdf 将是简历生成器的理想排版引擎选择。
+
+然而，React-pdf 并不是一个专用的排版引擎。它缺乏许多仅在专用排版引擎中可用或运行良好的功能。例如，它没有内置的列表项。最重要的是，尽管它已经实现了 Knuth Plass 换行算法，但排版不仅仅是将段落断词换行，对吗？你仍然需要调整段落之间的间距、字体大小/样式，并遵循 CJK 最佳排版实践等。所有这些调整都需要大量的工作，而 LaTeX 已经开箱即用地提供了这些功能。
+
+实际上，有一个开源的简历生成器 [open-resume](https://www.open-resume.com/resume-builder)，它使用这个库实时生成和更新简历 PDF，你可以自己检查输出 PDF，并与 [LaTeX 生成的 PDF](https://ppresume.com/gallery) 进行比较。
+
+OK，这里下个结论吧。
+
+- 优点
+  - **React 集成**：react-pdf 允许开发者使用 React 创建 PDF 文档。
+  - **实时预览**：在客户端运行时，react-pdf 提供实时预览。
+  - **良好的换行**：react-pdf 内部实现了 Knuth Plass 换行算法，效果优于普通 HTML 和 CSS。
+  - **分页支持**：react-pdf 开箱即用支持分页，具有可定制的页面大小、边距等。
+- 缺点
+  - **有限的排版能力**：毕竟 react-pdf 是一个 React 库，既不是专业的也不是专用的排版引擎。
+  - **对 CJK 的支持有限**：react-pdf 可以通过手动注册字体渲染 CJK，但默认并不遵循 CJK 最佳排版实践。
+
+## 总结
+
+PPResume 的目标是成为一个专业的简历生成器，提供顶级的排版质量，并原生支持多语言。
+
+如上所述，为了满足 PPResume 的要求，排版引擎必须：
+
+- 采用 Knuth Plass 换行算法
+- 支持 CJK，并遵循最佳排版实践
+- 支持分页
+- （可选）支持实时预览
+
+| 排版引擎   | Knuth Plass 换行 | CJK  | 分页 | 实时预览 |
+| ---------- | ---------------- | ---- | ---- | -------- |
+| HTML & CSS | 否               | 是   | 部分 | 是       |
+| LaTeX      | 是               | 是   | 是   | 否       |
+| LaTeX.js   | 否               | 是   | 否   | 是       |
+| Typst      | 是               | 部分 | 是   | 部分     |
+| React-pdf  | 是               | 否   | 是   | 是       |
+
+HTML & CSS 和 LaTeX.js 都不支持 Knuth Plass 换行，而 react-pdf 和 Typst 的 CJK 支持尚未成熟，因此 LaTeX 是我们唯一的选择。
+
+从长远来看，如果有更好的选择，PPResume 可能会添加对其他排版引擎的支持。
+
+最后但同样重要的是，享受 [polytype](https://polytype.dev/) 的乐趣，这是排版引擎的[如师通](https://zh.wikipedia.org/zh-hans/%E5%A6%82%E5%B8%88%E9%80%9A)。
+
+感谢你的阅读！
