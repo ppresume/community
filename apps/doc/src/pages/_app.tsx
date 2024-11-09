@@ -1,7 +1,9 @@
 import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
+
 import { MDXEmbedProvider } from 'mdx-embed'
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <MDXEmbedProvider>
       <script
