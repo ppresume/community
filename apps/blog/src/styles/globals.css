@@ -1,10 +1,10 @@
-.nx-prose {
-  max-width: 80ch;
+._prose {
+  max-width: 80ch !important;
   padding-bottom: 0;
 }
 
-.nx-prose img.shadow,
-.nx-prose video {
+._prose img.shadow,
+._prose video {
   /* add white background for img here, this is needed for some SVG images */
   background-color: #fff;
   margin-top: 1rem;
@@ -15,29 +15,29 @@
     rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem;
 }
 
-.nx-prose img {
+._prose img {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.nx-prose ul,
-.nx-prose ol {
+._prose ul,
+._prose ol {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.nx-prose li {
+._prose li {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-.nx-prose
+._prose
   :where(blockquote p:first-of-type):not(
-    :where([class~='nx-not-prose'] *)
+    :where([class~='_not-prose'] *)
   ):before {
   content: none;
 }
 
-.nx-prose blockquote {
+._prose blockquote {
   font-weight: 400;
 }
