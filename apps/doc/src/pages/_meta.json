@@ -2,6 +2,9 @@
   "index": {
     "title": "Introduction"
   },
+  "content": {
+    "title": "Content"
+  },
   "guide": {
     "title": "Guide"
   }
