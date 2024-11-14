@@ -41,3 +41,7 @@
 ._prose blockquote {
   font-weight: 400;
 }
+
+th._border {
+  text-align: start;
+}

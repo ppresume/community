@@ -18,3 +18,7 @@ img.white {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+th.nx-border {
+  text-align: start;
+}
