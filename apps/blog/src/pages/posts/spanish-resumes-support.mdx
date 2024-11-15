@@ -1,0 +1,126 @@
+---
+title: Spanish Resumes Support
+date: 2024-11-15
+description: >
+  PPResume now supports Spanish resumes. More Indo-European languages will
+  covered soon.
+tag: Spanish, Internationalization, LaTeX, Localization, babel
+author: Xiao Hanyu
+---
+
+## Table of Contents
+
+## Introduction
+
+[PPResume](https://ppresume.com/?utm_source=ppresume&utm_medium=blog&utm_campaign=spanish-resumes)
+now supports Spanish resumes.
+
+Let's take a look first:
+
+![Spanish Resume](/static/images/spanish-resumes-support/es.png)
+
+English and Spanish are both [Indo-European
+languages](https://en.wikipedia.org/wiki/Indo-European_languages) and therefore
+they share some similarities, so most of the common foundations of PPResume can
+be reused.
+
+However, there are still notable differences between English and Spanish
+resumes, such as:
+
+- character set
+- punctuations
+- date
+- capitalization rules
+- terms and options translations
+
+I'm not going to present all the details in this post—it is boring to do this,
+you know. Instead, this time we have revised our docs site and list all the
+details [there](https://docs.ppresume.com/content/multi-languages/spanish).
+
+## Engineering
+
+As for the engineering details, I can tell that supporting Spanish in PPResume
+is far more easier than [Chinese](/posts/multi-languagues-support).
+
+In total, it took me about 2 days to learn the basics of Spanish—mostly the
+differences between the English and Spanish writing systems. And then another 2
+or 3 days for implementation on top of July's [effort for multi languages
+support](https://blog.ppresume.com/posts/multi-languagues-support).
+
+Basically, to support Spanish, it needs 3 things:
+
+1. prepare the LaTeX environment
+2. revise the LaTeX template
+3. translations for terms and options
+
+### TeX Live
+
+If you are using [MacTeX](https://www.tug.org/mactex/), you do not need to do
+anything. If you are using Debian/Ubuntu, you will need to install the
+[texlive-lang-spanish](https://packages.debian.org/sid/tex/texlive-lang-spanish)
+package.
+
+```sh
+apt install -y texlive-lang-spanish
+```
+
+The texlive-lang-spanish package includes the following CTAN packages:
+
+- [babel-spanish](https://ctan.org/pkg/babel-spanish?lang=en):
+  [Babel](https://ctan.org/pkg/babel?lang=en) support for Spanish
+- [hyphen-spanish](https://ctan.org/pkg/hyphen-spanish): Spanish hyphenation
+  patterns.
+
+### LaTeX
+
+Once we have the necessary packages installed, we then revise the LaTeX template
+by putting the following snippets in the preamble.
+
+```latex
+\usepackage[T1]{fontenc}
+% [spanish]{babel} has some conflicting issues with moderncv, ref:
+% https://tex.stackexchange.com/a/140161/36007
+\usepackage[spanish,es-lcroman]{babel}
+```
+
+Here `\usepackage[T1]{fontenc}` is super important because it affects the LaTeX
+hyphenation algorithm for Spanish.
+
+> Font encodings are important for more than their rôle in mapping the glyphs of
+> the fonts to be used for typesetting: their glyph tables are also the context in
+> which TeX’s hyphenation algorithm operates.
+>
+> — [LaTeX font encodings](https://www.latex-project.org/help/documentation/encguide.pdf)
+
+Babel package is also needed with proper options:
+
+> The babel package presented in the introduction allows the use of characters
+> from a range of languages and also translates some elements within the
+> document. babel also automatically activates the appropriate hyphenation
+> rules for the language you choose.
+>
+> [International language support](https://www.overleaf.com/learn/latex/International_language_support)
+
+### Translations
+
+PPResume uses several hundred predefined terms and options, so we need to
+translate these terms and options into Spanish and make sure that Spanish
+[capitalization
+rules](https://docs.ppresume.com/content/multi-languages/spanish#capitalization)
+are followed.
+
+Check the
+[translations](http://localhost:3004/content/multi-languages/spanish#translations)
+on the docs site for the full list. I am not a Spanish speaker, all my knowledge
+of Spanish comes from the public internet, so if you find any errors, please
+help by [reporting an issue](https://github.com/ppresume/community/issues/new).
+Thank you very much!
+
+## Look ahead
+
+I am planning to add more language support to PPResume in the near future, just
+to keep PPResume's promise—to be the kind of resume builder that provides
+native support for multi languages. Our next target, the [French
+language](https://en.wikipedia.org/wiki/French_language).
+
+See you soon!
