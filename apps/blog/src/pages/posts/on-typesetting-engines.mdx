@@ -51,12 +51,13 @@ _Don't complain to me later. I warned you here!_
 
 Glossaries:
 
-- **[Indo-European
-  languages](https://en.wikipedia.org/wiki/Indo-European_languages)**:
-  a language family native to the overwhelming
-  majority of Europe, the Iranian plateau, and the northern Indian subcontinent.
-  Widely spoken indo-european languages includes English, French, Portuguese,
-  Russian, Dutch, and Spanish, etc.
+- **Latin script languages**: languages that use
+  [Latin script](https://en.wikipedia.org/wiki/Latin_script) as the [writing
+  systems](https://en.wikipedia.org/wiki/Writing_system). Most [germanic
+  languages](https://en.wikipedia.org/wiki/Germanic_languages), [romance
+  languages](https://en.wikipedia.org/wiki/Romance_languages) and many other
+  languages like [Indonesian](https://en.wikipedia.org/wiki/Indonesian_language)
+  use Latin script as the primary writing system.
 - **[CJK](https://en.wikipedia.org/wiki/CJK_characters)**: Chinese, Japanese and
   Korean languages.
 - **[Character Set](https://www.creatopy.com/blog/what-is-a-character-set/)**:
@@ -79,7 +80,7 @@ Glossaries:
 ## The Accessment Criteria
 
 Each typesetting engine has its strengths and weaknesses, catering to different
-needs and preferences. Web-based typesetting with HTML/CSS is extremely flexible
+needs and preferences. Web based typesetting with HTML/CSS is extremely flexible
 and [responsive](https://alistapart.com/article/responsive-web-design/), ideal
 for [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization) and
 interactive content. LaTeX.js provides a bridge between the web and LaTeX, while
@@ -192,7 +193,7 @@ engine must adopt Knuth Plass line breaking algorithm.
 
 Typesetting for [CJK](https://en.wikipedia.org/wiki/CJK_characters) (Chinese,
 Japanese, and Korean) languages is generally considered to be more complicated
-than Indo-European languages. Here is a classic
+than Latin script languages. Here is a classic
 [discussion](https://github.com/koreader/koreader/issues/6162) from the
 [koreader](https://github.com/koreader/koreader) project. There are several
 reasons for this.
@@ -210,13 +211,14 @@ the complexity of typesetting requirements for CJK:
 #### CJK Character Set is Huge
 
 The root cause for this complexity is that the size of the character set for CJK
-languages is much more larger than Indo-European languages. According to the
+languages is much more larger than Latin script languages. According to the
 [CJK Unified Ideographs](https://en.wikipedia.org/wiki/CJK_Unified_Ideographs),
 as of Unicode 16.0, Unicode defines a total of 97,680 characters. **This is
-insanely huge**. In contrast, Indo-European languages typically use the Latin
-alphabet, which has a few hundred characters, much smaller than CJK. Hmmmm, 100k
-characters, even creating a font that covers all of them is a huge amount of
-work, labor-intensive and very expensive.
+insanely huge**. In contrast, the [Latin
+alphabet](https://en.wikipedia.org/wiki/Latin_alphabet) only has a few hundred
+characters, much smaller than CJK. Hmmmm, 100k characters, even creating a font
+that covers all of them is a huge amount of work, labor-intensive and very
+expensive.
 
 ![CJK Characters](/static/images/on-typesetting-engines/The_old_man_is_72_years_old_final.webp)
 
@@ -224,7 +226,7 @@ Taking PPResume as an example, we met two issues
 ([1](https://github.com/ppresume/community/issues/33),
 [2](https://github.com/ppresume/community/issues/63)) where the fonts
 recommended by [CTeX](https://ctan.org/pkg/ctex?lang=en) are missing some
-characters. Unlike Indo-European languages, there are very few fonts that have
+characters. Unlike Latin script languages, there are very few fonts that have
 full coverage of the entire CJK character set, and most of them are commercial—
 [Noto](https://fonts.google.com/noto) is one of the few exceptions that both has
 good coverage of [CJK](https://github.com/notofonts/noto-cjk) characters and is
@@ -265,7 +267,7 @@ in CJK:
 
 #### Font Pairing
 
-When mixing CJK with other Indo-European languages, things become more
+When mixing CJK with other Latin script languages, things become more
 complicated.
 
 Firstly, punctuations are different. For example, the
@@ -279,9 +281,8 @@ English:
 >
 > — [Multi Languages Support](https://ppresume.com/posts/multi-languagues-support#punctuations)
 
-Meanwhile, a Latin font for Indo-European languages may cover only one thousand
-glyphs, whereas a CJK font must cover at least thousands of glyphs, as mentioned
-above.
+Meanwhile, a Latin font may cover only one thousand glyphs, whereas a CJK font
+must cover at least thousands of glyphs, as mentioned above.
 
 Effective typesetting often requires CJK fonts to be paired with Latin fonts to
 maintain visual consistency. This can be challenging as it requires combined
@@ -292,7 +293,7 @@ fonts that intelligently switch between character sets.
 > Unfortunately this can be at the expense of the design of the Latin letters,
 > which may in some cases be really quite ugly.
 >
-> The solution? Use an attractive Latin-script font for any Latin letters and
+> The solution? Use an attractive Latin script font for any Latin letters and
 > numbers, and an Asian font for the Chinese, Japanese or Korean characters.
 > Rather than making the poor typesetter manually change the font each time a
 > Latin letter or number appears, applications such as InDesign allow Combined
@@ -306,7 +307,7 @@ essential for PPResume to provide native support for multi languages.
 
 In summary, the insanely huge size of CJK character sets, cultural nuances and
 technical challenges contribute to the greater complexity of typesetting CJK
-languages compared to Indo-European languages.
+languages compared to Latin script languages.
 
 ## HTML & CSS
 
@@ -954,7 +955,51 @@ typesetting engines.
 
 Thanks for reading!
 
-## Revision
+## Revisions
+
+### Nov 18, 2024
+
+This post [featured](https://news.ycombinator.com/item?id=42100660) by Hacker News.
+
+To respond to some comments here.
+
+#### Indo-European languages
+
+[sundarurfriend](https://news.ycombinator.com/user?id=sundarurfriend) pointed
+out that the usage of [Indo-European
+languages](https://news.ycombinator.com/item?id=42103711) is inappropriate, and
+he is right.
+
+I am not a linguist and the two languages that I know well are Chinese and
+English. So I have coined a new glossary term "Latin script languages" and use
+that throughout the post instead.
+
+#### Choice of typesetting engines
+
+Some people asked me why I did not mention/evaluate xxx, yyy typesetting
+engines. As I mentioned above, I did the evaluation based on PPReseume's
+requirements. I chose the above 5 typesetting engines because each represents a
+different type:
+
+- [HTML & CSS](#html--css): traditional Web based typesetting/layout engine.
+- [LaTeX](#latex): traditional CLI based typesetting engine. LaTeX is the most
+  widely used, others including,
+  [ConTeXt](https://wiki.contextgarden.net/Main_Page),
+  [SILE](https://sile-typesetter.org/), [troff](https://troff.org/), etc.
+- [LaTeX.js](#latexjs): an attempt to run LaTeX on the Web using JavaScript,
+  interesting practice but very difficult to make it 100% compatible with LaTeX.
+- [Typst](#typst): a modern and redesigned typesetting engine, with better
+  syntax, user experience, incremental compilation, can be used on both CLI and
+  web, ery promising project LaTeX alternative.
+- [React-pdf](#react-pdf): react-based typesetting and PDF generation library.
+
+#### text-autospace
+
+Chrome has developed a new
+[text-autospace](https://developer.chrome.com/blog/css-i18n-features#inter-script_spacing_text-autospace)
+CSS property that can insert inter-script spacing by default. However, this
+property appears to be available only in Chrome and is currently behind a feature
+flag.
 
 ### Nov 8, 2024
 

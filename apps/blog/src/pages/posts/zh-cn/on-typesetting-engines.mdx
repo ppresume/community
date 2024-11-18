@@ -36,7 +36,7 @@ author: Xiao Hanyu
 
 术语：
 
-- **[印欧语系](https://en.wikipedia.org/wiki/Indo-European_languages)**：一种语言家族，主要分布在欧洲大部分地区、伊朗高原和印度次大陆北部。广泛使用的印欧语系语言包括英语、法语、葡萄牙语、俄语、荷兰语和西班牙语等。
+- **拉丁字母语言**：使用[拉丁字母](https://en.wikipedia.org/wiki/Latin_script)作为[书写系统](https://en.wikipedia.org/wiki/Writing_system)的语言。大多数[日耳曼语言](https://en.wikipedia.org/wiki/Germanic_languages)、[罗曼语言](https://en.wikipedia.org/wiki/Romance_languages)和许多其他语言[印度尼西亚语](https://en.wikipedia.org/wiki/Indonesian_language)都使用拉丁字母作为主要书写系统。
 - **[CJK](https://en.wikipedia.org/wiki/CJK_characters)**：中文、日文和韩文。
 - **[字符集](https://www.creatopy.com/blog/what-is-a-character-set/)**：特定字体或字型中可用的完整字符、符号、字形和标点符号的集合。
 - **[字形](https://en.wikipedia.org/wiki/Glyph)**：在排版中字符的具体形状、设计或表现形式。
@@ -95,7 +95,7 @@ author: Xiao Hanyu
 
 ### CJK 排版的复杂性
 
-[CJK](https://en.wikipedia.org/wiki/CJK_characters)（中文、日文和韩文）语言的排版通常被认为比印欧语言更为复杂。这一点在 [koreader](https://github.com/koreader/koreader) 项目的经典[讨论](https://github.com/koreader/koreader/issues/6162)中得到了体现。造成这种复杂性的原因有几个。
+[CJK](https://en.wikipedia.org/wiki/CJK_characters)（中文、日文和韩文）语言的排版通常被认为比拉丁字母语言更为复杂。这一点在 [koreader](https://github.com/koreader/koreader) 项目的经典[讨论](https://github.com/koreader/koreader/issues/6162)中得到了体现。造成这种复杂性的原因有几个。
 
 简而言之，如果你不想深入细节，可以参考以下几份 [W3C](https://www.w3.org/) 的草案说明，以直观了解 CJK 排版的复杂性：
 
@@ -107,14 +107,14 @@ author: Xiao Hanyu
 
 #### CJK 字符集庞大
 
-这种复杂性的根本原因在于 CJK 语言的字符集远远大于印欧语言。根据 [CJK 统一表意文字](https://en.wikipedia.org/wiki/CJK_Unified_Ideographs)，截至 Unicode 16.0，Unicode 定义了总共 97680 个字符。**这实在是庞大无比**。相比之下，印欧语言通常使用拉丁字母表，字符数量仅有几百个，远小于 CJK 字符集。嗯哼，10 万个字符，即使是创建一种涵盖所有字符的字体，也是一项巨大的工作，需要大量人力，而且非常昂贵。
+这种复杂性的根本原因在于 CJK 语言的字符集远远大于拉丁字母语言。根据 [CJK 统一表意文字](https://en.wikipedia.org/wiki/CJK_Unified_Ideographs)，截至 Unicode 16.0，Unicode 定义了总共 97680 个字符。**这实在是庞大无比**。相比之下，拉丁字母表的字符数量仅有几百个，远小于 CJK 字符集。嗯哼，10 万个字符，即使是创建一种涵盖所有字符的字体，也是一项巨大的工作，需要大量人力，而且非常昂贵。
 
 ![CJK Characters](/static/images/on-typesetting-engines/The_old_man_is_72_years_old_final.webp)
 
 以 PPResume 为例，我们曾遇到两个问题
 ([1](https://github.com/ppresume/community/issues/33),
 [2](https://github.com/ppresume/community/issues/63))，皆因
-[CTeX](https://ctan.org/pkg/ctex?lang=en) 的推荐字体缺少某些字符。与印欧语言不同，能够完整覆盖整个 CJK 字符集的字体非常少，且大多数都是商业字体——
+[CTeX](https://ctan.org/pkg/ctex?lang=en) 的推荐字体缺少某些字符。与拉丁字母语言不同，能够完整覆盖整个 CJK 字符集的字体非常少，且大多数都是商业字体——
 [Noto](https://fonts.google.com/noto) 是少数几个既能很好覆盖
 [CJK](https://github.com/notofonts/noto-cjk) 字符集又可以免费使用的例外之一。
 
@@ -146,7 +146,7 @@ author: Xiao Hanyu
 
 #### 字体搭配
 
-当 CJK 与其他印欧语言混合时，事情变得更加复杂。
+当 CJK 与其他拉丁字母语言混合时，事情变得更加复杂。
 
 首先，标点符号的形式不同。例如，[逗号](https://en.wikipedia.org/wiki/Comma)在中文和英文中有不同的形式：
 
@@ -157,7 +157,7 @@ author: Xiao Hanyu
 >
 > — [Multi Languages Support](https://ppresume.com/posts/multi-languagues-support#punctuations)
 
-另，如前所述，印欧语言的拉丁字体可能仅覆盖一千个字形，而 CJK 字体必须至少覆盖数千个字形。
+另，如前所述，拉丁字体可能仅覆盖一千个字形，而 CJK 字体必须至少覆盖数千个字形。
 
 合格的排版通常需要 CJK 字体与拉丁字体搭配，来保证视觉上的一致性。这也是有挑战性的，因为它需要智能地在字符集之间切换字体。
 
@@ -177,7 +177,7 @@ author: Xiao Hanyu
 
 并非所有排版引擎都内置支持字体搭配，但这对于 PPResume 提供对多语言的原生支持却是至关重要的。
 
-总之，与印欧语言相比，CJK 字符集的巨大规模、文化上的细微差别和技术上的挑战，导致 CJK 的排版工作更加复杂。
+总之，与拉丁字母语言相比，CJK 字符集的巨大规模、文化上的细微差别和技术上的挑战，导致 CJK 的排版工作更加复杂。
 
 ## HTML & CSS
 
