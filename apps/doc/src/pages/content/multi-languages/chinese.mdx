@@ -1,0 +1,590 @@
+# Chinese
+
+The [Chinese](https://en.wikipedia.org/wiki/Chinese_language) language belongs
+to the [Sino-Tibetan language
+family](https://en.wikipedia.org/wiki/Sino-Tibetan_language_family), which is
+very much different from the Latin script languages. About 1.4 billion
+people, or 17% of the world's population, speak a variety of Chinese as their
+first language.
+
+## Linguistics
+
+### Character Set
+
+The [Chinese characters](https://en.wikipedia.org/wiki/Chinese_characters) and
+the [Latin
+characters](<https://en.wikipedia.org/wiki/Western_Latin_character_sets_(computing)>)
+represent two fundamentally different approaches to written language.
+
+The Latin characters has a limited character set, where relatively few
+characters are needed to represent a large vocabulary, each character represents
+a specific sound or [phoneme](https://en.wikipedia.org/wiki/Phoneme), and words
+are formed by combining these characters in specific sequences. Chinese, on the
+other hand, has tens of thousands of characters in order to express the full
+range of the Chinese language, each character represents a
+[morpheme](https://en.wikipedia.org/wiki/Morpheme) or word, often conveying
+meaning directly, and words are formed by combining individual characters, each
+with its own meaning and pronunciation.
+
+<img
+  src="/static/images/multi-languages/chinese/Chenzihmyon_typefaces.svg.png"
+  className="center"
+  alt="Chinese characters"
+/>
+
+This fundamental difference in writing systems has significant implications for
+language learning, text processing, and cultural exchange. While the Latin
+characters are relatively easy to learn and use, the Chinese characters
+requires significant memorization and practice.
+
+PPResume has
+[invested](https://blog.ppresume.com/posts/multi-languagues-support) heavily in
+supporting Chinese resumes.
+
+### Variants
+
+While there are many regional variations of the Chinese language, the two
+primary written forms are Simplified Chinese and Traditional Chinese.
+
+Here's a breakdown:
+
+**Simplified Chinese**
+
+- Primarily used in mainland China and Singapore.
+- Developed in the mid-20th century to increase literacy rates.
+- Uses [simplified
+  characters](https://en.wikipedia.org/wiki/Simplified_Chinese_characters), often
+  with fewer strokes than traditional characters.
+
+**Traditional Chinese**
+
+- Primarily used in Hong Kong, Macau, Taiwan, and many overseas Chinese communities.
+- The older form of written Chinese.
+- Uses [traditional
+  characters](https://en.wikipedia.org/wiki/Traditional_Chinese_characters), with
+  more and complex strokes.
+
+It's important to note that both Simplified and Traditional Chinese can be used
+to write various dialects of Chinese, such as
+[Mandarin](https://en.wikipedia.org/wiki/Mandarin_Chinese),
+[Cantonese](https://en.wikipedia.org/wiki/Cantonese), and
+[Hokkien](https://en.wikipedia.org/wiki/Hokkien).
+
+Meanwhile, Traditional Chinese has at least two variants, namely, the Hong Kong
+variant [zh-HK](https://simplelocalize.io/data/locale-code/zh-HK/) and the
+Taiwan variant [zh-TW](https://simplelocalize.io/data/locale-code/zh-TW/). Most
+of the scripts in zh-HK and zh-TW are identical, with only a few minor
+differences.
+
+For example, the word "software", when translated to zh-HK, it is "軟件", while in
+zh-TW, it is "軟體". There are about tens of words in English that are translated
+differently in zh-HK and zh-TW, details
+[here](https://zh.wikipedia.org/wiki/%E7%B9%81%E4%BD%93%E5%AD%97#%E7%94%A8%E8%AA%9E%E5%B7%AE%E7%95%B0).
+
+In general, PPResume can't do too much for the difference between zh-HK and
+zh-TW, as users have to decide which variant to use when writing resumes and
+make sure that the content conforms to the idioms and convensions of zh-HK or
+zh-TW. However, there is one thing that PPResume needs to handle properly for
+zh-HK and zh-TW, as some countries and regions have different names in zh-HK and
+zh-TW. [Saudi Arabia](https://en.wikipedia.org/wiki/Saudi_Arabia), for example,
+is translated as "沙特阿拉伯" in zh-HK and "沙烏地阿拉伯" in zh-TW. There are also a few
+other countries. PPResume takes [care](#location-countries-and-regions) of all
+countries and regions that has different translations in zh-HK and zh-TW.
+
+## Idioms
+
+### Date
+
+Dates are presented differently in English and Chinese, e.g. "Jun 2018 –
+Present" in English should be translated as "2018 年 6 月至今" in Chinese，the
+position of the year and month should be reversed, and the en-dash "–" should be
+replaced by "至".
+
+Meanwhile, Chinese do not use dedicated words for months, instead, it uses a
+combination of an Arabic number and a character "月", making it as simple as a
+game of counting.
+
+| English         | Chinese |
+| --------------- | ------- |
+| January (Jan)   | 1 月    |
+| February (Feb)  | 2 月    |
+| March (Mar)     | 3 月    |
+| April (Apr)     | 4 月    |
+| May (May)       | 5 月    |
+| June (Jun)      | 6 月    |
+| July (Jul)      | 7 月    |
+| August (Aug)    | 8 月    |
+| September (Sep) | 9 月    |
+| October (Oct)   | 10 月   |
+| November (Nov)  | 11 月   |
+| December (Dec)  | 12 月   |
+
+### Location
+
+Address formats differ between
+[English](/content/multi-languages/english#location) and Chinese conventions.
+Unlike English, when presenting a location with address, city, and country, the
+general part (country, state, etc.) usually comes first in Chinese, while the
+most specific part (town, address, etc.) comes last.
+
+## Typesetting
+
+### Font
+
+Just like Latin script languages, Chinese has its serif font
+[Song](/guide/font#song) and sans-serif font [Bold](/guide/font#bold). Besides,
+it also has two additional font styles, [Regular](/guide/font#regular) and
+[Fangsong](/guide/font#fangsong). You can check [Guide -> Font -> CJK
+Font](/guide/font#cjk-font) for more details.
+
+PPResume uses Song as the main font for Chinese resumes.
+
+### Punctuations
+
+Chinese punctuations, like the language itself, has its own unique
+characteristics. One important distinction to note is the difference between
+[half-width and
+full-width](https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms)
+punctuations.
+
+The primary difference between half-width and full-width punctuations in Chinese
+lies in their visual width and their intended use.
+
+**Half-width punctuations**
+
+- **Narrower**: these punctuations are typically used in conjunction with Latin
+  characters or numbers, such as in URLs, email addresses, or code snippets.
+- **Less common**: they are less commonly used in standard Chinese text, often
+  used in a small portion of Latin script language phrases or paragraphs.
+
+**Full-width punctuations**
+
+- **Wider**: these punctuations are designed to match the width of Chinese
+  characters, ensuring a visually balanced and consistent appearance in Chinese
+  text.
+- **More common**: they are the standard punctuation marks used in Chinese text.
+
+Using the correct type of punctuations is crucial for proper formatting and
+readability in Chinese text. Mismatched punctuations can lead to visual
+inconsistencies and potential confusion.
+
+By understanding the difference between half-width and full-width punctuations,
+you can ensure that your Chinese text is correctly formatted and visually
+appealing. Here is a table of punctuations in both half-width and full-width
+forms, used in Latin script and Chinese languages respectively.
+
+|                           | English | Simplified Chinese |
+| ------------------------- | ------- | ------------------ |
+| Full Stop/Period (句号)   | .       | 。                 |
+| Question Mark (问号)      | ?       | ？                 |
+| Exclamation Mark (感叹号) | !       | ！                 |
+| Comma (逗点)              | ,       | ，                 |
+| Colon (冒号)              | :       | ：                 |
+| Semicolon (分号)          | ;       | ；                 |
+| Parenthesis (小括号)      | ()      | ()                 |
+| Bracket (中括号)          | []      | ［］               |
+| Brace (花括号)            | \{\}    | ｛｝               |
+
+For resumes, it's the author's duty to use correct punctuations when composing
+the content, but PPResume can guarantee that our resume templates will always
+use the correct punctuations. We have two cases right now:
+
+#### Comma
+
+English uses the comma `,` as a separator to separate parts of a sentence and
+items in a list, while Chinese uses a Chinese comma `，` to separate sensences,
+and a dedicated enumeration comma
+([顿号](https://en.wikipedia.org/wiki/Comma#East_Asia), `、`) to separate items in
+a list (e.g. keyword list).
+
+With PPResume's [TagsInput](https://mantine.dev/core/tags-input/) component for
+the input of `keywords` and `courses`, the correct seperator punctuations are
+used according to the main language of the resume.
+
+#### Colon
+
+English and Chinese also have
+[different](https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms) colons.
+The [English colon](https://www.compart.com/en/unicode/U+003A) is `:`, with
+Unicode `U+003A`, while the [Chinese
+colon](https://www.compart.com/en/unicode/U+FF1A) is `：`, with Unicode `U+FF1A`.
+As you can always trust, PPResume also takes care of this. We use correct colon
+for various fixed terms like "Keywords:" ("关键字：" in Simplified Chinese, "關鍵字："
+in Traditional Chinese) and "Courses:" ( `课程：` in Simplified Chinese, `課程：` in
+Traditional Chinese) in our resume template.
+
+### Old Style Numbers
+
+By default, **PPResume do not use [old style
+numbers](/guide/font#old-style-numbers) for Chinese resumes**. Why? Because
+Chinese characters all have the same height and width (that is why Chinese
+characters are also called "方块字", which means square characters), basically all
+Chinese characters are titled and monospaced by nature. By adopting numbers in
+the lining style, the number style is adapted more closely to the Chinese
+characters.
+
+### Italics
+
+By default, **PPResume do not use italics in Chinese resumes** because italics
+in Chinese is considered as a [bad
+practice](https://drwhispers.com/2021/11/16/italics-in-chinese/), why?
+
+In Latin script languages, italics are usually distinguished from body serifs
+and are used to emphasise or differentiate parts of the text, however,
+italicizing Chinese characters can disrupt the natural flow and readability of
+the text.
+
+Unlike Latin characters, Chinese characters are square characters that are not
+traditionally written in italics, and many Chinese fonts do not have specific
+italic glyphs for each character. When italicizing Chinese text, software often
+simply slants the characters, which can result in a visually unpleasant and
+unprofessional appearance.
+
+## Translations
+
+PPResume adopts the following translations for various options and terms used in
+Chinese resumes.
+
+### Education Degrees
+
+| English       | Chinese (Simplified) | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan) |
+| ------------- | -------------------- | -------------------------------- | ----------------------------- |
+| Middle School | 初中                 | 初中                             | 初中                          |
+| High School   | 高中                 | 高中                             | 高中                          |
+| Diploma       | 专科                 | 專科                             | 專科                          |
+| Associate     | 副学士               | 副學士                           | 副學士                        |
+| Bachelor      | 学士                 | 學士                             | 學士                          |
+| Master        | 硕士                 | 碩士                             | 碩士                          |
+| Doctor        | 博士                 | 博士                             | 博士                          |
+
+### Languages
+
+| English    | Chinese (Simplified) | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan) |
+| ---------- | -------------------- | -------------------------------- | ----------------------------- |
+| Arabic     | 阿拉伯语             | 阿拉伯語                         | 阿拉伯語                      |
+| Bengali    | 孟加拉语             | 孟加拉語                         | 孟加拉語                      |
+| Bhojpuri   | 博杰普尔语           | 博傑普爾語                       | 博傑普爾語                    |
+| Cantonese  | 粤语                 | 粵語                             | 粵語                          |
+| Chinese    | 中文                 | 中文                             | 中文                          |
+| English    | 英语                 | 英語                             | 英語                          |
+| French     | 法语                 | 法語                             | 法語                          |
+| German     | 德语                 | 德語                             | 德語                          |
+| Gujarati   | 古吉拉特语           | 古吉拉特語                       | 古吉拉特語                    |
+| Hausa      | 豪萨语               | 豪薩語                           | 豪薩語                        |
+| Hindi      | 印地语               | 印地語                           | 印地語                        |
+| Indonesian | 印度尼西亚语         | 印度尼西亞語                     | 印度尼西亞語                  |
+| Italian    | 意大利语             | 意大利語                         | 意大利語                      |
+| Japanese   | 日语                 | 日語                             | 日語                          |
+| Javanese   | 爪哇语               | 爪哇語                           | 爪哇語                        |
+| Korean     | 韩语                 | 韓語                             | 韓語                          |
+| Marathi    | 马拉地语             | 馬拉地語                         | 馬拉地語                      |
+| Portuguese | 葡萄牙语             | 葡萄牙語                         | 葡萄牙語                      |
+| Russian    | 俄语                 | 俄語                             | 俄語                          |
+| Spanish    | 西班牙语             | 西班牙語                         | 西班牙語                      |
+| Tamil      | 泰米尔语             | 泰米爾語                         | 泰米爾語                      |
+| Turkish    | 土耳其语             | 土耳其語                         | 土耳其語                      |
+| Urdu       | 乌尔都语             | 烏爾都語                         | 烏爾都語                      |
+| Vietnamese | 越南语               | 越南語                           | 越南語                        |
+
+### Language Fluencies
+
+| English                          | Chinese (Simplified) | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan) |
+| -------------------------------- | -------------------- | -------------------------------- | ----------------------------- |
+| Elementary Proficiency           | 初级水平             | 初級水平                         | 初級水平                      |
+| Limited Working Proficiency      | 有限工作水平         | 有限工作水平                     | 有限工作水平                  |
+| Minimum Professional Proficiency | 最低专业水平         | 最低專業水平                     | 最低專業水平                  |
+| Full Professional Proficiency    | 完全专业水平         | 完全專業水平                     | 完全專業水平                  |
+| Native or Bilingual Proficiency  | 母语或双语水平       | 母語或雙語水平                   | 母語或雙語水平                |
+
+### Location (Countries and Regions)
+
+| English                              | Chinese (Simplified)           | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan)  |
+| ------------------------------------ | ------------------------------ | -------------------------------- | ------------------------------ |
+| Afghanistan                          | 阿富汗                         | 阿富汗                           | 阿富汗                         |
+| Aland Islands                        | 奥兰群岛                       | 奧蘭羣島                         | 奧蘭群島                       |
+| Albania                              | 阿尔巴尼亚                     | 阿爾巴尼亞                       | 阿爾巴尼亞                     |
+| Algeria                              | 阿尔及利亚                     | 阿爾及利亞                       | 阿爾及利亞                     |
+| American Samoa                       | 美属萨摩亚                     | 美屬薩摩亞                       | 美屬薩摩亞                     |
+| Andorra                              | 安道尔                         | 安道爾                           | 安道爾                         |
+| Angola                               | 安哥拉                         | 安哥拉                           | 安哥拉                         |
+| Anguilla                             | 安圭拉                         | 安圭拉                           | 安圭拉                         |
+| Antarctica                           | 南极洲                         | 南極洲                           | 南極洲                         |
+| Antigua And Barbuda                  | 安提瓜和巴布达                 | 安提瓜和巴布達                   | 安地卡及巴布達                 |
+| Argentina                            | 阿根廷                         | 阿根廷                           | 阿根廷                         |
+| Armenia                              | 亚美尼亚                       | 亞美尼亞                         | 亞美尼亞                       |
+| Aruba                                | 阿鲁巴                         | 阿魯巴                           | 阿魯巴                         |
+| Australia                            | 澳大利亚                       | 澳大利亞                         | 澳大利亞                       |
+| Austria                              | 奥地利                         | 奧地利                           | 奧地利                         |
+| Azerbaijan                           | 阿塞拜疆                       | 阿塞拜疆                         | 亞塞拜然                       |
+| Bahrain                              | 巴林                           | 巴林                             | 巴林                           |
+| Bangladesh                           | 孟加拉                         | 孟加拉                           | 孟加拉                         |
+| Barbados                             | 巴巴多斯                       | 巴巴多斯                         | 巴貝多                         |
+| Belarus                              | 白俄罗斯                       | 白俄羅斯                         | 白俄羅斯                       |
+| Belgium                              | 比利时                         | 比利時                           | 比利時                         |
+| Belize                               | 伯利兹                         | 伯利茲                           | 貝里斯                         |
+| Benin                                | 贝宁                           | 貝寧                             | 貝南                           |
+| Bermuda                              | 百慕大                         | 百慕大                           | 百慕大                         |
+| Bhutan                               | 不丹                           | 不丹                             | 不丹                           |
+| Bolivia                              | 玻利维亚                       | 玻利維亞                         | 玻利維亞                       |
+| Bonaire, Sint Eustatius and Saba     | 博内尔岛、圣尤斯特歇斯和萨巴岛 | 博內爾島、聖尤斯特歇斯和薩巴島   | 博內爾島、聖尤斯特歇斯和薩巴島 |
+| Bosnia and Herzegovina               | 波斯尼亚和黑塞哥维那           | 波斯尼亞和黑塞哥維那             | 波斯尼亞和黑塞哥維那           |
+| Botswana                             | 博茨瓦纳                       | 博茨瓦納                         | 波札那                         |
+| Bouvet Island                        | 布维岛                         | 布維島                           | 布維島                         |
+| Brazil                               | 巴西                           | 巴西                             | 巴西                           |
+| British Indian Ocean Territory       | 英属印度洋领地                 | 英屬印度洋領地                   | 英屬印度洋領地                 |
+| Brunei                               | 文莱                           | 文萊                             | 汶萊                           |
+| Bulgaria                             | 保加利亚                       | 保加利亞                         | 保加利亞                       |
+| Burkina Faso                         | 布基纳法索                     | 布基納法索                       | 布吉納法索                     |
+| Burundi                              | 布隆迪                         | 布隆迪                           | 蒲隆地                         |
+| Cambodia                             | 柬埔寨                         | 柬埔寨                           | 柬埔寨                         |
+| Cameroon                             | 喀麦隆                         | 喀麥隆                           | 喀麥隆                         |
+| Canada                               | 加拿大                         | 加拿大                           | 加拿大                         |
+| Cape Verde                           | 佛得角                         | 佛得角                           | 維德角                         |
+| Cayman Islands                       | 开曼群岛                       | 開曼羣島                         | 開曼群島                       |
+| Central African Republic             | 中非                           | 中非                             | 中非                           |
+| Chad                                 | 乍得                           | 乍得                             | 查德                           |
+| Chile                                | 智利                           | 智利                             | 智利                           |
+| China                                | 中国                           | 中國                             | 中國                           |
+| Christmas Island                     | 圣诞岛                         | 聖誕島                           | 聖誕島                         |
+| Cocos (Keeling) Islands              | 科科斯（基林）群岛             | 科科斯（基林）羣島               | 科科斯（基林）群島             |
+| Colombia                             | 哥伦比亚                       | 哥倫比亞                         | 哥倫比亞                       |
+| Comoros                              | 科摩罗                         | 科摩羅                           | 葛摩                           |
+| Congo                                | 刚果                           | 剛果                             | 剛果                           |
+| Cook Islands                         | 库克群岛                       | 庫克羣島                         | 庫克群島                       |
+| Costa Rica                           | 哥斯达黎加                     | 哥斯達黎加                       | 哥斯大黎加                     |
+| Cote D'Ivoire (Ivory Coast)          | 科特迪瓦                       | 科特迪瓦                         | 象牙海岸                       |
+| Croatia                              | 克罗地亚                       | 克羅地亞                         | 克羅埃西亞                     |
+| Cuba                                 | 古巴                           | 古巴                             | 古巴                           |
+| Curaçao                              | 库拉索                         | 庫拉索                           | 庫拉索                         |
+| Cyprus                               | 塞浦路斯                       | 塞浦路斯                         | 塞普勒斯                       |
+| Czech Republic                       | 捷克                           | 捷克                             | 捷克                           |
+| Democratic Republic of the Congo     | 刚果（金）                     | 剛果（金）                       | 剛果（金）                     |
+| Denmark                              | 丹麦                           | 丹麥                             | 丹麥                           |
+| Djibouti                             | 吉布提                         | 吉布提                           | 吉布提                         |
+| Dominica                             | 多米尼加                       | 多米尼加                         | 多明尼加                       |
+| Dominican Republic                   | 多明尼加共和国                 | 多明尼加共和國                   | 多明尼加共和國                 |
+| East Timor                           | 东帝汶                         | 東帝汶                           | 東帝汶                         |
+| Ecuador                              | 厄瓜多尔                       | 厄瓜多爾                         | 厄瓜多                         |
+| Egypt                                | 埃及                           | 埃及                             | 埃及                           |
+| El Salvador                          | 萨尔瓦多                       | 薩爾瓦多                         | 薩爾瓦多                       |
+| Equatorial Guinea                    | 赤道几内亚                     | 赤道幾內亞                       | 赤道幾內亞                     |
+| Eritrea                              | 厄立特里亚                     | 厄立特里亞                       | 厄利垂亞                       |
+| Estonia                              | 爱沙尼亚                       | 愛沙尼亞                         | 愛沙尼亞                       |
+| Ethiopia                             | 埃塞俄比亚                     | 埃塞俄比亞                       | 衣索比亞                       |
+| Falkland Islands                     | 福克兰群岛                     | 福克蘭羣島                       | 福克蘭群島                     |
+| Faroe Islands                        | 法罗群岛                       | 法羅羣島                         | 法羅群島                       |
+| Fiji Islands                         | 斐济                           | 斐濟                             | 斐濟                           |
+| Finland                              | 芬兰                           | 芬蘭                             | 芬蘭                           |
+| France                               | 法国                           | 法國                             | 法國                           |
+| French Guiana                        | 法属圭亚那                     | 法屬圭亞那                       | 法屬蓋亞那                     |
+| French Polynesia                     | 法属波利尼西亚                 | 法屬波利尼西亞                   | 法屬波利尼西亞                 |
+| French Southern Territories          | 法属南部领地                   | 法屬南部領地                     | 法屬南部領地                   |
+| Gabon                                | 加蓬                           | 加蓬                             | 加彭                           |
+| Gambia The                           | 冈比亚                         | 岡比亞                           | 甘比亞                         |
+| Georgia                              | 格鲁吉亚                       | 格魯吉亞                         | 喬治亞                         |
+| Germany                              | 德国                           | 德國                             | 德國                           |
+| Ghana                                | 加纳                           | 加納                             | 迦納                           |
+| Gibraltar                            | 直布罗陀                       | 直布羅陀                         | 直布羅陀                       |
+| Greece                               | 希腊                           | 希臘                             | 希臘                           |
+| Greenland                            | 格陵兰岛                       | 格陵蘭島                         | 格陵蘭島                       |
+| Grenada                              | 格林纳达                       | 格林納達                         | 格瑞那達                       |
+| Guadeloupe                           | 瓜德罗普岛                     | 瓜德羅普島                       | 瓜德羅普島                     |
+| Guam                                 | 关岛                           | 關島                             | 關島                           |
+| Guatemala                            | 危地马拉                       | 危地馬拉                         | 瓜地馬拉                       |
+| Guernsey and Alderney                | 根西岛                         | 根西島                           | 根西島                         |
+| Guinea                               | 几内亚                         | 幾內亞                           | 幾內亞                         |
+| Guinea-Bissau                        | 几内亚比绍                     | 幾內亞比紹                       | 幾內亞比索                     |
+| Guyana                               | 圭亚那                         | 圭亞那                           | 蓋亞那                         |
+| Haiti                                | 海地                           | 海地                             | 海地                           |
+| Heard Island and McDonald Islands    | 赫德·唐纳岛及麦唐纳岛          | 赫德·唐納島及麥唐納島            | 赫德·唐納島及麥唐納島          |
+| Honduras                             | 洪都拉斯                       | 洪都拉斯                         | 宏都拉斯                       |
+| Hong Kong S.A.R.                     | 中国香港                       | 中國香港                         | 中國香港                       |
+| Hungary                              | 匈牙利                         | 匈牙利                           | 匈牙利                         |
+| Iceland                              | 冰岛                           | 冰島                             | 冰島                           |
+| India                                | 印度                           | 印度                             | 印度                           |
+| Indonesia                            | 印度尼西亚                     | 印度尼西亞                       | 印度尼西亞                     |
+| Iran                                 | 伊朗                           | 伊朗                             | 伊朗                           |
+| Iraq                                 | 伊拉克                         | 伊拉克                           | 伊拉克                         |
+| Ireland                              | 爱尔兰                         | 愛爾蘭                           | 愛爾蘭                         |
+| Israel                               | 以色列                         | 以色列                           | 以色列                         |
+| Italy                                | 意大利                         | 意大利                           | 義大利                         |
+| Jamaica                              | 牙买加                         | 牙買加                           | 牙買加                         |
+| Japan                                | 日本                           | 日本                             | 日本                           |
+| Jersey                               | 泽西岛                         | 澤西島                           | 澤西島                         |
+| Jordan                               | 约旦                           | 約旦                             | 約旦                           |
+| Kazakhstan                           | 哈萨克斯坦                     | 哈薩克斯坦                       | 哈薩克                         |
+| Kenya                                | 肯尼亚                         | 肯尼亞                           | 肯亞                           |
+| Kiribati                             | 基里巴斯                       | 基里巴斯                         | 吉里巴斯                       |
+| Kosovo                               | 科索沃                         | 科索沃                           | 科索沃                         |
+| Kuwait                               | 科威特                         | 科威特                           | 科威特                         |
+| Kyrgyzstan                           | 吉尔吉斯斯坦                   | 吉爾吉斯斯坦                     | 吉爾吉斯斯坦                   |
+| Laos                                 | 寮人民民主共和国               | 寮人民民主共和國                 | 寮人民民主共和國               |
+| Latvia                               | 拉脱维亚                       | 拉脫維亞                         | 拉脫維亞                       |
+| Lebanon                              | 黎巴嫩                         | 黎巴嫩                           | 黎巴嫩                         |
+| Lesotho                              | 莱索托                         | 萊索托                           | 賴索托                         |
+| Liberia                              | 利比里亚                       | 利比里亞                         | 賴比瑞亞                       |
+| Libya                                | 利比亚                         | 利比亞                           | 利比亞                         |
+| Liechtenstein                        | 列支敦士登                     | 列支敦士登                       | 列支敦斯登                     |
+| Lithuania                            | 立陶宛                         | 立陶宛                           | 立陶宛                         |
+| Luxembourg                           | 卢森堡                         | 盧森堡                           | 盧森堡                         |
+| Macau S.A.R.                         | 中国澳门                       | 中國澳門                         | 中國澳門                       |
+| Madagascar                           | 马达加斯加                     | 馬達加斯加                       | 馬達加斯加                     |
+| Malawi                               | 马拉维                         | 馬拉維                           | 馬拉維                         |
+| Malaysia                             | 马来西亚                       | 馬來西亞                         | 馬來西亞                       |
+| Maldives                             | 马尔代夫                       | 馬爾代夫                         | 馬爾地夫                       |
+| Mali                                 | 马里                           | 馬裏                             | 馬裡                           |
+| Malta                                | 马耳他                         | 馬耳他                           | 馬耳他                         |
+| Man (Isle of)                        | 马恩岛                         | 馬恩島                           | 馬恩島                         |
+| Marshall Islands                     | 马绍尔群岛                     | 馬紹爾羣島                       | 馬紹爾群島                     |
+| Martinique                           | 马提尼克岛                     | 馬提尼克島                       | 馬提尼克島                     |
+| Mauritania                           | 毛里塔尼亚                     | 毛里塔尼亞                       | 茅利塔尼亞                     |
+| Mauritius                            | 毛里求斯                       | 毛里求斯                         | 模里西斯                       |
+| Mayotte                              | 马约特                         | 馬約特                           | 馬約特                         |
+| Mexico                               | 墨西哥                         | 墨西哥                           | 墨西哥                         |
+| Micronesia                           | 密克罗尼西亚                   | 密克羅尼西亞                     | 密克羅尼西亞                   |
+| Moldova                              | 摩尔多瓦                       | 摩爾多瓦                         | 摩爾多瓦                       |
+| Monaco                               | 摩纳哥                         | 摩納哥                           | 摩納哥                         |
+| Mongolia                             | 蒙古                           | 蒙古                             | 蒙古                           |
+| Montenegro                           | 黑山                           | 黑山                             | 黑山                           |
+| Montserrat                           | 蒙特塞拉特                     | 蒙特塞拉特                       | 蒙特塞拉特                     |
+| Morocco                              | 摩洛哥                         | 摩洛哥                           | 摩洛哥                         |
+| Mozambique                           | 莫桑比克                       | 莫桑比克                         | 莫三比克                       |
+| Myanmar                              | 缅甸                           | 緬甸                             | 緬甸                           |
+| Namibia                              | 纳米比亚                       | 納米比亞                         | 奈米比亞                       |
+| Nauru                                | 瑙鲁                           | 瑙魯                             | 諾魯                           |
+| Nepal                                | 尼泊尔                         | 尼泊爾                           | 尼泊爾                         |
+| Netherlands                          | 荷兰                           | 荷蘭                             | 荷蘭                           |
+| New Caledonia                        | 新喀里多尼亚                   | 新喀里多尼亞                     | 新喀里多尼亞                   |
+| New Zealand                          | 新西兰                         | 新西蘭                           | 紐西蘭                         |
+| Nicaragua                            | 尼加拉瓜                       | 尼加拉瓜                         | 尼加拉瓜                       |
+| Niger                                | 尼日尔                         | 尼日爾                           | 尼日                           |
+| Nigeria                              | 尼日利亚                       | 尼日利亞                         | 奈及利亞                       |
+| Niue                                 | 纽埃                           | 紐埃                             | 紐埃                           |
+| Norfolk Island                       | 诺福克岛                       | 諾福克島                         | 諾福克島                       |
+| North Korea                          | 朝鲜                           | 朝鮮                             | 朝鮮                           |
+| North Macedonia                      | 北馬其頓                       | 北馬其頓                         | 北馬其頓                       |
+| Northern Mariana Islands             | 北马里亚纳群岛                 | 北马里亞納羣島                   | 北马里亞納群島                 |
+| Norway                               | 挪威                           | 挪威                             | 挪威                           |
+| Oman                                 | 阿曼                           | 阿曼                             | 阿曼                           |
+| Pakistan                             | 巴基斯坦                       | 巴基斯坦                         | 巴基斯坦                       |
+| Palau                                | 帕劳                           | 帕勞                             | 帛琉                           |
+| Palestinian Territory Occupied       | 巴勒斯坦                       | 巴勒斯坦                         | 巴勒斯坦                       |
+| Panama                               | 巴拿马                         | 巴拿馬                           | 巴拿馬                         |
+| Papua new Guinea                     | 巴布亚新几内亚                 | 巴布亞新幾內亞                   | 巴布亞紐幾內亞                 |
+| Paraguay                             | 巴拉圭                         | 巴拉圭                           | 巴拉圭                         |
+| Peru                                 | 秘鲁                           | 祕魯                             | 秘魯                           |
+| Philippines                          | 菲律宾                         | 菲律賓                           | 菲律賓                         |
+| Pitcairn Island                      | 皮特凯恩群岛                   | 皮特凱恩羣島                     | 皮特凱恩群島                   |
+| Poland                               | 波兰                           | 波蘭                             | 波蘭                           |
+| Portugal                             | 葡萄牙                         | 葡萄牙                           | 葡萄牙                         |
+| Puerto Rico                          | 波多黎各                       | 波多黎各                         | 波多黎各                       |
+| Qatar                                | 卡塔尔                         | 卡塔爾                           | 卡達                           |
+| Reunion                              | 留尼汪岛                       | 留尼汪島                         | 留尼汪島                       |
+| Romania                              | 罗马尼亚                       | 羅馬尼亞                         | 羅馬尼亞                       |
+| Russia                               | 俄罗斯联邦                     | 俄羅斯聯邦                       | 俄羅斯聯邦                     |
+| Rwanda                               | 卢旺达                         | 盧旺達                           | 盧安達                         |
+| Saint Helena                         | 圣赫勒拿                       | 聖赫勒拿                         | 聖赫勒拿                       |
+| Saint Kitts And Nevis                | 圣基茨和尼维斯                 | 聖基茨和尼維斯                   | 聖克里斯多福及尼維斯           |
+| Saint Lucia                          | 圣卢西亚                       | 聖盧西亞                         | 聖露西亞                       |
+| Saint Pierre and Miquelon            | 圣皮埃尔和密克隆               | 聖皮埃爾和密克隆                 | 聖皮埃爾和密克隆               |
+| Saint Vincent And The Grenadines     | 圣文森特和格林纳丁斯           | 聖文森特和格林納丁斯             | 聖文森及格瑞那丁               |
+| Saint-Barthelemy                     | 圣巴泰勒米                     | 聖巴泰勒米                       | 聖巴泰勒米                     |
+| Saint-Martin (French part)           | 密克罗尼西亚                   | 密克羅尼西亞                     | 密克羅尼西亞                   |
+| Samoa                                | 萨摩亚                         | 薩摩亞                           | 薩摩亞                         |
+| San Marino                           | 圣马力诺                       | 聖馬力諾                         | 聖馬利諾                       |
+| Sao Tome and Principe                | 圣多美和普林西比               | 聖多美和普林西比                 | 聖多美和普林西比               |
+| Saudi Arabia                         | 沙特阿拉伯                     | 沙特阿拉伯                       | 沙烏地阿拉伯                   |
+| Senegal                              | 塞内加尔                       | 塞內加爾                         | 塞內加爾                       |
+| Serbia                               | 塞尔维亚                       | 塞爾維亞                         | 塞爾維亞                       |
+| Seychelles                           | 塞舌尔                         | 塞舌爾                           | 塞席爾                         |
+| Sierra Leone                         | 塞拉利昂                       | 塞拉利昂                         | 獅子山                         |
+| Singapore                            | 新加坡                         | 新加坡                           | 新加坡                         |
+| Sint Maarten (Dutch part)            | 圣马丁岛（荷兰部分）           | 聖馬丁島（荷蘭部分）             | 聖馬丁島（荷蘭部分）           |
+| Slovakia                             | 斯洛伐克                       | 斯洛伐克                         | 斯洛伐克                       |
+| Slovenia                             | 斯洛文尼亚                     | 斯洛文尼亞                       | 斯洛維尼亞                     |
+| Solomon Islands                      | 所罗门群岛                     | 所羅門羣島                       | 索羅門群島                     |
+| Somalia                              | 索马里                         | 索馬里                           | 索馬利亞                       |
+| South Africa                         | 南非                           | 南非                             | 南非                           |
+| South Georgia                        | 南乔治亚                       | 南喬治亞                         | 南喬治亞                       |
+| South Korea                          | 韩国                           | 韓國                             | 韓國                           |
+| South Sudan                          | 南苏丹                         | 南蘇丹                           | 南蘇丹                         |
+| Spain                                | 西班牙                         | 西班牙                           | 西班牙                         |
+| Sri Lanka                            | 斯里兰卡                       | 斯里蘭卡                         | 斯里蘭卡                       |
+| Sudan                                | 苏丹                           | 蘇丹                             | 蘇丹                           |
+| Suriname                             | 苏里南                         | 蘇里南                           | 蘇利南                         |
+| Svalbard And Jan Mayen Islands       | 斯瓦尔巴和扬马延群岛           | 斯瓦爾巴和揚馬延羣島             | 斯瓦爾巴和揚馬延群島           |
+| Swaziland                            | 斯威士兰                       | 斯威士蘭                         | 史瓦濟蘭                       |
+| Sweden                               | 瑞典                           | 瑞典                             | 瑞典                           |
+| Switzerland                          | 瑞士                           | 瑞士                             | 瑞士                           |
+| Syria                                | 叙利亚                         | 敘利亞                           | 敘利亞                         |
+| Taiwan                               | 中国台湾                       | 中國臺灣                         | 中國臺灣                       |
+| Tajikistan                           | 塔吉克斯坦                     | 塔吉克斯坦                       | 塔吉克                         |
+| Tanzania                             | 坦桑尼亚                       | 坦桑尼亞                         | 坦尚尼亞                       |
+| Thailand                             | 泰国                           | 泰國                             | 泰國                           |
+| The Bahamas                          | 巴哈马                         | 巴哈馬                           | 巴哈馬                         |
+| Togo                                 | 多哥                           | 多哥                             | 多哥                           |
+| Tokelau                              | 托克劳                         | 托克勞                           | 托克勞                         |
+| Tonga                                | 汤加                           | 湯加                             | 湯加                           |
+| Trinidad And Tobago                  | 特立尼达和多巴哥               | 特立尼達和多巴哥                 | 千里達及托巴哥                 |
+| Tunisia                              | 突尼斯                         | 突尼斯                           | 突尼西亞                       |
+| Turkey                               | 土耳其                         | 土耳其                           | 土耳其                         |
+| Turkmenistan                         | 土库曼斯坦                     | 土庫曼斯坦                       | 土庫曼                         |
+| Turks And Caicos Islands             | 特克斯和凯科斯群岛             | 特克斯和凱科斯羣島               | 特克斯和凱科斯群島             |
+| Tuvalu                               | 图瓦卢                         | 圖瓦盧                           | 吐瓦魯                         |
+| Uganda                               | 乌干达                         | 烏干達                           | 烏干達                         |
+| Ukraine                              | 乌克兰                         | 烏克蘭                           | 烏克蘭                         |
+| United Arab Emirates                 | 阿拉伯联合酋长国               | 阿拉伯聯合酋長國                 | 阿拉伯聯合大公國               |
+| United Kingdom                       | 英国                           | 英國                             | 英國                           |
+| United States                        | 美国                           | 美國                             | 美國                           |
+| United States Minor Outlying Islands | 美国本土外小岛屿               | 美國本土外小島嶼                 | 美國本土外小島嶼               |
+| Uruguay                              | 乌拉圭                         | 烏拉圭                           | 烏拉圭                         |
+| Uzbekistan                           | 乌兹别克斯坦                   | 烏茲別克斯坦                     | 烏茲別克                       |
+| Vanuatu                              | 瓦努阿图                       | 瓦努阿圖                         | 萬那杜                         |
+| Vatican City State (Holy See)        | 梵蒂冈                         | 梵蒂岡                           | 梵蒂岡                         |
+| Venezuela                            | 委内瑞拉                       | 委內瑞拉                         | 委內瑞拉                       |
+| Vietnam                              | 越南                           | 越南                             | 越南                           |
+| Virgin Islands (British)             | 圣文森特和格林纳丁斯           | 聖文森特和格林納丁斯             | 聖文森及格瑞那丁               |
+| Virgin Islands (US)                  | 维尔京群岛（美国）             | 維爾京羣島（美國）               | 維爾京群島（美國）             |
+| Wallis And Futuna Islands            | 瓦利斯群岛和富图纳群岛         | 瓦利斯羣島和富圖納羣島           | 瓦利斯群島和富圖納群島         |
+| Western Sahara                       | 西撒哈拉                       | 西撒哈拉                         | 西撒哈拉                       |
+| Yemen                                | 也门                           | 也門                             | 葉門                           |
+| Zambia                               | 赞比亚                         | 贊比亞                           | 尚比亞                         |
+| Zimbabwe                             | 津巴布韦                       | 津巴布韋                         | 辛巴威                         |
+
+### Section Names
+
+| English      | Chinese (Simplified) | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan) |
+| ------------ | -------------------- | -------------------------------- | ----------------------------- |
+| Awards       | 荣誉                 | 榮譽                             | 榮譽                          |
+| Basics       | 简介                 | 簡介                             | 簡介                          |
+| Certificates | 证书                 | 證書                             | 證書                          |
+| Education    | 教育背景             | 教育背景                         | 教育背景                      |
+| Interests    | 兴趣爱好             | 興趣愛好                         | 興趣愛好                      |
+| Languages    | 语言                 | 語言                             | 語言                          |
+| Location     | 地址                 | 地址                             | 地址                          |
+| Profiles     | 社交信息             | 社交信息                         | 社交信息                      |
+| Projects     | 项目                 | 項目                             | 項目                          |
+| Publications | 出版刊物             | 出版刊物                         | 出版刊物                      |
+| References   | 引荐                 | 引薦                             | 引薦                          |
+| Skills       | 专业技能             | 專業技能                         | 專業技能                      |
+| Volunteer    | 志愿服务             | 志願服務                         | 志願服務                      |
+| Work         | 工作经历             | 工作經歷                         | 工作經歷                      |
+
+### Skill Levels
+
+| English      | Chinese (Simplified) | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan) |
+| ------------ | -------------------- | -------------------------------- | ----------------------------- |
+| Novice       | 新手                 | 新手                             | 新手                          |
+| Beginner     | 初级                 | 初級                             | 初級                          |
+| Intermediate | 中级                 | 中級                             | 中級                          |
+| Advanced     | 高级                 | 高級                             | 高級                          |
+| Expert       | 专家                 | 專家                             | 專家                          |
+| Master       | 大师                 | 大師                             | 大師                          |
+
+### Terms
+
+| English  | Chinese (Simplified) | Chinese (Traditional, Hong Kong) | Chinese (Traditional, Taiwan) |
+| -------- | -------------------- | -------------------------------- | ----------------------------- |
+| Courses  | 课程                 | 課程                             | 課程                          |
+| Keywords | 关键字               | 關鍵字                           | 關鍵字                        |
+| Score    | 成绩                 | 成績                             | 成績                          |
