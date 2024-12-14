@@ -315,7 +315,7 @@ TeX 拥有黄金换行算法——Knuth Plass 换行算法。毕竟 Knuth 是 Te
 - 新引擎如 [LuaTeX](https://www.luatex.org/) 和 [XeTeX](https://tug.org/xetex/)
 - 宏包如 [xeCJK](https://ctan.org/pkg/xecjk?lang=en)、[CTeX](https://ctan.org/pkg/ctex?lang=en) 和 [LuaTeX-ja](https://ctan.org/pkg/luatexja?lang=en)
 
-例如，xeCJK 包提供以下命令来设置 CJK 字体：
+例如，xeCJK 宏包提供以下命令来设置 CJK 字体：
 
 - `\setCJKmainfont`：设置正文衬线族的 CJK 字体
 - `\setCJKsansfont`：设置正文无衬线族的 CJK 字体
@@ -331,7 +331,7 @@ xeCJK 还提供了指定 CJK 标点样式、CJK 与非 CJK 字符之间的间距
 
 LaTeX 从一开始就是为排版分页文档而设计的，所以它对分页有出色的支持，你可以轻松调整纸张大小、方向、边距等。
 
-查看 [geometry](https://ctan.org/pkg/geometry?lang=en) 包以获取详细信息。
+查看 [geometry](https://ctan.org/pkg/geometry?lang=en) 宏包以获取详细信息。
 
 ### 实时预览
 
@@ -401,7 +401,7 @@ LaTeX.js 提供实时预览，因为它是一个客户端库，能够在浏览�
 
 ### 结论
 
-LaTeX.js 仅提供[有限的](https://latex.js.org/limitations.html#when-parsing-tex-as-a-context-free-grammar) TeX/LaTeX 解析能力，换句话说，许多 LaTeX 包无法在 LaTeX.js 中使用。
+LaTeX.js 仅提供[有限的](https://latex.js.org/limitations.html#when-parsing-tex-as-a-context-free-grammar) TeX/LaTeX 解析能力，换句话说，许多 LaTeX 宏包无法在 LaTeX.js 中使用。
 
 > This is a PEG parser, which means it interprets LaTeX as a context-free
 > language. However, TeX (and therefore LaTeX) is Turing complete, so TeX can only
@@ -415,7 +415,7 @@ LaTeX.js 仅提供[有限的](https://latex.js.org/limitations.html#when-parsing
   - **实时预览**：LaTeX.js 完全在客户端处理 LaTeX 文档，这意味着它可以在浏览器中实时渲染文档，消除了对服务器端 LaTeX 安装和编译的需求。
   - **可扩展性**：该项目用 JavaScript 实现，易于集成到 Web 应用程序中。新的宏也可以很容易地通过 JavaScript 来添加。
 - 缺点
-  - **功能有限**：LaTeX.js 仅涵盖有限的 LaTeX 功能，远未成为生产环境下的 LaTeX 替代品。许多 LaTeX 包无法与 LaTeX.js 一起使用。
+  - **功能有限**：LaTeX.js 仅涵盖有限的 LaTeX 功能，远未成为生产环境下的 LaTeX 替代品。许多 LaTeX 宏包无法与 LaTeX.js 一起使用。
   - **缺乏分页**：一些 LaTeX 功能，如粘连和分页，无法转换为 HTML，这对于生成像 PDF 这样的分页文档来说是一个致命缺点。
   - **换行效果差**：LaTeX.js 基于 HTML 和 CSS，并没有实现 Knuth Plass 换行算法。
   - **CJK 排版需要额外的工作**：同样，由于 LaTeX.js 基于 HTML 和 CSS，因此需要额外的工作才能遵循 CJK 的最佳排版实践，而且比纯 HTML 和 CSS 更麻烦一些。
@@ -491,7 +491,7 @@ Typst 提供了 `typst watch` 命令，结合增量编译，PDF 可以在毫秒�
   - **快速编译**：Typst 具有增量编译，编译速度在毫秒级而非秒级。
   - **可定制的换行**：Typst 提供选项让用户选择 Knuth Plass 换行算法。
 - 缺点
-  - **有限的生态系统**：作为一个较新的工具，Typst 缺乏 LaTeX 提供的广泛包生态系统，这可能限制高级排版需求的功能。
+  - **有限的生态系统**：作为一个较新的工具，Typst 缺乏 LaTeX 提供的丰富的宏包生态系统，这可能限制高级排版需求的功能。
   - **不稳定的 CJK 排版**：Typst 在 CJK 排版方面仍存在许多问题，并在不断演进中。
   - **实时预览是私有的**：Typst 并未开源其 WebAssembly 绑定，因此在浏览器中没有官方的实时预览功能。
 
