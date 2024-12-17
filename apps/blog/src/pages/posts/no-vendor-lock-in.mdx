@@ -1,0 +1,486 @@
+---
+title: No Vendor Lock-In
+date: 2024-12-16
+description: >
+  Let us say no to vendor lock-in. Starting today, PPResume provides the LaTeX
+  source code for the resume, so users can re-create their resumes at any time
+  with any devices.
+tag: LaTeX, Vendor Lock-In, Overleaf, Source Code
+author: Xiao Hanyu
+---
+
+import { YouTube } from 'mdx-embed'
+
+## Table of Contents
+
+## Fundamental principle
+
+There are countless resume builders on the market, most of which offer sleek
+interfaces and professional-looking templates, but they often come with
+a major drawback: [vendor
+lock-in](https://en.wikipedia.org/wiki/Vendor_lock-in). Once you create a resume
+on these platforms, you're typically forced to maintain a subscription in order
+to make future edits or access your resume. These subscriptions aren't
+cheap—many services charge between $15 to $30 per month, which is an ongoing
+expense even if you don't create or update your resumes every month. This
+practice essentially holds your professional documents hostage, requiring
+ongoing payment just to maintain access to your own career materials.
+
+| Vendor                                        | Pricing Plan                                 |
+| --------------------------------------------- | -------------------------------------------- |
+| [resume.io](https://resume.io)                | $2.95/week, $44.95/6 months, $74.95/year     |
+| [Novorésumé](https://novoresume.com/)         | $19.99/month, $39.99/quarter, $99.99/year    |
+| [CVwizard](https://www.cvwizard.com/)         | $0.99 for 14 days free trials, $14.99/month  |
+| [Rezi](https://www.rezi.ai/)                  | $29/month, $249 one-time for lifetime access |
+| [VisualCV](https://www.visualcv.com/)         | $24/month (monthly), $15/month (quarterly)   |
+| [Standard Resume](https://standardresume.co/) | $19/month                                    |
+
+[PPResume](https://ppresume.com) is built on a fundamental principle: **your
+resumes belong to you, not us**. While we provide a [powerful and intuitive
+platform](./introducing-ppresume#the-powerful-dashboard) for creating, updating
+and hosting your resumes, we believe that **users should have complete control
+over their data and the ability to re-create their resumes independently of our
+service**. That being said, we do provide an official eject opt-out option for
+you to take your resumes with you and keep them forever.
+
+![PPResume Eject](/static/images/no-vendor-lock-in/ppresume-eject.webp)
+
+## The curse of PDF
+
+By default, PPResume produces PDF as the output format for your resumes.
+
+[PDF](https://en.wikipedia.org/wiki/PDF) (Portable Document Format) is the
+golden standard documentation format that is widely recognized as the first
+choice for documents sharing. Its ability to preserve document formatting
+across different devices and platforms makes it an ideal choice for documents
+such as resumes, contracts, etc., ensuring that your carefully crafted documents
+look the same whether viewed on a computer, tablet, or smartphone.
+
+However, PDF is not perfect, the greatest curse of PDF is that it is generally
+not editable. If you want to edit the PDF files, you need to use specialized
+PDF editors and most of them are not free.
+
+Here is a non-exhaustive list of the professional PDF editors and their pricing
+plans:
+
+| PDF Editor                                                    | Free Version/Trial | Pricing Plan (For Individuals)                                              |
+| ------------------------------------------------------------- | ------------------ | --------------------------------------------------------------------------- |
+| [Adobe Acrobat DC](https://acrobat.adobe.com/)                | 7 days             | Standard: $12.99/month, Pro: $19.99/month                                   |
+| [Foxit PDF Editor](https://www.foxitsoftware.com/pdf-editor/) | 14 days            | PDF Editor: $10.99/month, PDF Editor+: $13.99/month                         |
+| [Nitro Pro](https://www.gonitro.com/)                         | 14 days            | Nitro Pro: $12.99/month, Nitro PDF Pro+: $250 for one-time purchase         |
+| [Smallpdf](https://smallpdf.com/)                             | Limited features   | Pro: $12/month                                                              |
+| [Sejda PDF Editor](https://www.sejda.com/pdf-editor)          | Limited features   | Web Week Pass: $5, Web Monthly: $7.50/month, Desktop + Web Annual: $63/year |
+| [PDF Expert](https://pdfexpert.com/)                          | 7 days             | $6.67/month, Lifetime: $139.99 one-time purchase                            |
+
+By providing the LaTeX source code along with the PDF output, we're ensuring that
+users always have a way to edit and re-create their resumes, even if they
+decide to stop using our service.
+
+This commitment to user freedom is why **we've made the decision to provide the
+complete LaTeX source code for every resume created on our platform**.
+As a free and open-source typesetting system,
+[LaTeX](https://www.latex-project.org/) ensures that users are never locked into
+our platform and can re-create their resumes anywhere, anytime.
+
+## Show time
+
+As we mentioned above, you fill the form with your personal information,
+PPResume takes the rest and produces pixel perfect PDF for your resumes. 1700
+users have already created their resumes on PPResume at the time of writing.
+
+![PPResume Output PDF](https://docs.ppresume.com/static/images/output-format/ppresume-output-pdf.webp)
+
+From now on, we also provide the LaTeX source code for your resumes, so you can
+download the code and re-create the PDF from the code by yourself at any time,
+any device.
+
+![PPResume Output Code](https://docs.ppresume.com/static/images/output-format/ppresume-output-code.webp)
+
+We will do our best to make sure that the generated LaTeX source code can be
+compiled by LaTeX and produce the same PDF output as the one on PPResume. In
+general, there are two ways to generate the PDF from the LaTeX source code:
+
+1. [Overleaf](https://www.overleaf.com/)
+2. Local LaTeX Environment
+
+You can check our
+[documentation](https://docs.ppresume.com/content/output-format) for more
+details.
+
+![PPResume Overleaf](https://docs.ppresume.com/static/images/output-format/ppresume-code-to-overleaf.webp)
+
+Last but not least, we've prepared a live demo for you to see how the LaTeX
+source code is generated and compiled:
+
+<YouTube youTubeId="TV0gjEobKDc" />
+
+## Engineering
+
+**Please ignore this section if you are not interested in the engineering
+details.**
+
+Initially, we use [mustache.js](https://github.com/janl/mustache.js) to generate
+both the LaTeX source code and the PDF on the server side, which makes things a
+bit complicated. For example, each time we generate a new PDF, we have to first
+query the database to get the template, and then render the template with the
+user's data to generate the LaTeX source code, and then compile the LaTeX source
+to PDF.
+
+The template code looks something like this:
+
+```latex
+\documentclass[a4paper, serif, <= &layout.typography.fontSize =>]{moderncv}
+\usepackage{fontawesome5}
+
+\moderncvstyle{banking}
+\moderncvcolor{black}
+\usepackage[utf8]{inputenc}
+
+% page layout/margin control
+\usepackage[top=<= &layout.margins.top =>,
+bottom=<= &layout.margins.bottom=>,
+left=<= &layout.margins.left=>,
+right=<= &layout.margins.right=>]{geometry}
+
+<= #layout.computed.environment.isSpanish =>
+\usepackage[T1]{fontenc}
+% [spanish]{babel} has some conflicting issues with moderncv, ref:
+% https://tex.stackexchange.com/a/140161/36007
+\usepackage[spanish,es-lcroman]{babel}
+<= /layout.computed.environment.isSpanish =>
+
+% English font settings
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont[Ligatures={Common}, Numbers={<= &layout.typography.fontSpec.numbers =>}, <= #layout.computed.environment.isCJK =>ItalicFont={<= &layout.computed.environment.mainFont =>}, <= /layout.computed.environment.isCJK =>Variant=01]{<= &layout.computed.environment.mainFont =>}
+
+\name{<= &content.basics.name =>}{}
+\title{<= &content.basics.headline =>}
+
+<= #content.basics.phone =>
+\phone[mobile]{<= &content.basics.phone =>}
+<= /content.basics.phone =>
+
+<= #content.basics.email =>
+\email{<= &content.basics.email =>}
+<= /content.basics.email =>
+
+<= #content.computed.urls =>
+\extrainfo{<= &content.computed.urls =>}
+<= /content.computed.urls =>
+
+<= #content.location.computed.fullAddress =>
+\address{<= &content.location.computed.fullAddress =>}{}{}
+<= /content.location.computed.fullAddress =>
+
+<= ^layout.page.showPageNumbers =>
+\nopagenumbers{}
+<= /layout.page.showPageNumbers =>
+
+\begin{document}
+\maketitle
+
+<= #content.basics.computed.summary =>
+\section{<= &content.computed.sectionNames.basics =>}
+\cvitem{}{\begin{minipage}{\textwidth}<= &content.basics.computed.summary =>\end{minipage}}
+<= /content.basics.computed.summary =>
+
+<= #content.education.length =>
+\section{<= &content.computed.sectionNames.education =>}
+<= /content.education.length =>
+
+<= #content.education =>
+\cventry{<= #computed.startDate =><= &computed.dateRange =><= /computed.startDate =>}
+{<= #computed.degreeAreaAndScore =><= &computed.degreeAreaAndScore =><= /computed.degreeAreaAndScore =>}
+{<= &institution =>}
+{\href{<= &url =>}{<= &url =>}}
+{}
+{\begin{minipage}{\textwidth}
+<= &computed.summary =>%
+<= #computed.courses =>\textbf{<= &templateTranslations.terms.Courses =>}<= &templateTranslations.punctuations.Colon =><= &computed.courses =><= /computed.courses =>%
+\end{minipage}}
+<= /content.education =>
+
+<= #content.work.length =>
+\section{<= &content.computed.sectionNames.work =>}
+<= /content.work.length =>
+
+<= #content.work =>
+\cventry{<= #computed.startDate =><= &computed.dateRange =><= /computed.startDate =>}
+{<= &position =>}
+{<= &name =>}
+{\href{<= &url =>}{<= &url =>}}
+{}
+{\begin{minipage}{\textwidth}
+<= &computed.summary =>%
+<= #computed.keywords =>\textbf{<= &templateTranslations.terms.Keywords =>}<= &templateTranslations.punctuations.Colon =><= &computed.keywords =><= /computed.keywords =>%
+\end{minipage}}
+<= /content.work =>
+
+<= #content.languages.length =>
+\section{<= &content.computed.sectionNames.languages =>}
+<= /content.languages.length =>
+
+<= #content.languages =>
+\cvlanguage{<= &computed.language =>}{<= &computed.fluency =>}{}
+<= /content.languages =>
+
+<= #content.skills.length =>
+\section{<= &content.computed.sectionNames.skills =>}
+<= /content.skills.length =>
+
+<= #content.skills =>
+\cvlanguage{<= &name =>}{<= &computed.level =>}{<= #computed.keywords =>\textbf{<= &templateTranslations.terms.Keywords =>}<= &templateTranslations.punctuations.Colon =><= &computed.keywords =><= /computed.keywords =>}
+<= /content.skills =>
+
+\end{document}
+```
+
+The server side code that generates the LaTeX source code and the PDF looks
+something like this:
+
+```typescript
+export const generatePDFHandler: PayloadHandler = async (req, res) => {
+  const { slug } = req.body
+
+  // Step 0: get resume and template
+  const resume = await findResume(req)
+  const template = await findTemplate()
+
+  // Step 1: render resume content to tex
+  const resumeTeXContent = resumeToTeX(resume as Resume, template)
+
+  // Step 2: prepare temp directory for compiling tex to pdf
+  const { resumeTexDir, resumeTexFile } = await prepareTeXDir(
+    req,
+    resumeTeXContent
+  )
+
+  // Step 3: compile tex to pdf
+  const resumePDFFile = await compileTeXToPDF(resumeTexDir, resumeTexFile)
+
+  // Step 4: return the pdf file
+  // ...
+}
+```
+
+The greatest benefit of this approach is that once we found any issues with the
+LaTeX template, we can fix it simply by updating a record in the database, and
+the changes will take effect immediately, without having to redeploy the service
+at all. However, this approach also has some drawbacks, for example, mustache's
+capabilities are very limited, and it is very hard for us to implement advanced PDF
+customization features like [section
+recordering](https://github.com/ppresume/community/issues/5), so we decided to
+do a major refactoring by rewriting the LaTeX source code generation in pure
+TypeScript:
+
+The new code looks something like this:
+
+```typescript
+class ModerncvBase extends Renderer {
+  style: ModerncvStyle
+
+  constructor(resume: Resume, style: ModerncvStyle) {
+    super(transformResume(resume))
+    this.style = style
+  }
+
+  renderPreamble(): string {
+    return joinNonEmptyString([
+      // document class
+      renderDocumentClassConfig(this.resume, DocumentClass.Moderncv),
+      renderModerncvConfig(this.resume, this.style),
+
+      // layout
+      renderLayoutConfig(this.resume),
+
+      // language specific
+      renderCTeXConfig(this.resume),
+      renderSpanishConfig(this.resume),
+
+      // fontspec
+      // note that loading order of fontspec and babel packages matters here
+      // babel package should be loaded before fontspec package, otherwise
+      // Spanish resumes cannot render correct font styles in my testing,
+      // reason still unknown though
+      renderFontspecConfig(this.resume),
+    ])
+  }
+
+  renderBasics(): string {
+    const {
+      content: {
+        basics: { name, headline, phone, email },
+      },
+    } = this.resume
+
+    return joinNonEmptyString(
+      [
+        showIf(!isEmptyString(name), `\\name{${name}}{}`),
+        showIf(!isEmptyString(headline), `\\title{${headline}}`),
+        showIf(!isEmptyString(phone), `\\phone[mobile]{${phone}}`),
+        showIf(!isEmptyString(email), `\\email{${email}}`),
+      ],
+      '\n'
+    )
+  }
+
+  renderLocation(): string {
+    // render location
+  }
+
+  renderProfiles(): string {
+    // render profiles
+  }
+
+  renderSummary(): string {
+    // render summary
+  }
+
+  renderEducation(): string {
+    const {
+      content: {
+        computed: { sectionNames },
+        education,
+      },
+      layout,
+    } = this.resume
+
+    const {
+      punctuations: { Colon },
+      terms: { Courses },
+    } = getTemplateTranslations(layout.locale?.language)
+
+    if (!education.length) {
+      return ''
+    }
+
+    return `\\section{${sectionNames.education}}
+
+${education
+  .map(
+    ({
+      computed: { startDate, dateRange, degreeAreaAndScore, summary, courses },
+      institution,
+      url,
+    }) => `\\cventry{${showIf(!isEmptyString(startDate), dateRange)}}
+        {${degreeAreaAndScore}}
+        {${institution}}
+        {\\href{${url}}{${url}}}
+        {}
+        {${showIf(
+          !isEmptyString(summary) || !isEmptyValue(courses),
+          `${joinNonEmptyString(
+            [
+              summary,
+              showIf(
+                !isEmptyValue(courses),
+                `\\textbf{${Courses}}${Colon}${courses}`
+              ),
+            ],
+            '\n'
+          )}`
+        )}}`
+  )
+  .join('\n\n')}`
+  }
+
+  renderWork(): string {
+    // render work
+    // ...
+  }
+
+  renderLanguages(): string {
+    // render languages
+    // ...
+  }
+
+  renderAwards(): string {
+    // render awards
+    // ...
+  }
+
+  renderPublications(): string {
+    // render publications
+    // ...
+  }
+
+  renderReferences(): string {
+    // render references
+    // ...
+  }
+
+  renderProjects(): string {
+    // render projects
+    // ...
+  }
+
+  renderInterests(): string {
+    // render interests
+    // ...
+  }
+
+  render(): string {
+    return this.generateTeX()
+  }
+
+  private generateTeX(): string {
+    return `${joinNonEmptyString([
+      this.renderPreamble(),
+      this.renderBasics(),
+      this.renderLocation(),
+      this.renderProfiles(),
+    ])}
+
+\\begin{document}
+
+\\maketitle
+
+${joinNonEmptyString([
+  this.renderSummary(),
+  this.renderEducation(),
+  this.renderWork(),
+  this.renderLanguages(),
+  this.renderSkills(),
+  this.renderAwards(),
+  this.renderCertificates(),
+  this.renderPublications(),
+  this.renderReferences(),
+  this.renderProjects(),
+  this.renderInterests(),
+  this.renderVolunteer(),
+])}
+\\end{document}`
+  }
+}
+```
+
+The new approach is much more flexible and powerful, which brings us two great
+benefits:
+
+1. We can now implement more advanced PDF customization features such as [section
+   recordering](https://github.com/ppresume/community/issues/5).
+2. Both frontend and backend can generate LaTeX source code at will, so we can
+   expose the code generation capability to frontend, that is why in our demo
+   the code generation happens in real time with no delay at all.
+
+## Next
+
+Our commitment to no vendor lock-in is not just about providing source code—it's
+about our respect for users' freedom over their own data and privacy: your
+resume should truly be yours, not tied to any single platform or service, **you
+have the right to dislike us**, get your data back, keep it in your own pocket
+forever.
+
+While we are maintaining our core principle, we will also continue to expand
+PPResume's capabilities as mentioned above:
+
+- more advanced PDF customization features like [section
+  reordering](https://github.com/ppresume/community/issues/5), [section
+  alias](https://github.com/ppresume/community/issues/11), etc.
+- [more templates](https://github.com/ppresume/community/issues/6)
+- an [interactive playground](https://github.com/ppresume/community/issues/79)
+  to lower the barrier for users to try out PPResume
+- [open source](https://github.com/ppresume/community/issues/121) PPResume's
+  typesetting engine
+
+Stay tuned for more updates!
