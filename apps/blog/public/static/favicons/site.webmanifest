@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "PPResume",
+  "short_name": "PPResume",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
