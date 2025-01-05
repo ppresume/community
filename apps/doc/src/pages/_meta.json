@@ -5,6 +5,9 @@
   "content": {
     "title": "Content"
   },
+  "typesetting": {
+    "title": "Typesetting"
+  },
   "guide": {
     "title": "Guide"
   }

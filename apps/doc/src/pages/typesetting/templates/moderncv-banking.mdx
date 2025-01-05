@@ -1,0 +1,55 @@
+# Moderncv Banking
+
+Moderncv banking is a modern and clean resume template based on
+[xdanaux/moderncv](https://github.com/xdanaux/moderncv).
+
+Under the hood, we use the following code for the LaTeX preamble:
+
+```latex
+\documentclass[a4paper, serif, 11pt]{moderncv}
+
+%% moderncv
+% style and color
+\moderncvstyle{banking}
+\moderncvcolor{black}
+
+% needed by moderncv for showing icons
+\usepackage{fontawesome5}
+```
+
+For moderncv banking style, we also adopt some special processings for
+punctuations in order to make it work with CJK.
+
+Technically speaking, English and Chinese have different colons. The English
+colon is `:`, with Unicode `U+003A`, while the Chinese colon is `：`, with
+Unicode `U+FF1A`. So when the resume language is Chinese, we would adopt the
+Chinese colon for moderncv by overriding some magic LaTeX macros:
+
+```latex
+% renew moderncv command to adapt for CJK colon
+\renewcommand*{\cvitem}[3][.25em]{%
+  \ifstrempty{#2}{}{\hintstyle{#2}<= &templateTranslations.punctuations.Colon =>}{#3}%
+  \par\addvspace{#1}}
+
+\renewcommand*{\cvitemwithcomment}[4][.25em]{%
+  \savebox{\cvitemwithcommentmainbox}{\ifstrempty{#2}{}{\hintstyle{#2}<= &templateTranslations.punctuations.Colon =>}#3}%
+  \setlength{\cvitemwithcommentmainlength}{\widthof{\usebox{\cvitemwithcommentmainbox}}}%
+  \setlength{\cvitemwithcommentcommentlength}{\maincolumnwidth-\separatorcolumnwidth-\cvitemwithcommentmainlength}%
+  \begin{minipage}[t]{\cvitemwithcommentmainlength}\usebox{\cvitemwithcommentmainbox}\end{minipage}%
+  \hfill% fill of \separatorcolumnwidth
+  \begin{minipage}[t]{\cvitemwithcommentcommentlength}\raggedleft\small\itshape#4\end{minipage}%
+  \par\addvspace{#1}}
+```
+
+Check our blog
+[post](https://blog.ppresume.com/posts/multi-languagues-support#colon) for more
+details.
+
+Preview:
+
+<iframe
+  title="resume-preview"
+  src="https://ppresume.com/pdf/gallery/templates/moderncv-banking.pdf"
+  width="100%"
+  style={{ aspectRatio: 0.7072135785007072, borderWidth: 0, marginTop: '1rem' }}
+></iframe>
