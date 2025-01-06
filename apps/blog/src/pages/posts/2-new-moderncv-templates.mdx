@@ -1,0 +1,122 @@
+---
+title: 2 New Moderncv Templates
+date: 2025-01-06
+description: >
+  PPResume now supports 2 new moderncv styles: casual and classic.
+author: Xiao Hanyu
+tag: LaTeX, Moderncv, Resume, Template
+---
+
+## Table of Contents
+
+## Introduction
+
+Hello and Happy New Year everyone! As a New Year's gift, I am glad to announce
+that PPResume now supports 2 new templates based on
+[xdanaux/moderncv](https://github.com/xdanaux/moderncv).
+
+You can hve a look at these templates in [PPResume Gallery ->
+Templates](https://ppresume.com/gallery/templates).
+
+Using these new templates in PPResume is pretty straightforward:
+
+1. open the resume settings drawer
+2. click on the template button to apply it, or
+3. preview the template by clicking on its thumbnails
+
+<video controls muted width="100%" style={{ margin: '24px 0' }}>
+  <source
+    src="/static/images/2-new-moderncv-templates/ppresume-switch-template.mp4"
+    type="video/mp4"
+  />
+  Your browser does not support the video tag.
+</video>
+
+Check PPResume [documentation](http://docs.ppresume.com/typesetting/templates)
+for more details.
+
+## Moderncv
+
+[xdanaux/moderncv](https://github.com/xdanaux/moderncv) is probably the most
+popular LaTeX template for crafting resumes. Its has a modern and clean design,
+and offers 5 different styles:
+
+- banking
+- casual
+- classic
+- fancy
+- oldstyle
+
+PPResume was [launched](./introducing-ppresume) in September 2023, and we only
+provide only one template based on moderncv banking. So far, 1700+ users have
+created their resumes using PPResume based on the only one template available.
+
+Many have asked me to add more templates, and I am happy to announce that
+PPResume now supports 2 new moderncv styles: casual and classic.
+
+### Moderncv Styles
+
+Some may ask why we only support 2 new moderncv styles, instead of all 5 styles.
+
+Technically speaking, it is quite easy to support all 5 moderncv styles. Under
+the hood it is roughly a one-liner problem: `\moderncvstyle{name-of-style}`.
+However, we need to make sure that all moderncv styles must work out of the box
+and support almost all kinds of user input by default. We did some careful
+testing and found that
+[fancy](https://github.com/ppresume/community/issues/117#issuecomment-2524945901)
+and
+[oldstyle](https://github.com/ppresume/community/issues/117#issuecomment-2524946310)
+are not very good at handling user emails or profiles with long input. This
+means that if the user enters a long email address or a long profile, the resume
+will look ugly with a broken layout, which is unacceptable.
+
+![Moderncv Fancy is Buggy](/static/images/2-new-moderncv-templates/moderncv-fancy-is-buggy.webp)
+
+So we end up supporting 3 moderncv styles in total:
+
+- [moderncv
+  banking](http://docs.ppresume.com/typesetting/templates/moderncv-banking)
+- [moderncv
+  casual](http://docs.ppresume.com/typesetting/templates/moderncv-casual)
+- [moderncv
+  classic](http://docs.ppresume.com/typesetting/templates/moderncv-classic)
+
+## Engineering
+
+Under the hood, supporting more moderncv style templates is a pretty
+straightforward task, as it is essentially a one-liner config
+
+```latex {5}
+\documentclass[a4paper, serif, 11pt]{moderncv}
+
+%% moderncv
+% style and color
+\moderncvstyle{banking}
+\moderncvcolor{black}
+
+% needed by moderncv for showing icons
+\usepackage{fontawesome5}
+```
+
+Basically, you need to set a proper argument for `\moderncvstyle`, then ideally
+you should be good to go, but we need to do some extra processing for
+some special cases.
+
+For moderncv banking style, we need to override some LaTeX macros in order to
+apply Chinese colons for CJK resumes, you can read our blog
+[post](https://blog.ppresume.com/posts/multi-languagues-support#colon) for more
+details.
+
+For moderncv casual and classic styles, we need to swap the position of name and
+email for `\cventry` macro in the "References" section, otherwise the email
+would be too long and overlap with the real content, details
+[here](https://github.com/ppresume/community/issues/117#issuecomment-2525034303).
+
+## Look Ahead
+
+Long story short:
+
+1. add more templates to PPResume
+2. open source our resume typesetting engine
+
+See you soon!
