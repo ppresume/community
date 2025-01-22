@@ -1,0 +1,536 @@
+---
+title: 2024 Recap, The Good, The Bad and The Learnings
+date: 2025-03-08
+description: >
+  PPResume 2024 recap, the good, the bad and the learnings, with many metrics
+  for business performance, web analytics and marketing experience.
+author: Xiao Hanyu
+tag: PPResume, 2024, Recap, Learnings, KOL, Reddit
+---
+
+## Table of Contents
+
+## Introduction
+
+PPResume was [launched on Sep 6,
+2023](https://x.com/xiaohanyu1988/status/1699430029132726388), after which I
+spent some time fixing bugs, and then spent another 2 weeks learning how to make
+my first product marketing [video](https://www.youtube.com/watch?v=mYqSTsCw3KI).
+At Oct 31, 2023, I wrote an official blog post about the
+[launch](/posts/introducing-ppresume).
+
+By the end of 2023, PPResume has 177 users, this number becomes 1725 by the end
+of 2024. With a math on the letters, the number of new users per month in 2023
+is $177/4 = 44.25$, while in 2024, it is $(1725 - 177)/12 = 129$. Over the year,
+people have created 1402 resumes on PPResume.
+
+```sql
+logto=> select count(*) from users where created_at <= '2024-01-01 00:00:00.000000+00';
+ count
+-------
+   177
+(1 row)
+
+logto=> select count(*) from users where created_at < '2025-01-01 00:00:00.000000+00';
+ count
+-------
+  1725
+(1 row)
+
+api=> select count(*) from resumes where created_at >= '2024-01-01 00:00:00.000000+00' and created_at < '2025-01-01 00:00:00.000000+00' and deleted = false;
+ count
+-------
+  1402
+(1 row)
+
+api=> select count(distinct owner_id) from resumes where created_at >= '2024-01-01 00:00:00.000000+00' and created_at < '2025-01-01 00:00:00.000000+00' and deleted = false;
+ count
+-------
+  1326
+(1 row)
+```
+
+There are a lot of other interesting metrics, along with some learnings for
+bootstrapping a SaaS product as a one man team, whic is why this post is here.
+
+## Metrics
+
+### Business Performance
+
+- 1548 new sign up users
+- 1402 resumes created
+- 1326 users created at least one resume
+  - 49 users created 2 resumes
+  - 4 users created 3 resumes
+  - 4 users created 4 resumes
+- sign up rate: $(1725-177)/16600 = 9.3\%$
+- revenue:
+  - Oct 2024: $12
+  - Nov 2024: $30
+  - Dec 2024: $0 (heart breaking month...💔)
+
+### Web Analytics
+
+In 2024 we got a total of 42.4k unique visitors for 3 sites:
+
+| Site                              | Unique Visitors | Total Visits | Total Pageviews | Bounce Rate | Visit Duration |
+| --------------------------------- | --------------- | ------------ | --------------- | ----------- | -------------- |
+| [PPResume](https://ppresume.com)  | 16.6k           | 19.1k        | 36.6k           | 50.2%       | 2:56           |
+| [Blog](https://blog.ppresume.com) | 24.3k           | 25.8k        | 32k             | 46.5%       | 3:21           |
+| [Docs](https://docs.ppresume.com) | 1.5k            | 1.6k         | 4.3k            | 1:32        | 62.3%          |
+
+We got several spikes in the number of unique visitors for the main site the
+blog, that is because we were featured by some top channels, I will talk
+more about it [later](#the-good).
+
+![ppresume 2024
+metrics](/static/images/2024-recap/ppresume-2024-metrics-all-sites-annotated.webp)
+
+### Geo Info
+
+Our users come from all over the world, the top 10 countries/regions are:
+
+- China
+- United States
+- Hong Kong
+- Singapore
+- Japan
+- India
+- Taiwan
+- Canada
+- Germany
+- United Kingdom
+
+![ppresume 2024
+metrics main site with geo
+info](/static/images/2024-recap/ppresume-2024-metrics-main-site-geo.webp)
+
+### Top Pages
+
+The top 5 pages are:
+
+- [landing page](https://ppresume.com): welcome to PPResume
+- [dashboard](https://ppresume.com/dashboard): sign in and manage resumes
+- [gallery](https://ppresume.com/gallery): a list of public sample resumes
+- [pricing](https://ppresume.com/pricing): pricing plan
+- [settings](https://ppresume.com/settings): user settings, billing info, etc.
+
+![ppresume 2024
+metrics main site top
+pages](/static/images/2024-recap/ppresume-2024-metrics-main-site-top-pages.webp)
+
+- $3.2k/15.3k = 20.9\%$ of the visitors signed in and accessed their dashboard.
+- $1.1k/15.3k = 7.2\%$ of the visitors checked our [pricing
+  plan](https://ppresume.com/pricing)—please note that the pricing plan was
+  only launched at Sep 29, 2024, so the numbers here should be much higher if
+  you only count the users who signed up after the pricing plan was launched.
+- $1.3k/15.3k = 8.5\%$ of the visitors were interested in the [gallery
+  showcase](https://ppresume.com/gallery)—please note that the gallery page was
+  launched around Aug 2024.
+
+### SEO
+
+[Ahrefs](https://ahrefs.com/)'s metrics are a bit better, the
+[DR](https://ahrefs.com/domain-rating) has been increased from 0 to 17, with a
+spike of 25 (the day after when the post [on typesetting
+engine](/posts/on-typesetting-engine) was [featured by Hacker
+News](https://news.ycombinator.com/item?id=42100660)), I guess the result is not
+too bad.
+
+| Ahrefs Metrics                                                                                    | 2024-01-01 | 2024-12-31 | 2025-03-06 (Time of Writing) |
+| ------------------------------------------------------------------------------------------------- | ---------- | ---------- | ---------------------------- |
+| [Domain Rating](https://ahrefs.com/domain-rating)                                                 | 0          | 13         | 17                           |
+| [Referring Domains](https://ahrefs.com/academy/how-to-use-ahrefs/site-explorer/referring-domains) | 11         | 132        | 159                          |
+
+![ppresume 2024
+metrics main site ahrefs
+](/static/images/2024-recap/ppresume-2024-metrics-main-site-ahrefs.webp)
+
+## New Features
+
+I've introduced a bunch of new features to PPResume in 2024, here are some of
+them with the link to the blog post and the estimated working days.
+
+| Feature                                                       | Working Days |
+| ------------------------------------------------------------- | ------------ |
+| [The New Auth Flow](/posts/introducting-the-new-auth-flow)    | 30           |
+| [Google Sign In](/posts/introducing-google-sign-in)           | 10           |
+| [PWA](/posts/introducing-ppresume-pwa)                        | 20           |
+| [Multi Languages Support](/posts/multi-languagues-support)    | 15           |
+| [Pricing Plan](/posts/introducing-the-pricing-plan)           | 40           |
+| [No Vendor Lock-In with LaTeX Code](/posts/no-vendor-lock-in) | 15           |
+| [Multi Templates](/posts/2-new-moderncv-templates)            | 20           |
+
+## The Good
+
+### Top Tier Sign Up Rate
+
+> According to WordStream's benchmark report, the average Sign Up Rate for SaaS
+> websites ranges between 2% to 5%, with top performing sites converting at
+> more than 11%.
+>
+> — [Sign Up Rate](https://www.metrichq.org/marketing/sign-up-rate/)
+
+PPResume's sign up rate is 9.3%, which is pretty good and close to the top tier.
+I guess this is mostly due to PPResume's clean, sharp and elegant UI/UX design.
+
+### Featured by ruanyifeng/weekly
+
+[ruanyifeng/weekly](https://github.com/ruanyf/weekly) is a top, Chinese tech
+newsletter, maintained by [Ruan Yifeng](https://ruanyifeng.com/).
+
+PPResume was featured twice in 2024:
+
+- [Weekly Issue
+  297](https://www.ruanyifeng.com/blog/2024/04/weekly-issue-297.html):
+  the product itself was featured, which brings 1.2k+ visits to the website and
+  **183 new signups** in one day.
+- [Weekly Issue
+  326](https://www.ruanyifeng.com/blog/2024/11/weekly-issue-326.html), the blog
+  post [On Typesetting Engine](/posts/on-typesetting-engine) was featured at Nov
+  22, 2024, which brings 2.2k visits to the blog site and 329 visits to the main
+  site, however it only brings **13 new signups**.
+
+### Featured by Hacker News
+
+The blog post [On Typesetting Engine](/posts/on-typesetting-engine) was
+[featured by Hacker News on Nov 11,
+2024](https://news.ycombinator.com/item?id=42100660), got 151 points in the end,
+which brings 9.2k visits the blog site and 725 visits to the main site, however
+it brings only **8 new signups**.
+
+The traffic from Hacker News is insane, however the conversion rate is quite
+low, I guess there are two reasons here:
+
+1. Most of the Hacker News readers understand tech well and they have the
+   ability to create a beautifully typed resume on their own without the need
+   for a resume builder.
+2. The readers of the blog post are more likely to be interested in the
+   technical content about typesetting engines, very few of them have the intent
+   to create resumes.
+
+### Finally Got Some Revenue
+
+I've launched the pricing plan on Sep 29, 2024, two weeks later, on Oct 15,
+2024, I finally received the first payment of $9.
+
+![ppresume first payment](/static/images/2024-recap/ppresume-first-payment.webp)
+
+Monthly revenue up to the time of writing:
+
+| Month    | Revenue | No. of Payments |
+| -------- | ------- | --------------- |
+| Oct 2024 | $12     | 2               |
+| Nov 2024 | $30     | 4               |
+| Dec 2024 | $0      | 0               |
+| Jan 2025 | $48     | 5               |
+| Feb 2025 | $58     | 4               |
+
+## The Bad
+
+### Poor Marketing
+
+First thing first, the marketing performance of PPResume is much worse and more
+difficult than what I am originally expected when I started working on PPResume.
+
+This is my first time to get my hands dirty and do marketing for a product
+myself. And to be honest, I know nothing about marketing, so I made the wrong
+expectation and estimation.
+
+On the Internet you can learn a lot of marketing practices, social networking,
+cold emails, etc. but almost none of them are low hanging fruit—it either
+takes money or time.
+
+1. Submitting to directories: except for [Product
+   Hunt](https://www.producthunt.com/), other directories bring poor traffic.
+   You hardly get any traffic share, and ranking on Product Hunt itself requires
+   effort and luck.
+2. Social networking: it is quite a lengthy process to grow a social account
+   starting with less than 100 followers.
+3. Reddit: most high-traffic subreddits have "no self-promotion" rules, posting
+   promotions will likely result in subreddit bans or account suspensions.
+4. Blogging/SEO: too slow, and you need to write many posts to slowly see
+   some effects. According to [ahrefs
+   data](https://ahrefs.com/blog/how-long-does-it-take-to-rank/), most pages
+   that rank in the top positions on Google take 2-3 years to get there,
+5. Email marketing: cold emails are likely to be flagged as spam, and data
+   compliance requirements are becoming increasingly stringent. Sending bulk
+   promotional emails without user consent is likely to be non-compliant with
+   regulations such as GDPR. Meanwhile, building an email list to get user
+   consent is a full-time job in itself.
+6. KOL: some require payment, and KOL traffic would decline to almost zero after
+   a month or two.
+
+If you ask me for a recommendation on how to improve the marketing performance,
+my answer is: **be prepared, be patient!**
+
+### My Fault on Email Outreach
+
+Many said that email outreach is a good way to get traffic, but it is not as
+easy as it looks. On Oct 2024, I started sending cold emails to people who give
+Github stars to open source resume builders (such as
+[resumake.io](https://github.com/saadq/resumake.io/),
+[ReactiveResume](https://github.com/AmruthPillai/Reactive-Resume)) hoping
+that they could give PPResume a try.
+
+I sent about 200 emails in 3 or 4 days and suddenly got a complaint from a guy
+saying I'm spamming people:
+
+> Hi,
+>
+> Spamming people because they make Github stars is against the Github terms of
+> service. Please remove me from your list and set technological measures in
+> place to ensure I am not added to your list in the future.
+>
+> Be well,
+
+To be honest, I also got some emails from people based on my Github profile,
+which I don't mind too much, so I think this should be OK. Then I checked the
+Github ToS and found out that it is [against the rules to send promotional
+emails](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies#7-information-usage-restrictions)
+to people based on their Github profile (another Hacker News
+[discussion](https://news.ycombinator.com/item?id=30764662)).
+
+I immediately stopped the cold email outreach, and then replied and apologized
+for the mistake:
+
+> Hello,
+>
+> **First, I am really sorry for that!**
+>
+> I didn't mean to spam people, but yes, I did make a mistake. Occasionally, I
+> also receive some emails from people based on my Github profile. Some of the
+> emails are fine while others are irrelevant and I just ignore that, so I
+> think it may be fine.
+>
+> You mentioned that this kind of emails is against Github ToS, then I've spent
+> a hour learning the lession:
+>
+> - https://docs.github.com/en/site-policy/acceptable-use-policies/Github-acceptable-use-policies#7-information-usage-restrictions
+> - https://news.ycombinator.com/item?id=30900237
+>
+> Yes you are right, absolutely. And to be honest, I've sent around 150+ emails
+> already. I would stop the whole marketing initiative immediately.
+>
+> This won't happen again, I promise.
+>
+> Regards,
+> Hanyu
+
+With today's increasingly stringent compliance requirements, it is very risky to
+send cold emails to people in bulk without their consent. How to get user
+consent? Emmm, this is a full-time job by itself, you need to provide some value
+to them, no wonder top tiers newsletters is a valuable asset.
+
+### Low Organic Traffic
+
+Like many other webmasters, I use [Google Search
+Console](https://search.google.com/search-console) to track the organic traffic
+performance. Over the whole year PPResume only got only 391 clicks, with 12.5k
+impressions, which is pretty low and bad performance.
+
+![ppresume 2024
+metrics main site GSC
+](/static/images/2024-recap/ppresume-2024-metrics-main-site-gsc.webp)
+
+High performing websites can get thousands of organic clicks from Google search,
+This is the ultimate goal of PPResume and I will make it happen one day.
+
+### Low Payment Conversion Rate
+
+As mentioned above, I launched the pricing plan on Sep 29, 2024 and got the
+first payment on Oct 15, 2024. Over Oct, Nov and Dec, I only got 6 payments,
+which is much less than what I expected.
+
+There may be some possible reasons:
+
+1. The product is still not good enough.
+2. Users who signed up prior to the pricing plan do not need to update their
+   resumes yet, so they do not need to pay.
+3. The price plan is a bit high for the current market (probably not, as most
+   competitors charge $10-20/month for subscription).
+
+This is of course a bit disappointing for me. Meanwhile, it is a challenging
+task to better monetize the product in 2025, otherwise the product would die, no
+wonder.
+
+### Browser Compatibility Issues
+
+At the beginning of 2024, I spent some time [optimized the auth
+flow](/posts/introducting-the-new-auth-flow) and introduced [google sign
+in](/posts/introducing-google-sign-in), which results to a boost in the sign up
+rate. Everything was going well until I got some bug reports from users
+mentioning that they could not sign in to their account. After digging into the
+issue, I found out that this only happens with Safari 17+ browsers.
+
+This [issue](https://github.com/ppresume/community/issues/59) still exists at
+the time of writing, I am sorry for the inconvenience, I will fix it this year.
+
+## The Learnings
+
+### KOL Traffic Will Decline
+
+KOL traffic is very juicy, but it will decline to zero after a month or two.
+
+For example, [PPResume](https://ppresume.com) was featured in [ruanyifeng/weekly
+297](https://www.ruanyifeng.com/blog/2024/04/weekly-issue-297.html) on April 19,
+2024, which brought 1.2k+ visits to [the main site](https://ppresume.com) and
+roughly **183 new signups** in one day. However, after a month or two, the
+traffic declined to almost zero.
+
+![ppresume.com ruanyifeng
+traffic](/static/images/2024-recap/ppresume.com-ruanyifeng-traffic.webp)
+
+The blog post [On Typesetting Engines](/posts/on-typesetting-engine) was
+featured again by [ruanyifeng/weekly
+326](https://www.ruanyifeng.com/blog/2024/11/weekly-issue-326.html) on Nov 22,
+2024, which brought 2.2k visits to the [blog site](https://blog.ppresume.com)
+and 329 visits to [the main site](https://ppresume.com), however it only brought
+**13 new signups**, again, the traffic declined to zero after a month or two.
+
+![blog.ppresume.com ruanyifeng
+traffic](/static/images/2024-recap/blog.ppresume.com-ruanyifeng-traffic.webp)
+
+That being said, **being featured by KOLs is still a good way to get traffic,
+however you should lower your expectations on the traffic, don't expect it to
+bring you traffic constantly for a long time**. You have to work hard to keep
+the traffic coming.
+
+### Not All Traffic Are Created Equal
+
+Different traffic sources have different quality and lead to completely different
+conversion rates, because the traffic comes with different user intent. I only
+realized this fact after being featured by Hacker News—the traffic is insane,
+but the sign up rate is extremely low.
+
+| Traffic Source                                                                     | Featured Site                                  | Visits                         | signups | Sign Up Rate |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------ | ------- | ------------ |
+| [ruanyifeng/weekly](https://www.ruanyifeng.com/blog/2024/04/weekly-issue-297.html) | [PPResume](https://ppresume.com)               | 1.2k                           | 183     | 15.2%        |
+| [Hacker News](https://news.ycombinator.com/item?id=42100660)                       | [PPResume Blog](/posts/on-typesetting-engines) | 9.2k to blog, 725 to main site | 8       | 1.1%         |
+| [ruanyifeng/weekly](https://www.ruanyifeng.com/blog/2024/11/weekly-issue-326.html) | [PPResume Blog](/posts/on-typesetting-engines) | 2.2k to blog, 329 to main site | 13      | 3.9%         |
+
+As you can see, the conversion rate from different traffic sources can be
+10x–100x times different. Why is that? Because users who come from different
+traffic sources have different intent.
+
+For example, users coming from Hacker News are more likely to be interested in
+the technical content—the typesetting engines, while users coming from
+ruanyifeng/weekly are more likely to be interested in the product itself—like
+how to create a beautifully typed resume. Second, most Hacker News readers have
+some technical background and they are more likely to have the ability to create
+a beautifully typed resume on their own without the need for a resume builder.
+
+In summary, **user intent matters more than traffic**.
+
+### 10x Content Get You 100x Traffic
+
+Even though the traffic from Hacker News did not lead to an expected number of
+signups, it still helps a lot for product awareness and promotion.
+
+Once you get featured by Hacker News, besides insane amount of traffic, you will
+also get some additional benefits:
+
+1. More backlinks to your site, which helps a lot for SEO.
+2. More visitors to your site, which can help you get more signups—depends on
+   the user insent, as mentioned.
+3. More brand mentions, improve your brand awareness and authority.
+
+In my case, a [dofollow link](https://ahrefs.com/seo/glossary/dofollow-link)
+from Hacker News increased PPResume DR from 11 to 24 in one day, which is insane
+and blows my mind.
+
+In SEO practices, [10x content](https://ahrefs.com/seo/glossary/10x-content)
+refers to the content that is 10x better than the average content on the
+Internet. It is a hardcore practice, not easy to do, requires a lot of time and
+effort, however this effort makes the job done—in my case, it took me 3 weeks
+to write the post [On Typesetting Engine](/posts/on-typesetting-engine)—wait, 3
+weeks for a post? You got to kidding me! Yes, I am not kidding, it is a
+hard investment but the result is far beyond my expectations. Take ahrefs's
+DR as the judgement:
+
+1. Jan to Oct: DR increased from 0 to 8.
+2. the post went a bit [viral on
+   reddit](https://www.reddit.com/r/programming/comments/1ggg67q/typesetting_engines_a_programmers_perspective/)
+   on Nov 1:
+   DR increased from 8 to 12 then down to 11.
+3. post featured by Hacker News on Nov 11, 2024: **DR increased from 11 to 24 in
+   one day!**
+
+Imagine the ROI for yourself.
+
+### Respect Reddit Rules
+
+Reddit is a pretty good place to get traffic, but it is also a place with strict
+rules. There is a site-wide 9:1 rule, which means that for every 1 self-promotional
+post you make, you should have 9 posts/comments that contribute to the community
+in some other way. This rule exists mostly mainly to prevent subreddits from
+becoming spam-filled advertising channels.
+
+Most subreddits enforce strict "no self-promotion" or "9:1" rules. Breaking
+these rules can result in:
+
+- Post removal
+- Temporary or permanent subreddit bans
+- Account suspension from Reddit entirely
+- Negative community reception and downvotes
+- Being marked as a spammer
+
+I was permanently banned from
+[r/typography](https://www.reddit.com/r/typography/) permanently for violating
+the "no self-promotion" rule in my first post to r/typography, and there is no
+way to recover from that.
+
+Many KOLs say that you can promote your content on Reddit, but few remind that
+reddit is a place with strict rules, and you should respect them, and only
+promote your content if it really adds value to the discussion, otherwise you
+will be banned sooner or later.
+
+Here are some of the subreddits I'm interested in, you can see that almost 50%
+of them forbid self promotion. Be cautious!
+
+| Category                 | Channel                                                                     | Users | Ranking | Allow Self Promotion?           |
+| ------------------------ | --------------------------------------------------------------------------- | ----- | ------- | ------------------------------- |
+| **Resumes**              | [r/EngineeringResumes/](https://www.reddit.com/r/EngineeringResumes/)       | 72K   | Top 2%  | no                              |
+|                          | [r/resumes/](https://www.reddit.com/r/resumes/)                             | 1.1M  | Top 1%  | no                              |
+| **Marketing**            | [r/alphaandbetausers/](https://www.reddit.com/r/alphaandbetausers/)         | 14K   | Top 6%  | yes                             |
+|                          | [r/Entrepreneur/](https://www.reddit.com/r/Entrepreneur/)                   | 3.4M  | Top 1%  | no                              |
+|                          | [r/EntrepreneurRideAlong/](https://www.reddit.com/r/EntrepreneurRideAlong/) | 479K  | Top 1%  | yes                             |
+|                          | [r/IMadeThis](https://www.reddit.com/r/IMadeThis)                           | 15K   | Top 6%  | yes                             |
+|                          | [r/InternetIsBeautiful/](https://www.reddit.com/r/InternetIsBeautiful/)     | 17M   | 46      | 90/10 rule                      |
+|                          | [r/indiebiz](https://www.reddit.com/r/indiebiz)                             | 19K   | Top 5%  | yes                             |
+|                          | [r/indiehackers/](https://www.reddit.com/r/indiehackers/)                   | 14K   | Top 6%  | can promote using SHOW in flare |
+|                          | [r/linkbuilding](https://www.reddit.com/r/linkbuilding)                     | 8.7K  | Top 8%  | yes                             |
+|                          | [r/SaaS/](https://www.reddit.com/r/SaaS/)                                   | 111K  | Top 2%  | no                              |
+|                          | [r/SEO](https://www.reddit.com/r/SEO)                                       | 325K  | Top 1%  | no                              |
+|                          | [r/SideProject/](https://www.reddit.com/r/SideProject/)                     | 157K  | Top 1%  | yes                             |
+|                          | [r/roastmystartup](https://www.reddit.com/r/roastmystartup)                 | 8.2K  | Top 8%  | yes                             |
+|                          | [r/smallbusiness/](https://www.reddit.com/r/smallbusiness/)                 | 1.6M  | Top 1%  | no                              |
+|                          | [r/startups/](https://www.reddit.com/r/startups/)                           | 1.6M  | Top 1%  | no                              |
+| **Engineering**          | [r/react/](https://www.reddit.com/r/react/)                                 | 77K   | Top 2%  | yes                             |
+|                          | [r/reactjs/](https://www.reddit.com/r/reactjs/)                             | 396K  | Top 1%  | partially yes                   |
+|                          | [r/webdev/](https://www.reddit.com/r/webdev/)                               | 2.2M  | Top 1%  | no                              |
+| **Design & Typesetting** | [r/LaTeX/](https://www.reddit.com/r/LaTeX/)                                 | 54K   | Top 3%  | yes                             |
+|                          | [r/typography/](https://www.reddit.com/r/typography/)                       | 424K  | Top 1%  | 90/10 rule                      |
+|                          | [r/web_design/](https://www.reddit.com/r/web_design/)                       | 883K  | Top 1%  | no                              |
+
+## 2025 Plan
+
+PPResume is a one-man product and for now it is far from being perfect and what
+I expect. I've created a [public
+roadmap](https://github.com/ppresume/community/issues/67) to track the progress
+for future development.
+
+In 2025, I will work on the following features:
+
+- [ ] [feat: pdf customization: section reordering](https://github.com/ppresume/community/issues/5)
+- [ ] [feat: pdf customization: section alias](https://github.com/ppresume/community/issues/11)
+- [ ] [feat: import resume data from linkedin](https://github.com/ppresume/community/issues/15)
+- [ ] [feat: create dedicated route for creating new resumes](https://github.com/ppresume/community/issues/82)
+- [ ] [feat: allow users to publish their resumes to public](https://github.com/ppresume/community/issues/85)
+- [ ] [feat: generate thumbnails for resumes list page](https://github.com/ppresume/community/issues/10)
+- [ ] [feat: add an interactive playground](https://github.com/ppresume/community/issues/79)
+- [ ] [feat: generate thumbnails for resumes list page](https://github.com/ppresume/community/issues/10)
+- [ ] [feat: GDPR compliance #74](https://github.com/ppresume/community/issues/74)
+
+Hopefully I can make the project self-sustaining and bring more value to the
+users. Let's see how far I can push it to.

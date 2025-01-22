@@ -45,3 +45,7 @@
 th._border {
   text-align: start;
 }
+
+table a {
+  text-decoration: underline;
+}
