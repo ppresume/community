@@ -49,3 +49,7 @@ th._border {
 table a {
   text-decoration: underline;
 }
+
+lite-youtube {
+  max-width: none !important;
+}
