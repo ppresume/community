@@ -121,11 +121,11 @@ importers:
         specifier: ^20.11.27
         version: 20.17.23
       '@types/react':
-        specifier: ^18.2.65
-        version: 18.2.65
+        specifier: ^18.3.18
+        version: 18.3.18
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: ^18.3.1
+        version: 18.3.1
       tslib:
         specifier: ^2.6.2
         version: 2.8.1
@@ -4125,7 +4125,7 @@ snapshots:
   '@mdx-js/react@2.3.0(react@18.3.1)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 18.2.65
+      '@types/react': 18.3.18
       react: 18.3.1
 
   '@mdx-js/react@3.1.0(@types/react@18.2.65)(react@18.2.0)':
