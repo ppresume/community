@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <script
         defer
         data-domain="docs.ppresume.com"
-        src="https://plausible.ppresume.com/js/script.js"
+        src="https://plausible.textlib.app/js/script.js"
       ></script>
       <Component {...pageProps} />
     </MDXEmbedProvider>
