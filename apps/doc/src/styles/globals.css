@@ -15,9 +15,8 @@ img.center {
   margin-right: auto;
 }
 
-.mdx-embed {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+lite-youtube {
+  max-width: none !important;
 }
 
 th.nx-border {
